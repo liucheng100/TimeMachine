@@ -1,0 +1,326 @@
+@font-face {
+    font-family: "Noto Sans SC";
+    src: url("../../assets/font/NotoSansSC-Regular.otf");
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Noto Sans SC";
+    /* font-family: "Noto Sans SC-Medium, Noto Sans SC"; */
+    box-sizing: border-box;
+}
+
+html {
+    color: #505050;
+    /* white-space: nowrap; */
+}
+
+body {
+    /* overflow: hidden; */
+    overflow: overlay;
+}
+
+:root {
+    --el-color-primary: #c7242f !important;
+    --el-font-size-base: 1rem !important;
+}
+
+p {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-track:hover {
+    /* background: rgba(200, 0, 0, 0.1); */
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar:hover {
+    /* -webkit-appearance: none; */
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.25);
+    transition: color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    cursor: pointer;
+    border-radius: 5px;
+    /* background: rgba(255, 0, 0, 0.25); */
+    transition: color 0.2s ease;
+}
+
+.noSelect {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.confirmBtn {
+    padding: 9px 32px !important;
+    background: #c7242f !important;
+    border-radius: 10px !important;
+    font-size: 20px !important;
+    height: 50px !important;
+    color: #fff !important;
+}
+
+.cancelBtn {
+    padding: 9px 32px !important;
+    background: #fafafa !important;
+    border-radius: 10px !important;
+    font-size: 20px !important;
+    color: #9f9f9f !important;
+    height: 50px !important;
+    margin-right: 50px !important;
+}
+
+.redBtn {
+    background-color: #C7242F !important;
+    color: white !important;
+    --el-button-hover-border-color: #C7242F !important;
+    --el-button-hover-bg-color: #C7242F !important;
+}
+
+.redBtn:focus,
+.redBtn:hover {
+    background-color: var(--el-button-hover-border-color) !important;
+    border-color: var(--el-button-hover-bg-color) !important;
+    opacity: 0.8;
+}
+
+.el-button--primary {
+    --el-button-hover-bg-color: rgba(242, 64, 76, 0.6) !important;
+    --el-button-hover-border-color: rgba(242, 64, 76, 0.64) !important;
+}
+
+.el-button:focus,
+.el-button:hover {
+    background-color: var(--el-button-hover-bg-color) !important;
+}
+
+.dialog-content {
+    text-align: center;
+    font-size: 24px;
+    color: #505050;
+}
+
+.el-dialog__title {
+    font-size: 22px !important;
+}
+
+.dialog-footer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.ani1-enter-active,
+.ani1-leave-active {
+    transition: all .4s;
+}
+
+.ani1-enter-from,
+.ani1-leave-to {
+    opacity: 0;
+    /* transform: rotate3d(0,0,1,60deg); */
+}
+
+.ani1-enter-to,
+.ani1-leave-from {
+    opacity: 1;
+    /* transform: rotate3d(0,0,0,0deg); */
+}
+
+.ani2-enter-active,
+.ani2-leave-active {
+    transition: all .24s !important;
+}
+
+.ani2-enter-from,
+.ani2-leave-to {
+    opacity: 0;
+    /* transform: rotate3d(0,0,1,60deg); */
+}
+
+.ani2-enter-to,
+.ani2-leave-from {
+    opacity: 1;
+    /* transform: rotate3d(0,0,0,0deg); */
+}
+
+.ani3-enter-active,
+.ani3-leave-active {
+    transition: all .3s;
+}
+
+.ani3-enter-from,
+.ani3-leave-to {
+    opacity: 0;
+    transform: translateX(100%);
+    /* transform: rotate3d(0,0,1,60deg); */
+}
+
+.ani3-enter-to,
+.ani3-leave-from {
+    opacity: 1;
+    transform: translateX(0);
+    /* transform: rotate3d(0,0,0,0deg); */
+}
+
+.ani5-enter-active,
+.ani5-leave-active {
+    transition: all .6s !important;
+}
+
+.ani5-enter-from,
+.ani5-leave-to {
+    opacity: 0;
+}
+
+.ani5-enter-to,
+.ani5-leave-from {
+    opacity: 1;
+}
+
+.el-carousel__container {
+    height: 100% !important;
+}
+
+.el-carousel--horizontal {
+    overflow: hidden !important;
+}
+
+.el-carousel__indicators--horizontal {
+    bottom: -8px !important;
+}
+
+.el-carousel__indicator--horizontal {
+    margin: 0 4px !important;
+}
+
+.el-carousel__button {
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 4px;
+    background: #E6E6E6 !important;
+    opacity: 1 !important;
+}
+
+.el-carousel__indicators--horizontal>.is-active button {
+    background: #C7242F !important;
+    opacity: 0.6 !important;
+}
+
+.el-tabs__nav-wrap::after {
+    background: none !important;
+}
+
+.el-tabs__content {
+    overflow: visible !important;
+}
+
+.el-tabs__item {
+    font-size: 24px !important;
+    color: #2F2F2F !important;
+    margin-bottom: 5px !important;
+}
+
+.el-tabs__nav>.is-active {
+    color: #C7242F !important;
+}
+
+.el-tabs__active-bar {
+    height: 3px !important;
+    background-color: #C7242F !important;
+}
+
+.el-textarea__inner,
+.el-input__wrapper {
+    border-radius: 4px !important;
+    box-shadow: 0 0 0 2px #F4F3F3 !important;
+}
+
+.el-textarea__inner:hover,
+.el-input__wrapper:hover {
+    box-shadow: 0 0 0 2px rgba(199, 36, 47, 0.5) inset !important;
+}
+
+.el-textarea__inner:focus,
+.el-input__wrapper:focus-within {
+    box-shadow: 0 0 0 2px rgba(199, 36, 47, 1) inset !important;
+}
+
+.el-overlay {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.el-dialog {
+    display: flex;
+    display: -ms-flex;
+    flex-direction: column;
+    -ms-flex-direction: column;
+    margin: 0 !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: calc(100% - 30px);
+    max-width: calc(100% - 30px);
+    border-radius: 8px !important;
+}
+
+.el-dialog .el-dialog__body {
+    max-height: 100%;
+    flex: 1;
+    -ms-flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.large-select .el-input {
+    text-align: center;
+    width: 500px;
+    --el-input-height: 50px;
+    line-height: 160px !important;
+    font-size: 22px !important;
+}
+
+.large-select .el-input .el-input__inner {
+    text-align: center;
+}
+
+.el-table {
+    font-size: 17px !important;
+}
+
+.table-header {
+    background-color: #FFF8F9 !important;
+    font-weight: 400 !important;
+    font-size: 17px !important;
+    color: #2F2F2F !important;
+}
