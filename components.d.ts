@@ -7,6 +7,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AddExamDialogForkedFromLjc: typeof import('./src/components/lhw/addExamDialogForkedFromLjc.vue')['default']
     Breadcrumb: typeof import('./src/components/Breadcrumb.vue')['default']
+    BtnMagic: typeof import('./src/components/littleTool/BtnMagic.vue')['default']
     Carousel: typeof import('./src/components/Carousel.vue')['default']
     ColorBlock: typeof import('./src/components/ColorBlock.vue')['default']
     CourseTable: typeof import('./src/components/CourseTable.vue')['default']
@@ -29,6 +30,7 @@ declare module '@vue/runtime-core' {
     ImgText: typeof import('./src/components/ImgText.vue')['default']
     LectureItem: typeof import('./src/components/LectureItem.vue')['default']
     MainHeader: typeof import('./src/components/MainHeader.vue')['default']
+    NavHeader: typeof import('./src/components/NavHeader.vue')['default']
     Navtree: typeof import('./src/components/Navtree.vue')['default']
     NewsBoard: typeof import('./src/components/NewsBoard.vue')['default']
     PassCapsule: typeof import('./src/components/PassCapsule.vue')['default']

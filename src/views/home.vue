@@ -1,42 +1,37 @@
 <template>
-  <div class="main">
-    <Navtree class="nav" />
-    <div class="content">
-      <MainHeader />
-      <div id="screen" class="screen">
-        <router-view></router-view>
-      </div>
+    <div class="home">
+        <NavHeader></NavHeader>
+        <router-view class="router-view" />
     </div>
-  </div>
 </template>
+
 <script>
-import Navtree from "@/components/Navtree.vue";
-import MainHeader from "@/components/MainHeader.vue";
+import NavHeader from '@/components/NavHeader.vue'
+
 export default {
-  components: {
-    Navtree,
-    MainHeader,
-  },
-};
+    components:[
+        NavHeader
+    ],
+    data(){
+        return{
+
+        }
+    },
+    methods:{
+
+    },
+
+}
 </script>
+
+
 <style scoped>
-.main {
-  background-color: #fafafa;
-  display: grid;
-  grid-template-columns: 300px auto;
-  overflow-x: hidden;
+.home{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
-.nav {
-  z-index: 99;
-  min-height: 100vh;
-}
-.screen {
-  background-color: #fafafa;
-  overflow: overlay; /*auto*/
-  padding: 30px 100px;
-}
-.content {
-  display: grid;
-  grid-template-rows: 90px auto;
+.router-view{
+    flex: 1;
 }
 </style>

@@ -1,7 +1,7 @@
-@font-face {
+/* @font-face {
     font-family: "Noto Sans SC";
     src: url("../../assets/font/NotoSansSC-Regular.otf");
-}
+} */
 
 * {
     padding: 0;
@@ -14,11 +14,13 @@
 html {
     color: #505050;
     /* white-space: nowrap; */
+    --nav-height: 48px;
+    --nav-bgc: #1F1F1F;
 }
 
 body {
-    /* overflow: hidden; */
-    overflow: overlay;
+    overflow: hidden;
+    /* overflow: overlay; */
 }
 
 :root {
@@ -156,56 +158,7 @@ p {
     /* transform: rotate3d(0,0,0,0deg); */
 }
 
-.ani2-enter-active,
-.ani2-leave-active {
-    transition: all .24s !important;
-}
 
-.ani2-enter-from,
-.ani2-leave-to {
-    opacity: 0;
-    /* transform: rotate3d(0,0,1,60deg); */
-}
-
-.ani2-enter-to,
-.ani2-leave-from {
-    opacity: 1;
-    /* transform: rotate3d(0,0,0,0deg); */
-}
-
-.ani3-enter-active,
-.ani3-leave-active {
-    transition: all .3s;
-}
-
-.ani3-enter-from,
-.ani3-leave-to {
-    opacity: 0;
-    transform: translateX(100%);
-    /* transform: rotate3d(0,0,1,60deg); */
-}
-
-.ani3-enter-to,
-.ani3-leave-from {
-    opacity: 1;
-    transform: translateX(0);
-    /* transform: rotate3d(0,0,0,0deg); */
-}
-
-.ani5-enter-active,
-.ani5-leave-active {
-    transition: all .6s !important;
-}
-
-.ani5-enter-from,
-.ani5-leave-to {
-    opacity: 0;
-}
-
-.ani5-enter-to,
-.ani5-leave-from {
-    opacity: 1;
-}
 
 .el-carousel__container {
     height: 100% !important;
