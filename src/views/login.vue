@@ -1,13 +1,158 @@
 <template>
-    <div>
-        login
+    <div class="login">
+      <p class="title">登陆天外天</p>
+      <div class="content">
+        <!-- <p class="hint">欢迎回来，请登录您的账号</p> -->
+        <form>
+          <p class="tag">账户名</p>
+          <el-input v-model="account" placeholder="学号/昵称/手机号..." class="input">
+          </el-input>
+          <p class="tag">密码</p>
+          <el-input
+            v-model="password"
+            type="password"
+            show-password
+            placeholder="请输入您的密码"
+            class="input"
+            @keypress.enter="toLogin"
+          >
+          </el-input>
+        </form>
+        <Protocol class="proto" @check="ON=!ON" :ON="ON"></Protocol>
+        <el-button
+          auto-insert-space
+          class="loginBtn redBtn"
+          @click="toLogin"
+          :loading="loginLoading"
+          >登录</el-button
+        >
+      </div>
     </div>
-</template>
+  </template>
+  
+  <script>
+  import { getToken, setToken } from "@/utils/auth";
+//   import { login } from "@/api/login";
+  export default {
+    data() {
+      return {
+        ON: false,
+        account: "",
+        password: "",
+        loginLoading: false,
+      };
+    },
+    methods: {
+      toLogin() {
+        setToken('asdf');
+        this.$router.push(this.$route.query.from || "/");
+        return
 
-<script setup>
+        if (!this.account) {
+          ElMessage.warning("请输入您的用户名");
+          return;
+        }
+        if (!this.password) {
+          ElMessage.warning("请输入您的密码");
+          return;
+        }
+        if(!this.ON){
+            ElMessage.warning("请阅读并同意隐私政策");
+            return;
+        }
 
-</script>
-
-
-<style scoped>
-</style>
+        
+        this.loginLoading = true;
+        login({ account: this.account, pass: this.password })
+          .then(({ data: { code: code, msg: msg }, ...res }) => {
+            if (code === 0) {
+              ElMessage.success("登录成功");
+              setToken(res.headers["token"]);
+              this.loginLoading = false;
+              this.$router.push(this.$route.query.from || "/");
+            } else {
+              ElMessage.error(msg);
+              this.password = "";
+              this.loginLoading = false;
+            }
+          })
+          .catch(() => {
+            ElMessage.error("登录失败");
+            this.loginLoading = false;
+          });
+      },
+    },
+    created() {
+      if (getToken()) {
+        this.$router.push(this.$route.query.from || "/");
+      }
+    },
+  };
+  </script>
+  
+  <style scoped>
+  .login {
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+    position: relative;
+  }
+  .content {
+    padding: 0 20px;
+    width: 100%;
+    height: 334px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 -30px 20px rgba(255, 255, 255, 0.8);
+  }
+  
+    
+  .input {
+    height: 48px;
+    font-size: 12px;
+    margin-bottom: 20px;
+    width: 100%;
+    background: #FFFFFF;
+    /* Mid-shadow */
+    box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+  }
+  .icon {
+    width: 1em;
+    height: 1em;
+  }
+  .title {
+    color: #1F1F1F;
+    font-size: 32px;
+    font-weight: 600;
+    position: absolute;
+    top: 35px;
+    left: 20px;
+  }
+  .hint {
+    color: #9f9f9f;
+    font-size: 20px;
+    margin-bottom: 64px;
+  }
+  .tag {
+    color: #4E46B4;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    height: 28px;
+  }
+  .loginBtn {
+    width: 100%;
+    height: 48px !important;
+    border-radius: 6px;
+  }
+  .proto{
+    margin-bottom: 20px;
+    align-self: center;
+  }
+  </style>

@@ -7,7 +7,13 @@
                 <div v-if="ON" class="nav-mask">
                     <div class="container">
                         <transition-group name="navItem" appear>
-                            <div :style="{transitionDelay: (idx+1)*0.09+'s'}" @click="$router.push(i.path)" class="route-item" :key="idx" v-for="(i,idx) in routeList">
+                            <div 
+                                :style="{transitionDelay: (idx+1)*0.09+'s'}" 
+                                @click="navEvent(i)" 
+                                class="route-item" 
+                                :key="idx" 
+                                v-for="(i,idx) in routeList"
+                            >
                                 {{i.name}}
                             </div>
                         </transition-group>
@@ -20,6 +26,7 @@
 
 <script>
 import BtnMagic from '@/components/littleTool/BtnMagic.vue'
+import { removeToken } from "@/utils/auth";
 export default {
     components:[
         BtnMagic
@@ -33,7 +40,7 @@ export default {
                     path: '/'
                 },
                 {
-                    name: '个人中心',
+                    name: '我的投稿',
                     path: '/'
                 },
                 {
@@ -45,8 +52,11 @@ export default {
                     path: '/'
                 },
                 {
-                    name: '登陆天外天',
-                    path: '/'
+                    name: '退出登陆',
+                    event: ()=>{
+                        removeToken();
+                        this.$router.push("/login");
+                    }
                 },
             ]
         }
@@ -57,7 +67,13 @@ export default {
         }
     },
     methods:{
-
+        navEvent(i){
+            if(i.path){
+                this.$router.push(i.path)
+            }else if(i.event){
+                i.event();
+            }
+        }
     },
 
 }

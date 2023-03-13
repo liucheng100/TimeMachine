@@ -6,7 +6,7 @@
 * {
     padding: 0;
     margin: 0;
-    font-family: "Noto Sans SC";
+    font-family: "PingFang SC";
     /* font-family: "Noto Sans SC-Medium, Noto Sans SC"; */
     box-sizing: border-box;
 }
@@ -20,6 +20,7 @@ html {
 
 body {
     overflow: hidden;
+    background-color: #fff;
     /* overflow: overlay; */
 }
 
@@ -102,10 +103,11 @@ p {
 }
 
 .redBtn {
-    background-color: #C7242F !important;
+    font-size: 20px !important;
+    background-color: #4E46B4 !important;
     color: white !important;
-    --el-button-hover-border-color: #C7242F !important;
-    --el-button-hover-bg-color: #C7242F !important;
+    --el-button-hover-border-color: #4E46B4 !important;
+    --el-button-hover-bg-color: #4E46B4 !important;
 }
 
 .redBtn:focus,
@@ -116,8 +118,8 @@ p {
 }
 
 .el-button--primary {
-    --el-button-hover-bg-color: rgba(242, 64, 76, 0.6) !important;
-    --el-button-hover-border-color: rgba(242, 64, 76, 0.64) !important;
+    --el-button-hover-bg-color: #4E46B4 !important;
+    --el-button-hover-border-color: #4E46B4 !important;
 }
 
 .el-button:focus,
@@ -220,12 +222,12 @@ p {
 
 .el-textarea__inner:hover,
 .el-input__wrapper:hover {
-    box-shadow: 0 0 0 2px rgba(199, 36, 47, 0.5) inset !important;
+    box-shadow: 0 0 0 1px #4d46b455 inset !important;
 }
 
 .el-textarea__inner:focus,
 .el-input__wrapper:focus-within {
-    box-shadow: 0 0 0 2px rgba(199, 36, 47, 1) inset !important;
+    box-shadow: 0 0 0 1px #4E46B4 inset !important;
 }
 
 .el-overlay {

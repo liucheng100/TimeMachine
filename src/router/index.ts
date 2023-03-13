@@ -8,7 +8,7 @@ const routes = [
 		redirect: '/homepage',
 		meta: {
 			title: "首页",
-			requireAuth: false,
+			requireAuth: true,
 		},
 		children:[
 			{
@@ -16,7 +16,7 @@ const routes = [
 				component: () => import("@/views/homepage/homepage.vue"),
 				meta: {
 					title: "主页",
-					requireAuth: false,
+					requireAuth: true,
 				},
 			}
 		]
@@ -48,8 +48,8 @@ router.beforeEach(async (to, from, next) => {
 	} else {
 		window.document.title =
 			to.meta.title == undefined
-				? "天津大学学生党建平台管理端"
-				: `${to.meta.title} - 天津大学学生党建平台管理端`;
+				? "方寸流年"
+				: `${to.meta.title} - 方寸流年`;
 		next();
 	}
 });

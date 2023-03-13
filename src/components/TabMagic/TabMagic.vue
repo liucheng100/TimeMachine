@@ -1,0 +1,150 @@
+<template>
+    <div class="tab-magic">
+        <div class="tab-bar">
+            <div class="tab-block-1">
+                <div
+                 @click="activeIdx=idx;$emit(`tab${idx}Click`)"
+                 :class="{'tab-item':1,'tab-item-active':activeIdx==idx}"
+                 :key="idx"
+                 v-for="(title,idx) in title_list">
+                    {{ title }}
+                </div>
+            </div>
+            <div class="desc" :style="{
+                left : (activeIdx*(100/title_list.length))+'%',
+                marginLeft: `calc(50%/${title_list.length})`
+            }"></div>
+        </div>
+        <div ref="tab" :style="{height:tabHeight+'px'}" class="main-container">
+            <div ref="tab0" class="tab tab-0" :style="{transform: `translateX(${100*(-activeIdx)}%)`}"><slot name="tab0"></slot></div>
+            <div ref="tab1" class="tab tab-1" :style="{transform: `translateX(${100*(-activeIdx)}%)`}"><slot name="tab1"></slot></div>
+            <div ref="tab2" class="tab tab-2" :style="{transform: `translateX(${100*(-activeIdx)}%)`}"><slot name="tab2"></slot></div>
+        </div>
+    </div>
+</template>
+
+<script>
+import bus from '@/utils/mitt'
+export default {
+    name: 'TabMagic',
+    emits:['tab0Click','tab1Click','tab2Click'],
+    props:{
+        title_list:{
+            type: Array,
+            required: true,
+        },
+    },
+    data(){
+        return{
+            activeIdx: 0,
+            observer: null,
+            tabHeight: 100,
+        }
+    },
+    methods:{
+        refreshHeight(){
+            let rect = this.$refs['tab'+this.activeIdx].getBoundingClientRect();
+            // console.log(rect.height)
+            this.tabHeight = rect.height
+        }
+    },
+    mounted(){
+        bus.on('refreshHeight',this.refreshHeight)
+        setTimeout(() => {
+            this.refreshHeight()
+        }, 100);
+        let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
+        this.observer = new MutationObserver((mutationList)=>{
+            // for (let mutation of mutationList) {
+            //     console.log(mutation);
+            // }
+            let rect = this.$refs['tab'+this.activeIdx].getBoundingClientRect();
+            console.log(rect.height,this.title_list)
+            this.tabHeight = rect.height
+            setTimeout(()=>{
+                bus.emit('refreshHeight')
+            },180)
+        })
+        this.observer.observe(this.$refs.tab, { 
+            childList : true,
+            attributes: true,
+            subtree: true,
+         })
+
+    },
+    beforeUnmount(){
+        if (this.observer) {
+            this.observer.disconnect()
+            this.observer.takeRecords()
+            this.observer = null
+        }
+        // bus.all.clear();
+        bus.off('refreshHeight',this.refreshHeight)
+    }
+
+}
+</script>
+
+
+<style scoped>
+.tab-magic{
+    width: 100%;
+}
+.tab-bar{
+    display: flex;
+    flex-direction: column;
+    height: 48px;
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    z-index: 99;
+    position: sticky;
+    top: 0;
+}
+.tab-block-1{
+    height: 48px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.tab-item{
+    color: #999CA0;
+    font-size: 16px;
+    font-weight: 400;
+    transition: color 0.3s;
+    width: calc(100%/3);
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.tab-item-active{
+    color: #1F1F1F;
+    font-weight: 500;
+}
+.desc{
+
+    width: 20px;
+    height: 2px;
+    bottom: 7px;
+    /* margin-left: calc(100%/6); */
+    transform: translateX(-50%);
+    position: absolute;
+    border-radius: 1px;
+    background-color: #4E46B4;
+    transition: .4s;
+}
+.main-container{
+    overflow: hidden;
+    width: 100%;
+    min-height: 100px;
+    display: flex;
+    align-items: flex-start;
+    transition: height .3s;
+}
+.tab{
+    flex-shrink: 0;
+    width: 100vw;
+    transition: .3s;
+}
+</style>

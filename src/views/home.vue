@@ -33,5 +33,7 @@ export default {
 }
 .router-view{
     flex: 1;
+    overflow: auto;
+    overflow: overlay;
 }
 </style>
