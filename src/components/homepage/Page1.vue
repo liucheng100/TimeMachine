@@ -1,6 +1,11 @@
 <template>
     <div class="page1">
-        <div class="cover">
+        <ImgZoom
+        src="https://avatars.githubusercontent.com/u/6"
+        v-model:ON="zoomOn"
+        @update:ON="zoomOn=false"
+        ></ImgZoom>
+        <div class="cover" @click="zoomOn=true">
             <img class="inst" src="../../assets/alertCircle.svg" alt="">
         </div>
         <div class="title-1">
@@ -28,6 +33,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="cover" @click="zoomOn=true">
+                        <img class="inst" src="../../assets/alertCircle.svg" alt="">
+                    </div>
                 </div>
             </template>
             <template v-slot:tab1>
@@ -48,7 +56,7 @@
 export default {
     data(){
         return{
-            
+            zoomOn:false
         }
     },
     methods:{
@@ -65,7 +73,7 @@ export default {
 
 <style scoped>
 .page1{
-    
+    padding-top: 10px;
 }
 .cover{
     width: 100%;
@@ -99,7 +107,7 @@ export default {
     justify-content: space-between;
     height: 115px;
     margin-top: 20px;
-    margin-bottom: 120px;
+    margin-bottom: 20px;
 }
 .box-1-item{
     width: 23%;

@@ -15,10 +15,18 @@ const routes = [
 				path: "/homepage",
 				component: () => import("@/views/homepage/homepage.vue"),
 				meta: {
-					title: "主页",
+					title: "首页",
 					requireAuth: true,
 				},
-			}
+			},
+			{
+				path: "/submit",
+				component: () => import("@/views/homepage/submit.vue"),
+				meta: {
+					title: "投稿",
+					requireAuth: true,
+				},
+			},
 		]
 	},
 	{

@@ -33,6 +33,10 @@ export default {
             type: Array,
             required: true,
         },
+        id:{
+            type: Number,
+            default: 0
+        }
     },
     data(){
         return{
@@ -46,6 +50,11 @@ export default {
             let rect = this.$refs['tab'+this.activeIdx].getBoundingClientRect();
             // console.log(rect.height)
             this.tabHeight = rect.height
+        }
+    },
+    watch:{
+        activeIdx(to){
+            bus.emit('need-tab-idx', [to, this.id])
         }
     },
     mounted(){

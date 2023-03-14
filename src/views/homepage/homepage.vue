@@ -1,5 +1,5 @@
 <template>
-    <div class="homepage">
+    <div class="homepage" @scroll="scroll">
         <div class="banner">
             <img class="banner-img" src="../../assets/warnCircle.svg" alt="">
             <div class="banner-tip">还有24天截稿</div>
@@ -10,10 +10,12 @@
                 <div class="info-tip">第十三届方寸·流年摄影大赛</div>
             </div>
             <SeasonBtn
+                @click.native="!seasonState?ON=true:0"
                 :state="seasonState"
             ></SeasonBtn>
         </div>
         <TabMagic 
+            :id="1"
             :title_list="['赛事介绍','全部作品','获奖作品']"
             @tab0Click="seasonState=0"
             @tab1Click="seasonState=1"
@@ -26,7 +28,9 @@
             </template>
             <template v-slot:tab1>
                 <div class="tab-1">
-                    tab1
+                    <Page2
+                        :loadMore="byEnd"
+                    ></Page2>
                 </div>
             </template>
             <template v-slot:tab2>
@@ -38,12 +42,12 @@
         <Pop
             :ON="ON"
             :model="0"
-            title="确认要删除吗?"
-            tip="此操作无法被撤销。"
-            :options="{black:'删除',grey:0,blue:'取消'}"
-            @blackClick="click1"
-            @greyClick="click1"
-            @blueClick="click1"
+            title="我们更推荐在PC端投稿作品"
+            tip="以避免在手机上找不到文件。"
+            :options="{black:'',grey:'坚持投稿',blue:'好的'}"
+            @blackClick="0"
+            @greyClick="$router.push('/submit')"
+            @blueClick="ON=false"
         >
         </Pop>
     </div>
@@ -51,15 +55,17 @@
 
 <script>
 import Page1 from '@/components/homepage/Page1.vue'
+import Page2 from '@/components/homepage/Page2.vue'
 export default {
     components:[
-        Page1
+        Page1,Page2
     ],
     data(){
         return{
             testList:[],
             ON:false,
-            seasonState:0
+            seasonState:0,
+            byEnd: false,
         }
     },
     methods:{
@@ -68,6 +74,18 @@ export default {
         },
         click2(){
             console.log(9)
+        },
+        scroll(e){
+            // console.log(e)
+            let a = e.target.scrollTop
+            let b = e.target.offsetHeight
+            let c = e.target.scrollHeight
+            let d = c - b - a
+            if(d<50){
+                this.byEnd = true
+            }else{
+                this.byEnd = false
+            }
         }
     },
     mounted(){
@@ -145,8 +163,8 @@ export default {
     /* background-color: red; */
 }
 .tab-1{
-    height: 1000px;
-    background-color: green;
+    /* height: 1000px; */
+    /* background-color: green; */
 }
 .tab-2{
     height: 10000px;

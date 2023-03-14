@@ -8,11 +8,13 @@ import TabMagic from '@/components/TabMagic/TabMagic.vue'
 import Pop from '@/components/Pop/Pop.vue'
 import Protocol from '@/components/littleTool/Protocol.vue'
 import SeasonBtn from '@/components/SeasonBtn.vue'
+import ImgZoom from '@/components/ImgZoom/ImgZoom.vue'
 const components = [
   TabMagic,
   Pop,
   Protocol,
-  SeasonBtn
+  SeasonBtn,
+  ImgZoom
 ]
 const app = createApp(App)
 
