@@ -55,7 +55,10 @@
                 </template>
             </TabMagic>
         </div>
-        <div class="refresh-competition"></div>
+        <div class="text-input">
+            <p class="title">更新赛事信息</p>
+            <input type="text" placeholder="请输入密码" class="input-content"/>
+        </div>
         <button class="submit">提交</button>
     </div>
 </template>
@@ -87,6 +90,7 @@ export default {
 <style scoped>
 .new-competition{
     background:#E5E5E540;
+    width:100%;
 }
 .submit-main-picture{
     display:flex;
@@ -134,5 +138,15 @@ export default {
 }
 .intro{
     margin:2vh;
+}
+.submit{
+    margin:5%;
+    height:6vh;
+    width:90%;
+    border-radius: .8vh;
+    background:#4E46B4;
+    color:white;
+    font-size:2.5vh;
+    border:0;
 }
 </style>

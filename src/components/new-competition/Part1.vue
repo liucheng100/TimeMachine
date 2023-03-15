@@ -1,10 +1,11 @@
 <template>
     <div class="prize-setting">
         <div class="prize-showing">
-            <div v-for="item in members" :key="members.prize_name">
+            <div v-for="item in members" :key="members.prize_name" class="prize-child">
                 <div class="out-square">
-                    
                 </div>
+                <p class="prize-name">{{item.prize_name}}</p>
+                <p class="prize-member">{{item.medal_name}}/{{ item.medal_member }}名</p>
             </div>
         </div>
         <div class="submit-main-picture">
@@ -75,5 +76,28 @@ export default{
 .detail{
     color:#999CA0;
     font-size:.6vh;
+}
+.prize-showing{
+    display: flex;
+    justify-content: space-around;
+}
+.out-square{
+    height:7vh;
+    width:7vh;
+    background:#D9D9D9;
+    border:white .5vh solid;
+    border-radius: 50%;
+}
+.prize-child{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+.prize-name{
+    color:black;
+    font-size:1.7vh;
+}
+.prize-member{
+    font-size:1.3vh;
 }
 </style>
