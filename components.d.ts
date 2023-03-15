@@ -17,17 +17,11 @@ declare module '@vue/runtime-core' {
     Page2: typeof import('./src/components/homepage/Page2.vue')['default']
     Page3: typeof import('./src/components/homepage/Page3.vue')['default']
     Part1: typeof import('./src/components/new-competition/Part1.vue')['default']
-    Part2: typeof import('./src/components/new-competition/Part2.vue')['default']
-    Part3: typeof import('./src/components/new-competition/Part3.vue')['default']
     Pop: typeof import('./src/components/Pop/Pop.vue')['default']
     Protocol: typeof import('./src/components/littleTool/Protocol.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SeasonBtn: typeof import('./src/components/SeasonBtn.vue')['default']
-    State1: typeof import('./src/components/new-competition/State1.vue')['default']
-    State2: typeof import('./src/components/new-competition/State2.vue')['default']
-    State3: typeof import('./src/components/new-competition/State3.vue')['default']
-    Stoped: typeof import('./src/components/new-competition/Stoped.vue')['default']
     TabMagic: typeof import('./src/components/TabMagic/TabMagic.vue')['default']
   }
 }

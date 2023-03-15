@@ -33,8 +33,8 @@
         <p class="title intro">赛事介绍</p>
         <div class="submit-main-picture">
             <img src="@/assets/folderPlus.svg" class="submit-picture"/>
-            <p class="submit">上传主图</p>
-            <p class="detail">16:9比例，建议为1920*1080</p>
+            <p class="title">上传长图</p>
+            <p class="detail">请在奖项设置前切图</p>
         </div>
         <div class="medal-setting">
             <TabMagic 
@@ -45,19 +45,13 @@
             @tab2Click="state_part=2"
             >
                 <template v-slot:tab0>
-                    
-                        <Part1></Part1>
-                    
+                    <Part1 :part="'单反组'"></Part1>
                 </template>
                 <template v-slot:tab1>
-                    
-                        <Part2></Part2>
-                    
+                    <Part1 :part="'随手拍组'"></Part1>               
                 </template>
                 <template v-slot:tab2>
-                    
-                        <Part3></Part3>
-                    
+                    <Part1 :part="'短视频组'"></Part1>  
                 </template>
             </TabMagic>
         </div>
