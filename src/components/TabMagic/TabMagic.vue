@@ -1,6 +1,6 @@
 <template>
     <div class="tab-magic">
-        <div class="tab-bar">
+        <div class="tab-bar" :style="{background:backColor}">
             <div class="tab-block-1">
                 <div
                  @click="activeIdx=idx;$emit(`tab${idx}Click`)"
@@ -36,6 +36,10 @@ export default {
         id:{
             type: Number,
             default: 0
+        },
+        backColor:{
+            type:String,
+            default:"auto"
         }
     },
     data(){
@@ -105,7 +109,7 @@ export default {
     height: 48px;
     width: 100%;
     position: relative;
-    background-color: #fff;
+    background-color: auto;
     z-index: 99;
     position: sticky;
     top: 0;
@@ -146,7 +150,6 @@ export default {
 .main-container{
     overflow: hidden;
     width: 100%;
-    min-height: 100px;
     display: flex;
     align-items: flex-start;
     transition: height .3s;
