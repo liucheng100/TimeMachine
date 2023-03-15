@@ -27,6 +27,14 @@ const routes = [
 					requireAuth: true,
 				},
 			},
+			{
+				path:"/new-competition",
+				component: () => import("@/views/homepage/new-competition.vue"),
+				meta: {
+					title: "新比赛",
+					requireAuth: true
+				}
+			}
 		]
 	},
 	{
@@ -36,7 +44,7 @@ const routes = [
 			title: "登录",
 			requireAuth: false,
 		},
-	},
+	}
 ];
 
 const router = createRouter({
