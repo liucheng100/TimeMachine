@@ -24,6 +24,7 @@
             </div>
             <TabMagic 
             :id="2"
+            backColor="transparent"
             :title_list="['评审中','已结束','其他状态']"
             @tab0Click="state_id=0"
             @tab1Click="state_id=1"
@@ -39,6 +40,7 @@
         <div class="medal-setting">
             <TabMagic 
             :id="3"
+            backColor="transparent"
             :title_list="['单反组','随手拍组','短视频组']"
             @tab0Click="state_part=0"
             @tab1Click="state_part=1"

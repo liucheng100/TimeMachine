@@ -39,7 +39,7 @@ export default {
         },
         backColor:{
             type:String,
-            default:"auto"
+            default:"#fff"
         }
     },
     data(){
@@ -109,7 +109,7 @@ export default {
     height: 48px;
     width: 100%;
     position: relative;
-    background-color: auto;
+    background-color: #fff;
     z-index: 99;
     position: sticky;
     top: 0;
