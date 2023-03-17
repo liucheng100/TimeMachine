@@ -24,8 +24,15 @@
           class="loginBtn redBtn"
           @click="toLogin"
           :loading="loginLoading"
-          >登录</el-button
-        >
+        >登录</el-button>
+          
+        <el-button
+          v-if="1"
+          auto-insert-space
+          class="loginBtn redBtn"
+          @click="toLogin('admin')"
+          :loading="loginLoading"
+        >测试按钮: 以管理者身份进入</el-button>
       </div>
     </div>
   </template>
@@ -43,8 +50,12 @@
       };
     },
     methods: {
-      toLogin() {
+      toLogin(op) {
         setToken('asdf');
+        if(op=='admin'){
+          this.$router.push("/admin");
+          return;
+        }
         this.$router.push(this.$route.query.from || "/");
         return
 
@@ -150,6 +161,9 @@
     width: 100%;
     height: 48px !important;
     border-radius: 6px;
+    margin: 0;
+    margin-bottom: 10px;
+    flex-shrink: 0;
   }
   .proto{
     margin-bottom: 20px;
