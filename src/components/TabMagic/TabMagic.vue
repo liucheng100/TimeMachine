@@ -1,6 +1,11 @@
 <template>
     <div class="tab-magic">
-        <div class="tab-bar" :style="{background:backColor}">
+        <div class="tab-bar" :style="{
+            background:backColor,
+            position: sticky?'sticky':'',
+            top: sticky || '',
+
+        }">
             <div class="tab-block-1">
                 <div
                  @click="activeIdx=idx;$emit(`tab${idx}Click`)"
@@ -40,7 +45,11 @@ export default {
         backColor:{
             type:String,
             default:"#fff"
-        }
+        },
+        sticky:{
+            type:[String],
+            default: '',
+        },
     },
     data(){
         return{
@@ -111,8 +120,8 @@ export default {
     position: relative;
     background-color: #fff;
     z-index: 99;
-    position: sticky;
-    top: 0;
+    /* position: sticky; */
+    /* top: 0; */
 }
 .tab-block-1{
     height: 48px;

@@ -55,6 +55,9 @@ export default {
     display: flex;
     align-items: center;
 }
+.text div{
+    flex-shrink: 0;
+}
 .a{
     color: rgba(78, 70, 180, 1);
 }

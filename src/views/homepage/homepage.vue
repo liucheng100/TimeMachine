@@ -16,6 +16,7 @@
         </div>
         <TabMagic 
             :id="1"
+            sticky="0"
             :title_list="['赛事介绍','全部作品','获奖作品']"
             @tab0Click="seasonState=0"
             @tab1Click="seasonState=1"

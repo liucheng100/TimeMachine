@@ -27,14 +27,25 @@ const routes = [
 					requireAuth: true,
 				},
 			},
+		]
+	},
+	{
+		path:"/admin",
+		component: () => import("@/views/admin.vue"),
+		redirect: '/admin/new-competition',
+		meta: {
+			title: "管理端",
+			requireAuth: true
+		},
+		children:[
 			{
-				path:"/new-competition",
-				component: () => import("@/views/homepage/new-competition.vue"),
+				path:"/admin/new-competition",
+				component: () => import("@/views/admin/new-competition.vue"),
 				meta: {
 					title: "新比赛",
 					requireAuth: true
 				}
-			}
+			},
 		]
 	},
 	{
@@ -54,6 +65,7 @@ const router = createRouter({
 });
 router.beforeEach(async (to, from, next) => {
 	let token = getToken();
+	// 该部分权限管理重写
 	if (to.meta.requireAuth && !token) {
 		next({
 			path: "/login",
