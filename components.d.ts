@@ -6,6 +6,7 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BtnMagic: typeof import('./src/components/littleTool/BtnMagic.vue')['default']
+    Card: typeof import('./src/components/Card/Card.vue')['default']
     CardMini: typeof import('./src/components/Card/CardMini.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
