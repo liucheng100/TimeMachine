@@ -14,7 +14,7 @@ declare module '@vue/runtime-core' {
     Page1: typeof import('./src/components/homepage/Page1.vue')['default']
     Page2: typeof import('./src/components/homepage/Page2.vue')['default']
     Page3: typeof import('./src/components/homepage/Page3.vue')['default']
-    Part1: typeof import('./src/components/new-competition/Part1.vue')['default']
+    PartPrize: typeof import('./src/components/new-competition/PartPrize.vue')['default']
     Pop: typeof import('./src/components/Pop/Pop.vue')['default']
     Protocol: typeof import('./src/components/littleTool/Protocol.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
