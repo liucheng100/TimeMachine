@@ -33,22 +33,46 @@
                             </div>
                         </div>
                     </div>
-                    <div class="cover" @click="zoomOn=true">
-                        <img class="inst" src="../../assets/alertCircle.svg" alt="">
-                    </div>
                 </div>
             </template>
             <template v-slot:tab1>
                 <div>
-                    随手拍拍
+                    <div class="box-1">
+                        <div class="box-1-item" v-for="i in 4">
+                            <div class="box-1-avatar">
+                                
+                            </div>
+                            <div class="box-1-name">
+                                DJI Pocket 2
+                            </div>
+                            <div class="box-1-tip">
+                                一等奖/1名
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </template>
             <template v-slot:tab2>
                 <div>
-                    短视频组
+                    <div class="box-1">
+                        <div class="box-1-item" v-for="i in 4">
+                            <div class="box-1-avatar">
+                                
+                            </div>
+                            <div class="box-1-name">
+                                DJI Pocket 2
+                            </div>
+                            <div class="box-1-tip">
+                                一等奖/1名
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </template>
         </TabMagic>
+        <div class="cover" @click="zoomOn=true">
+            <img class="inst" src="../../assets/alertCircle.svg" alt="">
+        </div>
     </div>
 </template>
 

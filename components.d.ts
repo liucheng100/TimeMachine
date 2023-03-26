@@ -6,15 +6,22 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BtnMagic: typeof import('./src/components/littleTool/BtnMagic.vue')['default']
+    Card: typeof import('./src/components/Card/Card.vue')['default']
     CardMini: typeof import('./src/components/Card/CardMini.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElInput: typeof import('element-plus/es')['ElInput']
     ImgZoom: typeof import('./src/components/ImgZoom/ImgZoom.vue')['default']
     NavHeader: typeof import('./src/components/NavHeader.vue')['default']
+    NavHeader_admin: typeof import('./src/components/NavHeader_admin.vue')['default']
     Page1: typeof import('./src/components/homepage/Page1.vue')['default']
     Page2: typeof import('./src/components/homepage/Page2.vue')['default']
     Page3: typeof import('./src/components/homepage/Page3.vue')['default']
+<<<<<<< HEAD
     PartPrize: typeof import('./src/components/new-competition/PartPrize.vue')['default']
+=======
+    Part1: typeof import('./src/components/admin/new-competition/Part1.vue')['default']
+>>>>>>> 95ecc966f48f3e9f6a243226158bfa1749e5661c
     Pop: typeof import('./src/components/Pop/Pop.vue')['default']
     Protocol: typeof import('./src/components/littleTool/Protocol.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

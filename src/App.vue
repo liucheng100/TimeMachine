@@ -12,9 +12,29 @@
   </div>
 </template>
 
-<script setup>
+<script>
+import pubuse from '@/utils/pub-use'
 import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
+export default {
+    data(){
+        return{
+          cacheArray:[
+            'seasonBtn/0.svg',
+            'seasonBtn/1.svg',
+            'seasonBtn/2.svg',
+            'seasonBtn/3.svg',
+          ]
+        }
+    },
+    mounted(){
+      for(let i of this.cacheArray){
+        let img = document.createElement('img')
+        img.src = pubuse(i)
+      }
+    }
+
+}
 </script>
 
 

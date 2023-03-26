@@ -36,7 +36,7 @@
                     <el-input v-model="artName" placeholder="输入作品题目..." class="art-name-input">
                     </el-input>
                     <p class="art-name">作品介绍</p>
-                    <el-input type="textarea" resize="none" v-model="artIntro" :rows="5" placeholder="输入作品介绍..." class="art-name-textarea">
+                    <el-input type="textarea" :autosize="{minRows:4,maxRows:20}" resize="none" v-model="artIntro" :rows="5" placeholder="输入作品介绍..." class="art-name-textarea">
                     </el-input>
                 </div>
             </template>
@@ -120,13 +120,14 @@ export default {
 
 <style scoped>
 .submit{
-    padding: 30px 0px;
+    /* padding: 30px 0px; */
 }
 .title{
     font-weight: 600;
     font-size: 32px;
     color: rgba(31, 31, 31, 1);
     margin-bottom: 17px;
+    margin-top: 30px;
     padding: 0 20px;
 }
 .dad-upload{
