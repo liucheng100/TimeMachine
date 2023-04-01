@@ -11,8 +11,8 @@
             </div>
             <SeasonBtn @click.native="!seasonState?ON=true:0" :state="seasonState"></SeasonBtn>
         </div>
-        <TabMagic :id="1" sticky="0" :title_list="['赛事介绍','全部作品','获奖作品','AI']" @tab0Click="seasonState=0"
-            @tab1Click="seasonState=1" @tab2Click="seasonState=2" @tab3Click="seasonState=2">
+        <TabMagic :id="1" sticky="0" :title_list="['赛事介绍','全部作品','获奖作品']" @tab0Click="seasonState=0"
+            @tab1Click="seasonState=1" @tab2Click="seasonState=2">
             <template v-slot:tab0>
                 <div class="tab-0">
                     <Page1></Page1>
@@ -25,11 +25,6 @@
             </template>
             <template v-slot:tab2>
                 <div class="tab-2">
-                    <Page3></Page3>
-                </div>
-            </template>
-            <template v-slot:tab3>
-                <div class="tab-3">
                     <Page3></Page3>
                 </div>
             </template>
@@ -46,7 +41,7 @@
     import Page3 from '@/components/homepage/Page3.vue'
     export default {
         components: [
-            Page1, Page2,Page3
+            Page1, Page2, Page3
         ],
         data() {
             return {
