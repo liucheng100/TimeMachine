@@ -238,5 +238,7 @@
         justify-content: space-between;
         flex-wrap: wrap;
         background-color: #fff;
+        margin-bottom: 100px;
+
     }
 </style>
