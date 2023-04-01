@@ -19,6 +19,7 @@ import zhCn from "element-plus/lib/locale/lang/zh-cn";
 export default {
     data(){
         return{
+          zhCn: zhCn,
           cacheArray:[
             'seasonBtn/0.svg',
             'seasonBtn/1.svg',

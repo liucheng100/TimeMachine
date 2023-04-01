@@ -14,7 +14,7 @@
 <script>
 export default {
     name: 'ImgZoom',
-    emits:['ON'],
+    emits:['update:ON'],
     props:{
         ON:{
             type: Boolean,

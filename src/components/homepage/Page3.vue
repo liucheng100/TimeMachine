@@ -80,6 +80,7 @@
     export default {
         data() {
             return {
+                zoomOn: false,
                 prize1List: [],
                 prize1List_df: [
                     { title: '一等奖1', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
