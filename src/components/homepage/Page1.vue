@@ -13,10 +13,11 @@
             <div class="title-1-right">*点击图片可查看奖品详情</div>
         </div>
         <TabMagic 
-            :title_list="['单反组','随手拍拍','短视频组']"
+            :title_list="['单反组','随手拍拍','短视频组','AI组']"
             @tab0Click="1"
             @tab1Click="1"
             @tab2Click="1"
+            @tab3Click="1"
         >
             <template v-slot:tab0>
                 <div>
@@ -69,6 +70,24 @@
                     </div>
                 </div>
             </template>
+            <template v-slot:tab3>
+                <div>
+                    <div class="box-1">
+                        <div class="box-1-item" v-for="i in 4">
+                            <div class="box-1-avatar">
+                                
+                            </div>
+                            <div class="box-1-name">
+                                DJI Pocket 2
+                            </div>
+                            <div class="box-1-tip">
+                                一等奖/1名
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            
         </TabMagic>
         <div class="cover" @click="zoomOn=true">
             <img class="inst" src="../../assets/alertCircle.svg" alt="">

@@ -28,9 +28,6 @@
             <div ref="tab2" class="tab tab-2" :style="{transform: `translateX(${100*(-activeIdx)}%)`}">
                 <slot name="tab2"></slot>
             </div>
-            <div ref="tab3" class="tab tab-3" :style="{transform: `translateX(${100*(-activeIdx)}%)`}">
-                <slot name="tab3"></slot>
-            </div>
         </div>
     </div>
 </template>
@@ -39,7 +36,7 @@
     import bus from '@/utils/mitt'
     export default {
         name: 'TabMagic',
-        emits: ['tab0Click', 'tab1Click', 'tab2Click', 'tab3Click'],
+        emits: ['tab0Click', 'tab1Click', 'tab2Click'],
         props: {
             title_list: {
                 type: Array,
@@ -130,8 +127,6 @@
         z-index: 99;
         /* position: sticky; */
         /* top: 0; */
-        border-left: solid 5px transparent;
-        border-right: solid 5px transparent;
     }
 
     .tab-block-1 {
@@ -147,8 +142,7 @@
         font-size: 16px;
         font-weight: 400;
         transition: color 0.3s;
-        min-width: calc(100%/5);
-        /* background-color: red; */
+        width: calc(100%/3);
         display: flex;
         align-items: center;
         justify-content: center;
