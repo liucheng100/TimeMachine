@@ -41,7 +41,7 @@
     import Page3 from '@/components/homepage/Page3.vue'
     export default {
         components: [
-            Page1, Page2
+            Page1, Page2, Page3
         ],
         data() {
             return {

@@ -7,8 +7,8 @@
                 <div class="prize_font">一等奖</div>
             </div>
         </div>
-        <TabMagic :id="1" sticky="0" :title_list="['单反组','随手拍组','短视频组']" @tab0Click="setPrize1State(0)"
-            @tab1Click="setPrize1State(1)" @tab2Click="setPrize1State(2)">
+        <TabMagic :id="1" sticky="0" :title_list="['单反组','随手拍组','短视频组','AI组']" @tab0Click="setPrize1State(0)"
+            @tab1Click="setPrize1State(1)" @tab2Click="setPrize1State(2)" @tab3Click="setPrize1State(3)">
             <template v-slot:tab0>
                 <card v-for="i in prize1List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
                 </card>
@@ -18,6 +18,10 @@
                 </card>
             </template>
             <template v-slot:tab2>
+                <card v-for="i in prize1List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
+                </card>
+            </template>
+            <template v-slot:tab3>
                 <card v-for="i in prize1List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
                 </card>
             </template>
@@ -27,8 +31,8 @@
                 <div class="prize_font">二等奖</div>
             </div>
         </div>
-        <TabMagic :id="2" sticky="0" :title_list="['单反组','随手拍组','短视频组']" @tab0Click="setPrize2State(0)"
-            @tab1Click="setPrize2State(1)" @tab2Click="setPrize2State(2)">
+        <TabMagic :id="2" sticky="0" :title_list="['单反组','随手拍组','短视频组','AI组']" @tab0Click="setPrize2State(0)"
+            @tab1Click="setPrize2State(1)" @tab2Click="setPrize2State(2)" @tab3Click="setPrize2State(3)">
             <template v-slot:tab0>
                 <card v-for="i in prize2List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
                 </card>
@@ -41,14 +45,18 @@
                 <card v-for="i in prize2List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
                 </card>
             </template>
+            <template v-slot:tab3>
+                <card v-for="i in prize2List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
+                </card>
+            </template>
         </TabMagic>
         <div class="prize_out">
             <div class="prize">
                 <div class="prize_font">三等奖</div>
             </div>
         </div>
-        <TabMagic :id="3" sticky="0" :title_list="['单反组','随手拍组','短视频组']" @tab0Click="setPrize3State(0)"
-            @tab1Click="setPrize3State(1)" @tab2Click="setPrize3State(2)">
+        <TabMagic :id="3" sticky="0" :title_list="['单反组','随手拍组','短视频组','AI组']" @tab0Click="setPrize3State(0)"
+            @tab1Click="setPrize3State(1)" @tab2Click="setPrize3State(2)" @tab3Click="setPrize3State(3)">
             <template v-slot:tab0>
                 <div class="prize3_card">
                     <cardMini v-for="i in prize3List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
@@ -65,6 +73,13 @@
                 </div>
             </template>
             <template v-slot:tab2>
+                <div class="prize3_card">
+                    <cardMini v-for="i in prize3List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
+                        :cover=i.cover>
+                    </cardMini>
+                </div>
+            </template>
+            <template v-slot:tab3>
                 <div class="prize3_card">
                     <cardMini v-for="i in prize3List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
                         :cover=i.cover>
@@ -80,6 +95,7 @@
     export default {
         data() {
             return {
+                zoomOn: false,
                 prize1List: [],
                 prize1List_df: [
                     { title: '一等奖1', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
@@ -102,6 +118,13 @@
                     { title: '一等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
                     { title: '一等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
                 ],
+                prize1List_ai: [
+                    { title: '一等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '一等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '一等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '一等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '一等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                ],
                 prize2List: [],
                 prize2List_df: [
                     { title: '二等奖1', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
@@ -118,6 +141,13 @@
                     { title: '二等奖2', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
                 ],
                 prize2List_dsp: [
+                    { title: '二等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '二等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '二等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '二等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '二等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                ],
+                prize2List_ai: [
                     { title: '二等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
                     { title: '二等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
                     { title: '二等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
@@ -161,6 +191,18 @@
                     { title: '三等奖1', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
                     { title: '三等奖1', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
                 ],
+                prize3List_ai: [
+                    { title: '三等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '三等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '三等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '三等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '三等奖3', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '三等奖1', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '三等奖1', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '三等奖1', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '三等奖1', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                    { title: '三等奖1', auth: '城市作画', avatar: '', hot: '1071', cover: '', },
+                ],
             }
         },
         methods: {
@@ -171,6 +213,8 @@
                     this.prize1List = this.prize1List_ssp
                 } else if (i === 2) {
                     this.prize1List = this.prize1List_dsp
+                } else if (i === 3) {
+                    this.prize1List = this.prize1List_ai
                 }
             },
             setPrize2State(i) {
@@ -180,6 +224,8 @@
                     this.prize2List = this.prize2List_ssp
                 } else if (i === 2) {
                     this.prize2List = this.prize2List_dsp
+                } else if (i === 2) {
+                    this.prize2List = this.prize2List_ai
                 }
             },
             setPrize3State(i) {
@@ -189,6 +235,8 @@
                     this.prize3List = this.prize3List_ssp
                 } else if (i === 2) {
                     this.prize3List = this.prize3List_dsp
+                } else if (i === 2) {
+                    this.prize3List = this.prize3List_ai
                 }
             }
 
@@ -238,5 +286,7 @@
         justify-content: space-between;
         flex-wrap: wrap;
         background-color: #fff;
+        margin-bottom: 100px;
+
     }
 </style>
