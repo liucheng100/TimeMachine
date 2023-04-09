@@ -55,6 +55,20 @@ const routes = [
 			title: "登录",
 			requireAuth: false,
 		},
+	},
+	{
+		path:"/PC",
+		component:() => import("@/views/homepagePC.vue"),
+		meta: {
+			title:"首页",
+			requireAuth:true
+		},
+		children:[
+			{
+				path:"/PC/homepage",
+				component:() => import("@/views/homepagePC/homepage.vue")
+			}
+		]
 	}
 ];
 

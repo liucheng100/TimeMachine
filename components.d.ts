@@ -5,6 +5,7 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Advertise: typeof import('./src/components/bottom/Advertise.vue')['default']
     BtnMagic: typeof import('./src/components/littleTool/BtnMagic.vue')['default']
     Card: typeof import('./src/components/Card/Card.vue')['default']
     CardMini: typeof import('./src/components/Card/CardMini.vue')['default']
@@ -14,10 +15,12 @@ declare module '@vue/runtime-core' {
     ImgZoom: typeof import('./src/components/ImgZoom/ImgZoom.vue')['default']
     NavHeader: typeof import('./src/components/NavHeader.vue')['default']
     NavHeader_admin: typeof import('./src/components/NavHeader_admin.vue')['default']
+    NavHeader_PC: typeof import('./src/components/NavHeader_PC.vue')['default']
     Page1: typeof import('./src/components/homepage/Page1.vue')['default']
     Page2: typeof import('./src/components/homepage/Page2.vue')['default']
     Page3: typeof import('./src/components/homepage/Page3.vue')['default']
     Part1: typeof import('./src/components/admin/new-competition/Part1.vue')['default']
+    PartPrize: typeof import('./src/components/admin/new-competition/PartPrize.vue')['default']
     Pop: typeof import('./src/components/Pop/Pop.vue')['default']
     Protocol: typeof import('./src/components/littleTool/Protocol.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
