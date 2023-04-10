@@ -31,16 +31,20 @@
                 ON: false,
                 routeList: [
                     {
-                        name: '赛事管理',
+                        name: '回到主页',
+                        path: '/admin/homepage'
+                    },
+                    {
+                        name: '管理赛事',
                         path: '/admin/management'
                     },
                     {
-                        name: '审核投稿',
-                        path: ''
+                        name: '所有作品',
+                        path: '/admin/all'
                     },
                     {
-                        name: '作品评分',
-                        path: ''
+                        name: '回收站',
+                        path: '/admin/recycled'
                     },
                     {
                         name: '退出登陆',

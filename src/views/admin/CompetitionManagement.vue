@@ -1,5 +1,6 @@
 <template>
     <div class="management">
+        管理赛事
     </div>
 </template>
 

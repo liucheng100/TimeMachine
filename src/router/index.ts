@@ -50,7 +50,7 @@ const routes = [
 				path:"/admin/management",
 				component: () => import("@/views/admin/CompetitionManagement.vue"),
 				meta: {
-					title: "赛事管理",
+					title: "管理赛事",
 					requireAuth: true
 				}
 			},
@@ -63,18 +63,18 @@ const routes = [
 				}
 			},
 			{
-				path:"/admin/review",
-				component: () => import("@/views/admin/SubmissionReview.vue"),
+				path:"/admin/all",
+				component: () => import("@/views/admin/AllWork.vue"),
 				meta: {
-					title: "审核投稿",
+					title: "所有作品",
 					requireAuth: true
 				}
 			},
 			{
-				path:"/admin/grade",
-				component: () => import("@/views/admin/WorkGrade.vue"),
+				path:"/admin/recycled",
+				component: () => import("@/views/admin/RecycleBin.vue"),
 				meta: {
-					title: "作品评分",
+					title: "回收站",
 					requireAuth: true
 				}
 			},

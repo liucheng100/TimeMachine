@@ -1,11 +1,12 @@
 <template>
     <div class="grade">
+        回收站
     </div>
 </template>
 
 <script>
     export default {
-        name: "WorkGrade",
+        name: "RecycleBin",
         props: {
         },
         data() {
