@@ -32,17 +32,49 @@ const routes = [
 	{
 		path:"/admin",
 		component: () => import("@/views/admin.vue"),
-		redirect: '/admin/new-competition',
+		redirect: '/admin/homepage',
 		meta: {
 			title: "管理端",
 			requireAuth: true
 		},
 		children:[
 			{
+				path:"/admin/homepage",
+				component: () => import("@/views/admin/AdminHomepage.vue"),
+				meta: {
+					title: "首页",
+					requireAuth: true
+				}
+			},
+			{
+				path:"/admin/management",
+				component: () => import("@/views/admin/CompetitionManagement.vue"),
+				meta: {
+					title: "赛事管理",
+					requireAuth: true
+				}
+			},
+			{
 				path:"/admin/new-competition",
 				component: () => import("@/views/admin/new-competition.vue"),
 				meta: {
 					title: "新比赛",
+					requireAuth: true
+				}
+			},
+			{
+				path:"/admin/review",
+				component: () => import("@/views/admin/SubmissionReview.vue"),
+				meta: {
+					title: "审核投稿",
+					requireAuth: true
+				}
+			},
+			{
+				path:"/admin/grade",
+				component: () => import("@/views/admin/WorkGrade.vue"),
+				meta: {
+					title: "作品评分",
 					requireAuth: true
 				}
 			},
