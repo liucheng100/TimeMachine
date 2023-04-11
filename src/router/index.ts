@@ -83,10 +83,10 @@ const routes = [
 				}
 			},
 			{
-				path: "/admin/recycled",
-				component: () => import("@/views/admin/RecycleBin.vue"),
+				path:"/admin/score",
+				component: () => import("@/views/admin/Score.vue"),
 				meta: {
-					title: "回收站",
+					title: "作品评分",
 					requireAuth: true
 				}
 			},
