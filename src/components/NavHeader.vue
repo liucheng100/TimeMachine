@@ -105,7 +105,7 @@ export default {
     background-color: var(--nav-bgc);
     position: fixed;
     top: calc(var(--nav-height) - 1px);
-    z-index: 999;
+    z-index: 998;
     transition: all .3s;
     -webkit-mask-image: linear-gradient(
         180deg,

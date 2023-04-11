@@ -121,7 +121,8 @@ const routes = [
 		component: () => import("@/views/homepagePC.vue"),
 		meta: {
 			title: "首页",
-			requireAuth: true
+			requireAuth: true,
+			isPC: true
 		},
 		children: [
 			{
@@ -141,50 +142,74 @@ router.beforeEach(async (to, from, next) => {
 	let token = getToken();
 	let isAdmin = getAdmin();
 	// 该部分权限管理重写
-	if (to.meta.requireAuth && !token) {
-		removeAdmin();
-		next({
-			path: "/login",
-			query: {
-				from: to.path,
-			},
-		});
-	} else {
-		if (isAdmin == '1') {
-			// 管理端
-			// console.log(to.meta.isAdmin)
-			if (!to.meta.isAdmin) {
-				// 不是管理端页面
-				ElMessage.info('请不要访问非管理端端页面')
-				next({
-					path: "/admin"
-				})
-			} else {
-				// 是管理端页面
-				window.document.title =
-					to.meta.title == undefined
-						? "方寸流年"
-						: `${to.meta.title} - 方寸流年管理端`;
-				next();
-			}
+	// PC端判断
+	let deviceWidth = window.innerWidth
+	// alert(deviceWidth)
+	if (deviceWidth > 768) {
+		if (!to.meta.isPC) {
+			next({
+				path: "/PC"
+			});
 		} else {
-			// 用户端
-			if (to.meta.isAdmin) {
-				// 不是用户端页面
-				ElMessage.warning('请不要访问非用户端页面')
-				next({
-					path: "/"
-				})
-			} else {
-				// 是用户端页面
-				window.document.title =
-					to.meta.title == undefined
-						? "方寸流年"
-						: `${to.meta.title} - 方寸流年`;
-				next();
-			}
+			window.document.title =
+				to.meta.title == undefined
+					? "方寸流年"
+					: `${to.meta.title} - 方寸流年`;
+			next();
 		}
+	} else {
+		if(to.meta.isPC){
+			setTimeout(() => {
+				alert('当前正在用手机访问电脑页面,为不影响体验请更换为手机页面')
+			}, 1000);
+		}
+		// 以下为手机端
+		if (to.meta.requireAuth && !token) {
+			removeAdmin();
+			next({
+				path: "/login",
+				query: {
+					from: to.path,
+				},
+			});
+		} else {
+			if (isAdmin == '1') {
+				// 管理端
+				// console.log(to.meta.isAdmin)
+				if (!to.meta.isAdmin) {
+					// 不是管理端页面
+					ElMessage.info('请不要访问非管理端端页面')
+					next({
+						path: "/admin"
+					})
+				} else {
+					// 是管理端页面
+					window.document.title =
+						to.meta.title == undefined
+							? "方寸流年"
+							: `${to.meta.title} - 方寸流年管理端`;
+					next();
+				}
+			} else {
+				// 用户端
+				if (to.meta.isAdmin) {
+					// 不是用户端页面
+					ElMessage.warning('请不要访问非用户端页面')
+					next({
+						path: "/"
+					})
+				} else {
+					// 是用户端页面
+					window.document.title =
+						to.meta.title == undefined
+							? "方寸流年"
+							: `${to.meta.title} - 方寸流年`;
+					next();
+				}
+			}
 
+		}
 	}
+
 });
 export default router;
