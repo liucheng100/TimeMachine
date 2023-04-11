@@ -7,6 +7,10 @@
             :avatar = i.avatar
             :hot = i.hot
             :cover = i.cover
+            @click="$router.push({
+                path: '/WorkDetail',
+                query: {workId:13}
+            })"
         ></CardMini>
     </div>
 </template>
@@ -15,6 +19,7 @@
 import CardMini from '@/components/Card/CardMini.vue'
 import bus from '@/utils/mitt'
 export default {
+    name: 'page2',
     props:{
         loadMore:{
             default: false,

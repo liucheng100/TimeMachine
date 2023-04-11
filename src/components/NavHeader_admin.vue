@@ -88,7 +88,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 14px;
-        z-index: 9999;
+        z-index: 999;
     }
 
     .group13 {
@@ -107,7 +107,7 @@
         background-color: var(--nav-bgc);
         position: fixed;
         top: calc(var(--nav-height) - 1px);
-        z-index: 999;
+        z-index: 998;
         transition: all .3s;
         -webkit-mask-image: linear-gradient(180deg,
                 #000 80%,
