@@ -43,8 +43,12 @@
                         path: '/admin/all'
                     },
                     {
-                        name: '回收站',
+                        name: '审核投稿',
                         path: '/admin/recycled'
+                    },
+                    {
+                        name: '作品评分',
+                        path: '/admin/score'
                     },
                     {
                         name: '退出登陆',

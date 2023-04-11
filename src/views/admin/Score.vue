@@ -1,12 +1,12 @@
 <template>
-    <div class="grade">
-        回收站
+    <div class="score">
+        作品评分
     </div>
 </template>
 
 <script>
     export default {
-        name: "RecycleBin",
+        name: "Score",
         props: {
         },
         data() {
