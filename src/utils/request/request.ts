@@ -6,6 +6,8 @@
 import axios from "axios";
 import type { AxiosInstance } from "axios";
 import type { MYRequestInterceptors, MYRequestConfig } from "./type";
+import { ElMessage } from "element-plus";
+import { removeToken, setToken } from "@/utils/auth";
 
 const DEFAULT_LOADING = true;
 
@@ -48,6 +50,9 @@ class MYRequest {
         if (data.returnCode === "-1001") {
           console.log("请求失败,错误信息");
         } else {
+          if(res.headers && res.headers["token"]){
+            setToken(res.headers["token"]);
+          }
           if (this.needHeader) return res;
           return data;
         }
@@ -56,6 +61,10 @@ class MYRequest {
         console.log("所有实例的拦拦截器:响应拦截失败");
         if (err.response.status === 404) {
           console.log("404的错误");
+        } else if (err.response.status === 401) {
+          removeToken();
+          ElMessage.warning('token过期，请重新登录')
+          alert('token过期，请重新登录')
         }
         return err;
       }

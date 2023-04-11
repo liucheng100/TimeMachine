@@ -54,6 +54,7 @@ export default {
     font-size: 12px;
     display: flex;
     align-items: center;
+    color: rgba(153, 156, 160, 1);
 }
 .text div{
     flex-shrink: 0;

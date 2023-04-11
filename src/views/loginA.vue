@@ -4,24 +4,27 @@
     <div class="content">
       <!-- <p class="hint">欢迎回来，请登录您的账号</p> -->
       <form>
-        <p class="tag">天外天账户名</p>
-        <el-input v-model="account" placeholder="学号/昵称/手机号..." class="input">
+        <p class="tag">方寸 · 流年账号</p>
+        <el-input v-model="account" @blur="checkEmail" placeholder="请输入邮箱..." class="input">
         </el-input>
         <p class="tag">密码</p>
         <el-input v-model="password" type="password" show-password placeholder="请输入密码..." class="input"
           @keypress.enter="toLogin">
         </el-input>
       </form>
-      <Protocol class="proto" @check="ON = !ON" :ON="ON"></Protocol>
+      <div class="other-bar">
+        <Protocol class="proto" @check="ON = !ON" :ON="ON"></Protocol>
+        <div class="forget">忘记密码</div>
+      </div>
       <el-button auto-insert-space class="loginBtn redBtn" @click="toLogin" :loading="loginLoading">登录</el-button>
 
       <el-button v-if="0" auto-insert-space class="loginBtn redBtn" @click="toLogin('admin')"
         :loading="loginLoading">测试按钮: 以管理者身份进入</el-button>
       <div class="other-bar">
-        <div @click="$router.replace('loginA')" class="other-way">
-          没有天外天账号？
+        <div @click="$router.replace('login')" class="other-way">
+          天外天账号登陆
         </div>
-        <div class="forget">忘记密码</div>
+        <div @click="$router.replace('signup')" class="forget">注册方寸 · 流年</div>
       </div>
     </div>
   </div>
@@ -29,7 +32,7 @@
   
 <script>
 import { getToken, setToken, setAdmin } from "@/utils/auth";
-import { login } from "@/api/login";
+import { loginA } from "@/api/login";
 export default {
   data() {
     return {
@@ -50,7 +53,7 @@ export default {
       // return
 
       if (!this.account) {
-        ElMessage.warning("请输入您的用户名");
+        ElMessage.warning("请输入您的账号");
         return;
       }
       if (!this.password) {
@@ -64,12 +67,12 @@ export default {
 
 
       this.loginLoading = true;
-      login({ username: this.account, password: this.password })
-        .then(({ data: data, ...res }) => {
+      loginA({ username: this.account, password: this.password })
+        .then((data) => {
           if (data.code === 0) {
             ElMessage.success("登录成功");
             setAdmin(data.data.isAdmin);
-            // setToken(res.headers["token"]);
+            // console.log(data)
             this.loginLoading = false;
             this.$router.push(this.$route.query.from || "/");
           } else {
@@ -83,6 +86,14 @@ export default {
           this.loginLoading = false;
         });
     },
+    checkEmail() {
+      const emailPattern = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+      if (!emailPattern.test(this.account) && this.account) {
+        ElMessage.info('请输入正确的邮箱格式');
+        return false;
+      }
+      return true;
+    }
   },
   created() {
     if (getToken()) {
@@ -164,7 +175,6 @@ export default {
 }
 
 .proto {
-  margin-bottom: 20px;
   align-self: center;
 }
 
@@ -172,6 +182,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .other-way {
