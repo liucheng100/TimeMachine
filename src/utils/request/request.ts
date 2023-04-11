@@ -62,8 +62,9 @@ class MYRequest {
         if (err.response.status === 404) {
           console.log("404的错误");
         } else if (err.response.status === 401) {
-          ElMessage.warning('token过期，请重新登录')
           removeToken();
+          ElMessage.warning('token过期，请重新登录')
+          alert('token过期，请重新登录')
         }
         return err;
       }

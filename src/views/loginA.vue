@@ -5,14 +5,17 @@
       <!-- <p class="hint">欢迎回来，请登录您的账号</p> -->
       <form>
         <p class="tag">方寸 · 流年账号</p>
-        <el-input v-model="account" placeholder="ID/手机号..." class="input">
+        <el-input v-model="account" @blur="checkEmail" placeholder="请输入邮箱..." class="input">
         </el-input>
         <p class="tag">密码</p>
         <el-input v-model="password" type="password" show-password placeholder="请输入密码..." class="input"
           @keypress.enter="toLogin">
         </el-input>
       </form>
-      <Protocol class="proto" @check="ON = !ON" :ON="ON"></Protocol>
+      <div class="other-bar">
+        <Protocol class="proto" @check="ON = !ON" :ON="ON"></Protocol>
+        <div class="forget">忘记密码</div>
+      </div>
       <el-button auto-insert-space class="loginBtn redBtn" @click="toLogin" :loading="loginLoading">登录</el-button>
 
       <el-button v-if="0" auto-insert-space class="loginBtn redBtn" @click="toLogin('admin')"
@@ -50,7 +53,7 @@ export default {
       // return
 
       if (!this.account) {
-        ElMessage.warning("请输入您的用户名");
+        ElMessage.warning("请输入您的账号");
         return;
       }
       if (!this.password) {
@@ -83,6 +86,14 @@ export default {
           this.loginLoading = false;
         });
     },
+    checkEmail() {
+      const emailPattern = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+      if (!emailPattern.test(this.account) && this.account) {
+        ElMessage.info('请输入正确的邮箱格式');
+        return false;
+      }
+      return true;
+    }
   },
   created() {
     if (getToken()) {
@@ -164,7 +175,6 @@ export default {
 }
 
 .proto {
-  margin-bottom: 20px;
   align-self: center;
 }
 
@@ -172,6 +182,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .other-way {

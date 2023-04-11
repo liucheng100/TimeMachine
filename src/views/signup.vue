@@ -4,20 +4,25 @@
     <div class="content">
       <!-- <p class="hint">欢迎回来，请登录您的账号</p> -->
       <form>
-        <p class="tag">手机号</p>
-        <el-input v-model="account" type="number" @blur="checkMobile" placeholder="请输入手机号..." class="input">
+        <p class="tag">邮箱</p>
+        <el-input v-model="account" @blur="checkEmail" placeholder="请输入邮箱..." class="input">
         </el-input>
+        <p class="tag">验证码</p>
+        <div class="flex">
+          <div class="left-input">
+            <el-input v-model="authcode" placeholder="请输入验证码..." class="input code-input" @keypress.enter="toLogin">
+            </el-input>
+          </div>
+          <div v-if="sendable" @click="sendCode" class="right-sender">发送验证码</div>
+          <div v-else class="right-sender resend">重发: {{ restTime }}s</div>
+        </div>
         <p class="tag">密码</p>
         <el-input v-model="password" type="password" show-password placeholder="请输入密码..." class="input"
           @keypress.enter="toLogin">
         </el-input>
-        <p class="tag">确认密码</p>
-        <el-input v-model="password" type="password" show-password placeholder="请再次输入密码..." class="input"
-          @keypress.enter="toLogin">
-        </el-input>
       </form>
       <Protocol class="proto" @check="ON = !ON" :ON="ON"></Protocol>
-      <el-button auto-insert-space class="loginBtn redBtn" @click="toLogin" :loading="loginLoading">注册</el-button>
+      <el-button auto-insert-space class="loginBtn redBtn" @click="signUp" :loading="loginLoading">注册</el-button>
 
       <el-button v-if="0" auto-insert-space class="loginBtn redBtn" @click="toLogin('admin')"
         :loading="loginLoading">测试按钮: 以管理者身份进入</el-button>
@@ -25,7 +30,7 @@
         <div @click="$router.replace('login')" class="other-way">
           天外天账号登陆
         </div>
-        <div @click="$router.replace('loginA')" class="forget">返回手机号登陆</div>
+        <div @click="$router.replace('loginA')" class="forget">返回邮箱登陆</div>
       </div>
     </div>
   </div>
@@ -33,32 +38,33 @@
   
 <script>
 import { getToken, setToken } from "@/utils/auth";
-//   import { login } from "@/api/login";
+import { loginA, sendCode, verifyCode, register } from "@/api/login";
 export default {
   data() {
     return {
       ON: false,
       account: "",
       password: "",
+      authcode: '',
+      restTime: 0,
+      waitTime: 2,
+      sendable: true,
       loginLoading: false,
+      interval: 0,
     };
   },
   methods: {
-    toLogin(op) {
-      setToken('asdf');
-      if (op == 'admin') {
-        this.$router.push("/admin");
+    signUp(){
+      if (!this.account) {
+        ElMessage.warning("请输入您的邮箱并验证");
         return;
       }
-      this.$router.push(this.$route.query.from || "/");
-      return
-
-      if (!this.account) {
-        ElMessage.warning("请输入您的用户名");
+      if (!this.authcode) {
+        ElMessage.warning("请输入验证码");
         return;
       }
       if (!this.password) {
-        ElMessage.warning("请输入您的密码");
+        ElMessage.warning("请设置密码");
         return;
       }
       if (!this.ON) {
@@ -66,31 +72,87 @@ export default {
         return;
       }
 
-
-      this.loginLoading = true;
-      login({ account: this.account, pass: this.password })
+      verifyCode({
+        code: this.authcode,
+        email: this.account
+      }).then(v=>{
+        console.log(v)
+        if(!v.code){
+          register({
+            password: this.password,
+            email: this.account
+          }).then(v=>{
+            // console.log(v)
+            if(!v.code){
+              ElMessage.success('注册成功！')
+              // 自动登录
+              this.toLogin();
+            }else{
+              ElMessage.error('注册失败: '+v.description)
+            }
+          })
+        }else{
+          ElMessage.error('验证码校验失败:'+v.msg)
+        }
+      })
+    },
+    toLogin() {
+      loginA({ username: this.account, password: this.password })
         .then(({ data: { code: code, msg: msg }, ...res }) => {
           if (code === 0) {
-            ElMessage.success("登录成功");
+            // ElMessage.success("登录成功");
             setToken(res.headers["token"]);
-            this.loginLoading = false;
             this.$router.push(this.$route.query.from || "/");
           } else {
             ElMessage.error(msg);
-            this.password = "";
-            this.loginLoading = false;
           }
         })
         .catch(() => {
           ElMessage.error("登录失败");
-          this.loginLoading = false;
         });
     },
     checkMobile() {
       const reg = /^[1][3|4|5|6|7|8|9][0-9]{9}$/;
-      if (!reg.test(this.account) && this.account!='') {
+      if (!reg.test(this.account) && this.account != '') {
         ElMessage.warning('手机格式不正确')
       }
+    },
+    checkEmail() {
+      const emailPattern = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+      // if (!emailPattern.test(this.account) && this.account) {
+      //   ElMessage.info('请输入正确的邮箱格式');
+      //   return false;
+      // }
+      if(emailPattern.test(this.account)){
+        return true;
+      }
+      return false;
+    },
+    sendCode() {
+      if(!this.checkEmail()) {
+        ElMessage.warning('请输入正确的邮箱格式')
+        return
+      }
+
+
+      this.sendable = false
+      this.restTime = this.waitTime
+      setTimeout(() => {
+        this.sendable = true
+        clearInterval(this.interval);
+      }, this.waitTime * 1000);
+      this.interval = setInterval(() => {
+        this.restTime--;
+      }, 1000);
+
+      sendCode(this.account).then(v=>{
+        // console.log(v)
+        if(!v.code){
+          ElMessage.success('验证码已发送至邮箱')
+        }else{
+          ElMessage.error(v.msg)
+        }
+      })
     }
   },
   created() {
@@ -191,5 +253,39 @@ export default {
 .forget {
   color: #4E46B4;
   font-size: 12px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.left-input {
+  flex: 1;
+}
+
+.code-input {
+  margin: 0;
+}
+
+.right-sender {
+  width: 118px;
+  height: 48px;
+  color: white;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  margin-left: 20px;
+  background-color: rgba(78, 70, 180, 1);
+
+}
+
+.resend {
+  color: rgba(78, 70, 180, 1);
+  ;
+  background-color: rgb(228, 227, 244);
 }
 </style>
