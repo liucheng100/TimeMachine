@@ -97,6 +97,7 @@
 
 <script>
 export default {
+    name: 'page1',
     data(){
         return{
             zoomOn:false

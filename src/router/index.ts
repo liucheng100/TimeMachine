@@ -10,13 +10,14 @@ const routes = [
 			title: "首页",
 			requireAuth: true,
 		},
-		children:[
+		children: [
 			{
 				path: "/homepage",
 				component: () => import("@/views/homepage/homepage.vue"),
 				meta: {
 					title: "首页",
 					requireAuth: true,
+					keepAlive: true,
 				},
 			},
 			{
@@ -27,19 +28,27 @@ const routes = [
 					requireAuth: true,
 				},
 			},
+			{
+				path: "/workDetail",
+				component: () => import("@/views/homepage/WorkDetail.vue"),
+				meta: {
+					title: "作品详情",
+					requireAuth: true,
+				},
+			},
 		]
 	},
 	{
-		path:"/admin",
+		path: "/admin",
 		component: () => import("@/views/admin.vue"),
 		redirect: '/admin/new-competition',
 		meta: {
 			title: "管理端",
 			requireAuth: true
 		},
-		children:[
+		children: [
 			{
-				path:"/admin/new-competition",
+				path: "/admin/new-competition",
 				component: () => import("@/views/admin/new-competition.vue"),
 				meta: {
 					title: "新比赛",
@@ -57,16 +66,16 @@ const routes = [
 		},
 	},
 	{
-		path:"/PC",
-		component:() => import("@/views/homepagePC.vue"),
+		path: "/PC",
+		component: () => import("@/views/homepagePC.vue"),
 		meta: {
-			title:"首页",
-			requireAuth:true
+			title: "首页",
+			requireAuth: true
 		},
-		children:[
+		children: [
 			{
-				path:"/PC/homepage",
-				component:() => import("@/views/homepagePC/homepage.vue")
+				path: "/PC/homepage",
+				component: () => import("@/views/homepagePC/homepage.vue")
 			}
 		]
 	}
