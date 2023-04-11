@@ -17,5 +17,20 @@ export function setToken(token: string) {
 }
 
 export function removeToken() {
+    removeAdmin()
     return Cookies.remove(TokenKey)
+}
+
+const AdminKey = 'isAdmin';
+
+export function getAdmin() {
+    return Cookies.get(AdminKey);
+}
+
+export function setAdmin(token: string) {
+    return Cookies.set(AdminKey, token)
+}
+
+export function removeAdmin() {
+    return Cookies.remove(AdminKey)
 }

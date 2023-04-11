@@ -23,7 +23,7 @@ const myRequest = new MYRequest({
       return res;
     },
     responseInterceptorCatch: (err) => {
-      console.log("响应失败的拦截");
+      console.log("响应失败的拦截",err);
       return err;
     },
   },

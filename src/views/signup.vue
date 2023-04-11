@@ -1,35 +1,39 @@
 <template>
   <div class="login">
-    <p class="title">登录方寸 · 流年</p>
+    <p class="title">注册方寸 · 流年</p>
     <div class="content">
       <!-- <p class="hint">欢迎回来，请登录您的账号</p> -->
       <form>
-        <p class="tag">天外天账户名</p>
-        <el-input v-model="account" placeholder="学号/昵称/手机号..." class="input">
+        <p class="tag">手机号</p>
+        <el-input v-model="account" type="number" @blur="checkMobile" placeholder="请输入手机号..." class="input">
         </el-input>
         <p class="tag">密码</p>
         <el-input v-model="password" type="password" show-password placeholder="请输入密码..." class="input"
           @keypress.enter="toLogin">
         </el-input>
+        <p class="tag">确认密码</p>
+        <el-input v-model="password" type="password" show-password placeholder="请再次输入密码..." class="input"
+          @keypress.enter="toLogin">
+        </el-input>
       </form>
       <Protocol class="proto" @check="ON = !ON" :ON="ON"></Protocol>
-      <el-button auto-insert-space class="loginBtn redBtn" @click="toLogin" :loading="loginLoading">登录</el-button>
+      <el-button auto-insert-space class="loginBtn redBtn" @click="toLogin" :loading="loginLoading">注册</el-button>
 
       <el-button v-if="0" auto-insert-space class="loginBtn redBtn" @click="toLogin('admin')"
         :loading="loginLoading">测试按钮: 以管理者身份进入</el-button>
       <div class="other-bar">
-        <div @click="$router.replace('loginA')" class="other-way">
-          没有天外天账号？
+        <div @click="$router.replace('login')" class="other-way">
+          天外天账号登陆
         </div>
-        <div class="forget">忘记密码</div>
+        <div @click="$router.replace('loginA')" class="forget">返回手机号登陆</div>
       </div>
     </div>
   </div>
 </template>
   
 <script>
-import { getToken, setToken, setAdmin } from "@/utils/auth";
-import { login } from "@/api/login";
+import { getToken, setToken } from "@/utils/auth";
+//   import { login } from "@/api/login";
 export default {
   data() {
     return {
@@ -41,13 +45,13 @@ export default {
   },
   methods: {
     toLogin(op) {
-      // setToken('asdf');
-      // if (op == 'admin') {
-      //   this.$router.push("/admin");
-      //   return;
-      // }
-      // this.$router.push(this.$route.query.from || "/");
-      // return
+      setToken('asdf');
+      if (op == 'admin') {
+        this.$router.push("/admin");
+        return;
+      }
+      this.$router.push(this.$route.query.from || "/");
+      return
 
       if (!this.account) {
         ElMessage.warning("请输入您的用户名");
@@ -64,16 +68,15 @@ export default {
 
 
       this.loginLoading = true;
-      login({ username: this.account, password: this.password })
-        .then(({ data: data, ...res }) => {
-          if (data.code === 0) {
+      login({ account: this.account, pass: this.password })
+        .then(({ data: { code: code, msg: msg }, ...res }) => {
+          if (code === 0) {
             ElMessage.success("登录成功");
-            setAdmin(data.data.isAdmin);
-            // setToken(res.headers["token"]);
+            setToken(res.headers["token"]);
             this.loginLoading = false;
             this.$router.push(this.$route.query.from || "/");
           } else {
-            ElMessage.error(data.description+': '+data.msg);
+            ElMessage.error(msg);
             this.password = "";
             this.loginLoading = false;
           }
@@ -83,6 +86,12 @@ export default {
           this.loginLoading = false;
         });
     },
+    checkMobile() {
+      const reg = /^[1][3|4|5|6|7|8|9][0-9]{9}$/;
+      if (!reg.test(this.account) && this.account!='') {
+        ElMessage.warning('手机格式不正确')
+      }
+    }
   },
   created() {
     if (getToken()) {

@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import { getToken } from "@/utils/auth";
+import { getToken, getAdmin, removeAdmin } from "@/utils/auth";
+import { ElMessage } from "element-plus";
 
 const routes = [
 	{
@@ -9,6 +10,7 @@ const routes = [
 		meta: {
 			title: "首页",
 			requireAuth: true,
+			isAdmin: false,
 		},
 		children: [
 			{
@@ -44,11 +46,12 @@ const routes = [
 		redirect: '/admin/homepage',
 		meta: {
 			title: "管理端",
-			requireAuth: true
+			requireAuth: true,
+			isAdmin: true,
 		},
 		children: [
 			{
-				path:"/admin/homepage",
+				path: "/admin/homepage",
 				component: () => import("@/views/admin/AdminHomepage.vue"),
 				meta: {
 					title: "首页",
@@ -56,7 +59,7 @@ const routes = [
 				}
 			},
 			{
-				path:"/admin/management",
+				path: "/admin/management",
 				component: () => import("@/views/admin/CompetitionManagement.vue"),
 				meta: {
 					title: "管理赛事",
@@ -64,7 +67,7 @@ const routes = [
 				}
 			},
 			{
-				path:"/admin/new-competition",
+				path: "/admin/new-competition",
 				component: () => import("@/views/admin/new-competition.vue"),
 				meta: {
 					title: "新比赛",
@@ -72,7 +75,7 @@ const routes = [
 				}
 			},
 			{
-				path:"/admin/all",
+				path: "/admin/all",
 				component: () => import("@/views/admin/AllWork.vue"),
 				meta: {
 					title: "所有作品",
@@ -80,7 +83,7 @@ const routes = [
 				}
 			},
 			{
-				path:"/admin/recycled",
+				path: "/admin/recycled",
 				component: () => import("@/views/admin/RecycleBin.vue"),
 				meta: {
 					title: "回收站",
@@ -94,6 +97,22 @@ const routes = [
 		component: () => import("@/views/login.vue"),
 		meta: {
 			title: "登录",
+			requireAuth: false,
+		},
+	},
+	{
+		path: "/loginA",
+		component: () => import("@/views/loginA.vue"),
+		meta: {
+			title: "登录",
+			requireAuth: false,
+		},
+	},
+	{
+		path: "/signup",
+		component: () => import("@/views/signup.vue"),
+		meta: {
+			title: "注册",
 			requireAuth: false,
 		},
 	},
@@ -120,8 +139,10 @@ const router = createRouter({
 });
 router.beforeEach(async (to, from, next) => {
 	let token = getToken();
+	let isAdmin = getAdmin();
 	// 该部分权限管理重写
 	if (to.meta.requireAuth && !token) {
+		removeAdmin();
 		next({
 			path: "/login",
 			query: {
@@ -129,11 +150,41 @@ router.beforeEach(async (to, from, next) => {
 			},
 		});
 	} else {
-		window.document.title =
-			to.meta.title == undefined
-				? "方寸流年"
-				: `${to.meta.title} - 方寸流年`;
-		next();
+		if (isAdmin == '1') {
+			// 管理端
+			// console.log(to.meta.isAdmin)
+			if (!to.meta.isAdmin) {
+				// 不是管理端页面
+				ElMessage.info('请不要访问非管理端端页面')
+				next({
+					path: "/admin"
+				})
+			} else {
+				// 是管理端页面
+				window.document.title =
+					to.meta.title == undefined
+						? "方寸流年"
+						: `${to.meta.title} - 方寸流年管理端`;
+				next();
+			}
+		} else {
+			// 用户端
+			if (to.meta.isAdmin) {
+				// 不是用户端页面
+				ElMessage.warning('请不要访问非用户端页面')
+				next({
+					path: "/"
+				})
+			} else {
+				// 是用户端页面
+				window.document.title =
+					to.meta.title == undefined
+						? "方寸流年"
+						: `${to.meta.title} - 方寸流年`;
+				next();
+			}
+		}
+
 	}
 });
 export default router;

@@ -4,8 +4,8 @@
     <div class="content">
       <!-- <p class="hint">欢迎回来，请登录您的账号</p> -->
       <form>
-        <p class="tag">天外天账户名</p>
-        <el-input v-model="account" placeholder="学号/昵称/手机号..." class="input">
+        <p class="tag">方寸 · 流年账号</p>
+        <el-input v-model="account" placeholder="ID/手机号..." class="input">
         </el-input>
         <p class="tag">密码</p>
         <el-input v-model="password" type="password" show-password placeholder="请输入密码..." class="input"
@@ -18,10 +18,10 @@
       <el-button v-if="0" auto-insert-space class="loginBtn redBtn" @click="toLogin('admin')"
         :loading="loginLoading">测试按钮: 以管理者身份进入</el-button>
       <div class="other-bar">
-        <div @click="$router.replace('loginA')" class="other-way">
-          没有天外天账号？
+        <div @click="$router.replace('login')" class="other-way">
+          天外天账号登陆
         </div>
-        <div class="forget">忘记密码</div>
+        <div @click="$router.replace('signup')" class="forget">注册方寸 · 流年</div>
       </div>
     </div>
   </div>
@@ -29,7 +29,7 @@
   
 <script>
 import { getToken, setToken, setAdmin } from "@/utils/auth";
-import { login } from "@/api/login";
+import { loginA } from "@/api/login";
 export default {
   data() {
     return {
@@ -64,12 +64,12 @@ export default {
 
 
       this.loginLoading = true;
-      login({ username: this.account, password: this.password })
-        .then(({ data: data, ...res }) => {
+      loginA({ username: this.account, password: this.password })
+        .then((data) => {
           if (data.code === 0) {
             ElMessage.success("登录成功");
             setAdmin(data.data.isAdmin);
-            // setToken(res.headers["token"]);
+            // console.log(data)
             this.loginLoading = false;
             this.$router.push(this.$route.query.from || "/");
           } else {

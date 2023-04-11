@@ -88,7 +88,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: 14px;
-    z-index: 9999;
+    z-index: 999
 }
 .group13{
     background: url('../assets/Group13.svg') center center / 100% no-repeat;

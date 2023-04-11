@@ -84,7 +84,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 14px;
-        z-index: 9999;
+        z-index: 999;
     }
 
     .group13 {
