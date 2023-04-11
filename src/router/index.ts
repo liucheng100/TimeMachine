@@ -78,6 +78,14 @@ const routes = [
 					requireAuth: true
 				}
 			},
+			{
+				path:"/admin/ReviewSubmissions",
+				component:() => import("@/views/admin/ReviewSubmissions.vue"),
+				meta: {
+					title: "审核投稿",
+					requireAuth: true
+				}
+			}
 		]
 	},
 	{
