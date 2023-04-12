@@ -7,7 +7,7 @@
             </div>
             <div class="bar">
                 <div class="flex">
-                    <div class="avatar" :style="{backgroundImage: `url('${auth}')`}"></div>
+                    <div class="avatar" :style="{backgroundImage: `url('${avatar}')`}"></div>
                     <div class="info">{{ auth }}</div>
                 </div>
                 <div class="flex">

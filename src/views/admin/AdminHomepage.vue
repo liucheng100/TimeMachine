@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="homepage" @scroll="scroll">
         <div class="banner">
             <img class="banner-img" src="../../assets/warnCircle.svg" alt="">
@@ -162,4 +162,4 @@
         /* height: 10000px;  */
         /* background-color: blue; */
     }
-</style>
+</style> -->

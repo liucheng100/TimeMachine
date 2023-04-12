@@ -121,7 +121,15 @@ const routes = [
 					title:"作品详情",
 					requireAuth: true
 				}
-			}
+			},
+			{
+				path:"/admin/score/detail",
+				component:() => import("@/views/admin/ScoreDetail.vue"),
+				meta: {
+					title:"作品详情",
+					requireAuth: true
+				}
+			},
 		]
 	},
 	{

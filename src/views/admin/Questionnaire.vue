@@ -56,7 +56,7 @@
 
 
 <style scoped>
-    .questionnaire {}
+    /* .questionnaire {} */
 
     .top {
         height: 64px;
