@@ -1,15 +1,31 @@
 import http from "@/utils/request";
 
-export function uploadFile<T>(FormData:any){
-    return http.post<T>({
-        url:'/api/file/upload',
-        data: FormData,
+export function getFile<T>(path:any){
+    return http.get<Blob>({
+        url:'/file/get',
+        params: {
+            path: path
+        },
+        responseType: "blob",
     })
 }
 
-export function downloadFile<T>(parmas:any){
-    return http.get<T>({
-        url: `/d/${parmas.type}/${parmas.name}`,
-        responseType: "blob",
+export function getSrc<T>(path:any){
+    // return new Promise((resolve, reject) => {
+    //     getFile(path).then(blob=>{
+    //         resolve(URL.createObjectURL(blob))
+    //     }).catch(error => reject(error))
+    // })
+    return new Promise((resolve, reject) => {
+        resolve('/file/get?path='+path)
+    })
+}
+
+export function uploadFile<T>(file:File){
+    return http.post<T>({
+        url: '/file/upload',
+        data:{
+            file: file
+        }
     })
 }

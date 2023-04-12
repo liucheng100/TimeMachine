@@ -1,14 +1,20 @@
 <template>
     <div class="work-detail">
-        <div @click="zoomOn=true" class="cover-box">
-            <img class="img" src="../../assets/alertCircle.svg" alt="">
+        <div v-if="0" @click="zoomOn = true" class="cover-box">
+            <img class="img" :src="workData.workFile" alt="">
+        </div>
+        <div v-else class="video-box">
+            <video controls muted class="video">
+                <source :src="testVideo" type="video/mp4">
+            </video>
+            <a :href="testVideo" class="videoErr">无法播放?点我下载到本地</a>
         </div>
         <div class="info-mask">
-            <div class="title">城市作画</div>
+            <div class="title">{{ workData.workTitle }}</div>
             <div class="bar">
                 <div class="flex">
                     <div class="avatar" :style="{ backgroundImage: `url('')` }"></div>
-                    <div class="info">城市作画</div>
+                    <div class="info">暂无</div>
                 </div>
                 <div class="flex">
                     <div class="eye"></div>
@@ -16,7 +22,7 @@
                 </div>
             </div>
             <div class="psg">
-                城市画作代表了未来摄影的前进方向城市画作代表了未来摄影的前进方向城市画作代表了未来摄影的前进方向城市画作代表了未来摄影的前进方向城市画作代表了未来摄影的前进方向城市画作代表了未来摄影的前进方向。
+                {{ workData.description }}
             </div>
             <div class="back">
                 <div @click="$router.back()" class="flex">
@@ -25,27 +31,50 @@
                 </div>
             </div>
         </div>
-        <ImgZoom
-        src="https://avatars.githubusercontent.com/u/6"
-        v-model:ON="zoomOn"
-        @update:ON="zoomOn=false"
-        ></ImgZoom>
+        <ImgZoom :src="workData.workFile" v-model:ON="zoomOn" @update:ON="zoomOn = false"></ImgZoom>
     </div>
 </template>
 
 <script>
+import { workDetail, } from '@/api/work'
+import { getSrc, uploadFile, } from '@/api/file'
+import pubuse from '@/utils/pub-use'
 export default {
     name: 'WorkDetail',
     data() {
         return {
             zoomOn: false,
+            workId: -1,
+            workData: {},
+            testVideo: 'http://photo.twtstudio.com/file/get?path=media/2023_04/265e2dd0-805d-4c28-b9aa-dcc1ec48e8a9.flv',
+            testVideo: 'http://photo.twtstudio.com/file/get?path=media/2023_04/c5352d51-e028-4dae-864f-c0161e590181.mp4',
         }
     },
     methods: {
-
+        replaceBlob(tarObject, attrList) {
+            attrList.forEach(attr => {
+                getSrc(tarObject[attr]).then(v => {
+                    // console.log(v)
+                    tarObject[attr] = v
+                }).catch(err => {
+                    ElMessage.error('图片加载失败')
+                })
+                tarObject[attr] = pubuse('loading.gif')
+            });
+        }
     },
     mounted() {
-        console.log(this.$route.query)
+        // alert(this.$route.query.workId)
+        this.workId = this.$route.query.workId
+        workDetail(this.workId).then(v => {
+            console.log(v)
+            if (!v.code) {
+                this.workData = v.data
+                this.replaceBlob(this.workData, [
+                    'workFile'
+                ])
+            }
+        })
 
     },
 
@@ -63,7 +92,20 @@ export default {
     width: 100%;
     overflow: hidden;
 }
-
+.video-box {
+    height: calc(100% - 200px);
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.video{
+    width: 100%;
+    height: 350px;
+    max-height: 30vh;
+    background-color: black;
+}
 .img {
     height: 100%;
     width: 100%;
@@ -124,27 +166,41 @@ export default {
     color: rgba(31, 31, 31, 1);
     margin-bottom: 10px;
 }
-.psg{
+
+.psg {
     font-size: 12px;
     color: rgba(153, 156, 160, 1);
     line-height: 16.8px;
     margin-bottom: 10px;
     flex: 1;
 }
-.back{
+
+.back {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     height: 22px;
 }
-.backIcon{
+
+.backIcon {
     height: 22px;
     width: 22px;
     background: url('../../assets/backArray.svg') center center / 100% no-repeat;
 }
-.backInfo{
+
+.backInfo {
     font-size: 16px;
     color: rgba(78, 70, 180, 1);
     transform: translateY(-.6px);
+}
+.videoErr{
+    color: rgba(78, 70, 180, 1);
+    background-color: rgb(229, 227, 255);
+    padding: 10px 25px;
+    border-radius: 6px;
+    margin-top: 20px;
+    font-size: 16px;
+    outline: none;
+    text-decoration: none;
 }
 </style>

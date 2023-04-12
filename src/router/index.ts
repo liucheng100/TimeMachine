@@ -142,6 +142,14 @@ const routes = [
 		},
 	},
 	{
+		path: "/resetPwd",
+		component: () => import("@/views/resetPwd.vue"),
+		meta: {
+			title: "忘记密码",
+			requireAuth: false,
+		},
+	},
+	{
 		path: "/PC",
 		component: () => import("@/views/homepagePC.vue"),
 		redirect: "/PC/homepage",
