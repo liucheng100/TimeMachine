@@ -1,7 +1,8 @@
 <script setup>
 import { onMounted, computed, ref, reactive} from "vue"
+import { useRouter } from "vue-router"
 let touchEvent = "";
-
+const router = useRouter();
 const WorkCard = ref();
 
 const emit = defineEmits(["multi"]);
@@ -38,10 +39,19 @@ function clearTouch(){
 function multi(){
     emit("multi");
 }
+function checkDetail(){
+    router.push({
+        query:{
+            name:"Jerry",
+            number:1000
+        },
+        path:"/admin/WorkDetail"
+    })
+}
 </script>
 
 <template>
-    <div class="work-card" ref="WorkCard">
+    <div class="work-card" ref="WorkCard" @click="checkDetail()">
         <img src="https://i.328888.xyz/2023/04/11/ipdpXU.jpeg" :style="image_style" class="image"/>
         <p class="work-name">{{ WorkName }}</p>
         <p class="small-text">{{ PublishTime }}</p>

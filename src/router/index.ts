@@ -97,6 +97,22 @@ const routes = [
 					title: "审核投稿",
 					requireAuth: true
 				}
+			},
+			{
+				path:"/admin/RecycleBin",
+				component:() => import("@/views/admin/RecycleBin.vue"),
+				meta: {
+					title: "回收站",
+					requireAuth: true
+				}
+			},
+			{
+				path:"/admin/WorkDetail",
+				component:() => import("@/views/admin/WorkDetail.vue"),
+				meta: {
+					title:"作品详情",
+					requireAuth: true
+				}
 			}
 		]
 	},
@@ -119,6 +135,7 @@ const routes = [
 	{
 		path: "/signup",
 		component: () => import("@/views/signup.vue"),
+		
 		meta: {
 			title: "注册",
 			requireAuth: false,
@@ -127,6 +144,7 @@ const routes = [
 	{
 		path: "/PC",
 		component: () => import("@/views/homepagePC.vue"),
+		redirect: "/PC/homepage",
 		meta: {
 			title: "首页",
 			requireAuth: true,

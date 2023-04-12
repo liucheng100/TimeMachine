@@ -1,25 +1,11 @@
 <script setup>
 import { ref, reactive, nextTick, onMounted} from "vue"
 import { useRouter } from "vue-router"
-import { getNewestCompetition } from "@/api/competition"
-import { getUnExamined } from "@/api/examine"
-
-const contest_id = undefined;
-
-getNewestCompetition()
-.then((res) => {
-    console.log(res);
-})
-
-getUnExamined({contestId:16, pageNum:1, pageSize:8})
-.then((res) => {
-    console.log(res);
-})
-
 const router = useRouter();
 const FloatPanel = ref();
-const top_change = reactive({marginTop:0})
-const background_button = reactive([false,false,false])
+const top_change = reactive({
+    marginTop:0
+})
 const card_info = [
     {
         WorkName: "城市画作",
@@ -86,11 +72,9 @@ const card_info = [
         ViewVolume:100
     },
 ]
-
 onMounted(() => {
     top_change.marginTop = FloatPanel.value.offsetHeight + "px";
 })
-
 function multiply(){
     card_info.forEach(item => {
         item.is_multiply.value = !item.is_multiply.value;
@@ -100,38 +84,22 @@ function multiply(){
         top_change.marginTop = FloatPanel.value.offsetHeight + "px";
     })
 }
-
-function chooseMulti(index){
-    for(let a = 0; a < background_button.length; a++){
-        background_button[a] = false;
-    }
-    background_button[index] = true;
-}
-
 function send(){
     multiply();
 }
-
-function toRecycle(){
-    router.push("/admin/RecycleBin");
+function back(){
+    router.push("/admin/ReviewSubmissions")
 }
 </script>
 
 <template>
     <div class="review-submissions">
         <div class="float-panel" ref="FloatPanel">
-            <p class="page-title">审核投稿</p>
-            <img src="@/assets/trash.svg" class="icon-title" @click="toRecycle()"/>
+            <p class="back-page" @click="back()">&lt;  返回</p>
+            <p class="page-title">回收站</p>
+            <img src="@/assets/rotate-ccw.svg"  class="icon-title" v-show="card_info[0].is_multiply.value" @click="send()"/>
             <img src="@/assets/checkSquare_.svg" class="icon-title" v-show="!card_info[0].is_multiply.value" @click="multiply()"/>
             <img src="@/assets/check.svg"  class="icon-title" v-show="card_info[0].is_multiply.value" @click="send()"/>
-            <div class="multi-panel" v-show="card_info[0].is_multiply.value">
-                <button class="multi-button" 
-                :style="{background:(background_button[0]?'#4E46B4':'#444444')}" @click="chooseMulti(0)">通过</button>
-                <button class="multi-button" 
-                :style="{background:(background_button[1]?'#4E46B4':'#444444')}" @click="chooseMulti(1)">不通过</button>
-                <button class="multi-button" 
-                :style="{background:(background_button[2]?'#4E46B4':'#444444')}" @click="chooseMulti(2)">下载</button>
-            </div>
         </div>
 
         <div class="all-works" :style="top_change">
@@ -171,6 +139,13 @@ function toRecycle(){
     width:100%;
     padding-left:20px;
     padding-right:20px;
+}
+.back-page{
+    width:100%;
+    font-size:16px;
+    margin-bottom:10px;
+    color:#4E46B4;
+    font-weight: bold;
 }
 .multi-panel{
     width:100%;
