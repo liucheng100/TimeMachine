@@ -73,7 +73,7 @@ export default {
 
 .cover {
     height: 166px;
-    background: center center / 100% no-repeat;
+    background: center center / cover no-repeat;
     background-color: #53517742;
 }
 
