@@ -1,106 +1,124 @@
 <template>
     <div class="page2">
-        <CardMini
-            v-for="i in dataList"
-            :title = i.title
-            :auth = i.auth
-            :avatar = i.avatar
-            :hot = i.hot
-            :cover = i.cover
-            @click="$router.push({
+        <CardMini :key="idx" v-for="(i, idx) in dataList" :title=i.workTitle :auth="'暂无'" :avatar=i.makerAvatar :hot=i.views
+            :cover=i.coverFile @click="$router.push({
                 path: '/WorkDetail',
-                query: {workId:13}
-            })"
-        ></CardMini>
+                query: { workId: i.workId }
+            })"></CardMini>
     </div>
 </template>
 
 <script>
 import CardMini from '@/components/Card/CardMini.vue'
 import bus from '@/utils/mitt'
+import { getSrc, uploadFile, } from '@/api/file'
+import { getAllWorks, } from '@/api/work'
+import { getCurrentInstance } from 'vue';
+import pubuse from '@/utils/pub-use'
+const instance = getCurrentInstance();
 export default {
     name: 'page2',
-    props:{
-        loadMore:{
+    props: {
+        loadMore: {
             default: false,
             type: Boolean,
         }
     },
-    components:[
+    components: [
         CardMini
     ],
-    data(){
-        return{
+    inject: ['globalData'],
+    data() {
+        return {
             loading: false,
             tabIdx: 0,
-            dataList:[
-                {
-                    title: '城市作画',
-                    auth: '城市作画',
-                    avatar: '',
-                    hot: '1071',
-                    cover:'',
-                },
-                {
-                    title: '城市作画',
-                    auth: '城市作画',
-                    avatar: '',
-                    hot: '1071',
-                    cover:'',
-                },
-                {
-                    title: '城市作画',
-                    auth: '城市作画',
-                    avatar: '',
-                    hot: '1071',
-                    cover:'',
-                },
-                {
-                    title: '城市作画',
-                    auth: '城市作画',
-                    avatar: '',
-                    hot: '1071',
-                    cover:'',
-                },
-                {
-                    title: '城市作画',
-                    auth: '城市作画',
-                    avatar: '',
-                    hot: '1071',
-                    cover:'',
-                },
-                {
-                    title: '城市作画',
-                    auth: '城市作画',
-                    avatar: '',
-                    hot: '1071',
-                    cover:'',
-                },
-            ]
+            dataList: [],
+            pageNum: 1,
+            pageSize: 10,
         }
     },
-    watch:{
-        loadMore(to){
-            if(this.tabIdx==1 && to){
-                if(!this.loading){
+    computed: {
+        contestId() {
+            return this.globalData.contestId
+        }
+    },
+    watch: {
+        loadMore(to) {
+            if (this.tabIdx == 1 && to) {
+                if (!this.loading) {
                     this.loading = true
                     // loadmore here
-                    alert('loadMore')
-                    this.loading = false
+                    getAllWorks({
+                        contestId: this.globalData.contestId,
+                        pageNum: this.pageNum,
+                        pageSize: this.pageSize,
+                    }).then(v => {
+                        // console.log(v)
+                        if (!v.code) {
+                            this.dataList = this.dataList.concat(v.data)
+                            v.data.forEach(ele => {
+                                this.replaceBlob(ele, ['coverFile'])
+                            });
+                            this.pageNum++;
+                        }
+                        this.loading = false
+                    })
+
+
                 }
             }
+        },
+        contestId(to) {
+            if (to !== -1) {
+                // alert(this.globalData.contestId)
+                this.loading = true
+                getAllWorks({
+                    contestId: this.globalData.contestId,
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize,
+                }).then(v => {
+                    console.log(v)
+                    if (!v.code) {
+                        this.dataList = v.data
+                        v.data.forEach(ele => {
+                            this.replaceBlob(ele, ['coverFile'])
+                        });
+                        this.pageNum++;
+                    }
+                    this.loading = false
+                })
+            }
+        },
+        dataList() {
+
         }
     },
-    methods:{
-        
+    methods: {
+        replaceBlob(tarObject, attrList) {
+            console.log(attrList)
+            attrList.forEach(attr => {
+                getSrc(tarObject[attr]).then(v => {
+                    // console.log(v)
+                    tarObject[attr] = v
+                    this.$forceUpdate()
+                })
+                // .catch(err => {
+                //     ElMessage.error('图片加载失败')
+                // })
+                tarObject[attr] = pubuse('loading.gif')
+                console.log(this.dataList)
+            });
+        }
     },
-    mounted(){
-        bus.on('need-tab-idx',(ls)=>{
-            if(ls[1]==1){
+    mounted() {
+        bus.on('need-tab-idx', (ls) => {
+            if (ls[1] == 1) {
                 this.tabIdx = ls[0]
             }
         })
-        
+
+
+
     },
 
 }
@@ -108,7 +126,7 @@ export default {
 
 
 <style scoped>
-.page2{
+.page2 {
     width: 100%;
     min-height: 300px;
     padding: 10px 20px;

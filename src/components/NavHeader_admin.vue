@@ -44,7 +44,7 @@
                     },
                     {
                         name: '审核投稿',
-                        path: '/admin/recycled'
+                        path: '/admin/ReviewSubmissions'
                     },
                     {
                         name: '作品评分',

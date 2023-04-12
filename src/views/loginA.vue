@@ -14,7 +14,7 @@
       </form>
       <div class="other-bar">
         <Protocol class="proto" @check="ON = !ON" :ON="ON"></Protocol>
-        <div class="forget">忘记密码</div>
+        <div @click="$router.replace('resetPwd')" class="forget">忘记密码</div>
       </div>
       <el-button auto-insert-space class="loginBtn redBtn" @click="toLogin" :loading="loginLoading">登录</el-button>
 

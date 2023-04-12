@@ -17,12 +17,12 @@ export default {
     emits:['update:ON'],
     props:{
         ON:{
-            type: Boolean,
+            type: [Boolean,String],
             required: true,
         },
         src:{
-            type:String,
-            required: true
+            type:[String,Boolean],
+            required: false
         }
     },
     data(){

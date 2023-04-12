@@ -1,7 +1,7 @@
 <template>
     <div id="homepage" ref="homepage" class="homepage" @scroll="scroll">
         <div class="banner">
-            <img class="banner-img" src="../../assets/warnCircle.svg" alt="">
+            <img class="banner-img" :src="contest.bannerPic" alt="">
             <div class="banner-tip">还有24天截稿</div>
         </div>
         <div class="info">
@@ -15,7 +15,7 @@
             @tab1Click="seasonState = 1" @tab2Click="seasonState = 2">
             <template v-slot:tab0>
                 <div class="tab-0">
-                    <Page1></Page1>
+                    <Page1 :contest="contest"></Page1>
                 </div>
             </template>
             <template v-slot:tab1>
@@ -29,8 +29,9 @@
                 </div>
             </template>
         </TabMagic>
-        <Pop :ON="ON" :model="0" title="我们更推荐在PC端投稿作品" tip="以避免在手机上找不到文件。" :options="{ black: '', grey: '坚持投稿', blue: '好的' }"
-            @blackClick="0" @greyClick="$router.push('/submit'); ON = false" @blueClick="ON = false">
+        <Pop :ON="ON" :model="0" title="我们更推荐在PC端投稿作品" tip="以避免在手机上找不到文件。"
+            :options="{ black: '', grey: '坚持投稿', blue: '好的' }" @blackClick="0"
+            @greyClick="$router.push('/submit'); ON = false" @blueClick="ON = false">
         </Pop>
     </div>
 </template>
@@ -39,11 +40,15 @@
 import Page1 from '@/components/homepage/Page1.vue'
 import Page2 from '@/components/homepage/Page2.vue'
 import Page3 from '@/components/homepage/Page3.vue'
+import { getSrc, uploadFile, } from '@/api/file'
+import { contesting, } from '@/api/contest'
+import pubuse from '@/utils/pub-use'
 export default {
     name: 'homepage',
     components: [
         Page1, Page2, Page3
     ],
+    inject: ['globalData'],
     data() {
         return {
             testList: [],
@@ -51,6 +56,8 @@ export default {
             seasonState: 0,
             byEnd: false,
             catchTop: 0,
+
+            contest: {},
         }
     },
     methods: {
@@ -72,9 +79,50 @@ export default {
                 this.byEnd = false
             }
             this.catchTop = a
+        },
+        replaceBlob(tarObject, attrList) {
+            attrList.forEach(attr => {
+                getSrc(tarObject[attr]).then(v => {
+                    // console.log(v)
+                    tarObject[attr] = v
+                }).catch(err => {
+                    ElMessage.error('图片加载失败')
+                })
+                tarObject[attr] = pubuse('loading.gif')
+            });
         }
     },
     mounted() {
+
+        contesting().then(v => {
+            console.log(v)
+            if (!v.code) {
+                this.contest = v.data
+                console.log(this.contest)
+                this.replaceBlob(this.contest, [
+                    'bannerPic',
+                    'introductionPic',
+                    'tailPic',
+                ])
+                // prizes
+                this.contest.prizes['1'].forEach(ele => {
+                    this.replaceBlob(ele, ['goodPic',])
+                });
+                this.contest.prizes['2'].forEach(ele => {
+                    this.replaceBlob(ele, ['goodPic',])
+                });
+                this.contest.prizes['3'].forEach(ele => {
+                    this.replaceBlob(ele, ['goodPic',])
+                });
+                this.contest.prizes['4'].forEach(ele => {
+                    this.replaceBlob(ele, ['goodPic',])
+                });
+                this.globalData.contestId = this.contest.contestId
+                this.globalData.prizes = this.contest.prizes
+            } else {
+                ElMessage.error(v.msg)
+            }
+        })
 
     },
     activated() {
