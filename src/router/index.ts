@@ -90,6 +90,14 @@ const routes = [
 					requireAuth: true
 				}
 			},
+			{
+				path:"/admin/questionnaire",
+				component: () => import("@/views/admin/Questionnaire.vue"),
+				meta: {
+					title: "问卷收集",
+					requireAuth: true
+				}
+			},
 		]
 	},
 	{
