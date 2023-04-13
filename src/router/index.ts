@@ -38,6 +38,22 @@ const routes = [
 					requireAuth: true,
 				},
 			},
+			{
+				path: "/preCamps",
+				component: () => import("@/views/PreCamps.vue"),
+				meta: {
+					title: "往届赛事",
+					requireAuth: true,
+				},
+			},
+			{
+				path: "/myWork",
+				component: () => import("@/views/myWork.vue"),
+				meta: {
+					title: "我的投稿",
+					requireAuth: true,
+				},
+			},
 		]
 	},
 	{

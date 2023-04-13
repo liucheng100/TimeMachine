@@ -1,12 +1,5 @@
 <template>
-    <div class="management">
-        <div class="top">
-            <div class="title">管理赛事</div>
-            <img src="../../assets/admin/box.svg" @click="setQues">
-            <button @click="newCompetition">
-                <p>开启新赛事</p>
-            </button>
-        </div>
+    <div class="preCamps">
         <div class="comps">
             <div class="compCard" v-for="(item,index) in comps">
                 <div class="compPic" :style="{backgroundImage:'url('+NewURL(item.bannerPic)+')'}"></div>
@@ -26,16 +19,16 @@
 
 <script>
     export default {
-        name: "CompetitionManagement",
+        name: "preCamps",
         props: {
         },
         data() {
             return {
                 comps: [
-                    { title: "光·迹", subtitle: "第十三届方寸·流年摄影大赛", status: 1, bannerPic: "../../assets/admin/testpic.jpg", stopTime: "2023-08-24T14:15:22", startTime: "2023-07-24T14:15:22" },
-                    { title: "光·迹", subtitle: "第十三届方寸·流年摄影大赛", status: 2, bannerPic: "../../assets/admin/testpic.jpg", stopTime: "2023-05-24T14:15:22", startTime: "2023-03-24T14:15:22" },
-                    { title: "光·迹", subtitle: "第十三届方寸·流年摄影大赛", status: 3, bannerPic: "../../assets/admin/testpic.jpg", stopTime: "2021-08-24T14:15:22", startTime: "2021-07-24T14:15:22" },
-                    { title: "光·迹", subtitle: "第十三届方寸·流年摄影大赛", status: 4, bannerPic: "../../assets/admin/testpic.jpg", stopTime: "2019-08-24T14:15:22", startTime: "2019-07-24T14:15:22" },
+                    { title: "光·迹", subtitle: "第十三届方寸·流年摄影大赛", status: 1, bannerPic: "../assets/admin/testpic.jpg", stopTime: "2023-08-24T14:15:22", startTime: "2023-07-24T14:15:22" },
+                    { title: "光·迹", subtitle: "第十三届方寸·流年摄影大赛", status: 2, bannerPic: "../assets/admin/testpic.jpg", stopTime: "2023-05-24T14:15:22", startTime: "2023-03-24T14:15:22" },
+                    { title: "光·迹", subtitle: "第十三届方寸·流年摄影大赛", status: 3, bannerPic: "../assets/admin/testpic.jpg", stopTime: "2021-08-24T14:15:22", startTime: "2021-07-24T14:15:22" },
+                    { title: "光·迹", subtitle: "第十三届方寸·流年摄影大赛", status: 4, bannerPic: "../assets/admin/testpic.jpg", stopTime: "2019-08-24T14:15:22", startTime: "2019-07-24T14:15:22" },
 
                 ]
             }
@@ -76,7 +69,8 @@
 
 
 <style scoped>
-    .management {
+    .preCamps {
+        padding-top: 20px;
         width: 100vw;
     }
 
