@@ -14,6 +14,7 @@ export function login<T>(data: any) {
 export function loginA<T>(data: any) {
   return http.post<T>({
     url: "/user/login/common",
+    needHeader: true,
     data: {
       password: data.password,
       username: data.username
@@ -47,6 +48,17 @@ export function register<T>(data: any) {
       checkPassword: data.password,
       password: data.password,
       username: data.email,
+    },
+  });
+}
+
+export function resetPass<T>(data: any) {
+  return http.post<T>({
+    url: "/user/reset",
+    params: {
+      code: data.code,
+      newPassword: data.newPassword,
+      email: data.email,
     },
   });
 }

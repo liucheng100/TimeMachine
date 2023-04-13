@@ -69,7 +69,7 @@ export default {
           if (data.code === 0) {
             ElMessage.success("登录成功");
             setAdmin(data.data.isAdmin);
-            // setToken(res.headers["token"]);
+            setToken(res.headers["token"]);
             this.loginLoading = false;
             this.$router.push(this.$route.query.from || "/");
           } else {
