@@ -85,7 +85,7 @@ export default {
         }
     },
     mounted() {
-        bus.on('refreshHeight', this.refreshHeight)
+        // bus.on('refreshHeight', this.refreshHeight)
         setTimeout(() => {
             this.refreshHeight()
         }, 100);
@@ -98,7 +98,8 @@ export default {
             // console.log(rect.height, this.title_list)
             this.tabHeight = rect.height
             setTimeout(() => {
-                bus.emit('refreshHeight')
+                // bus.emit('refreshHeight')
+                this.refreshHeight()
             }, 180)
         })
         this.observer.observe(this.$refs.tab, {

@@ -37,7 +37,7 @@
 </template>
   
 <script>
-import { getToken, setToken } from "@/utils/auth";
+import { getToken, setToken, setAdmin } from "@/utils/auth";
 import { loginA, sendCode, verifyCode, register } from "@/api/login";
 export default {
   data() {
@@ -98,13 +98,14 @@ export default {
     },
     toLogin() {
       loginA({ username: this.account, password: this.password })
-        .then(({ data: { code: code, msg: msg }, ...res }) => {
-          if (code === 0) {
+        .then(({ data: data, ...res }) => {
+          if (data.code === 0) {
             // ElMessage.success("登录成功");
+            setAdmin(data.data.isAdmin);
             setToken(res.headers["token"]);
             this.$router.push(this.$route.query.from || "/");
           } else {
-            ElMessage.error(msg);
+            ElMessage.error(data.description+': '+data.msg);
           }
         })
         .catch(() => {

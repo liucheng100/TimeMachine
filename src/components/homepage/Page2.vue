@@ -1,6 +1,6 @@
 <template>
     <div class="page2">
-        <CardMini :key="idx" v-for="(i, idx) in dataList" :title=i.workTitle :auth="'暂无'" :avatar=i.makerAvatar :hot=i.views
+        <CardMini :key="idx" v-for="(i, idx) in dataList" :title=i.workTitle :auth="i.makerName" :avatar=i.makerAvatar :hot=i.views
             :cover=i.coverFile @click="$router.push({
                 path: '/WorkDetail',
                 query: { workId: i.workId }
@@ -35,6 +35,7 @@ export default {
             dataList: [],
             pageNum: 1,
             pageSize: 10,
+            timeouter: 0,
         }
     },
     computed: {
@@ -100,7 +101,10 @@ export default {
                 getSrc(tarObject[attr]).then(v => {
                     // console.log(v)
                     tarObject[attr] = v
-                    this.$forceUpdate()
+                    clearTimeout(this.timeouter)
+                    this.timeouter = setTimeout(() => {
+                        this.$forceUpdate()
+                    }, 500);
                 })
                 // .catch(err => {
                 //     ElMessage.error('图片加载失败')

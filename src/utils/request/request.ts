@@ -7,7 +7,7 @@ import axios from "axios";
 import type { AxiosInstance } from "axios";
 import type { MYRequestInterceptors, MYRequestConfig } from "./type";
 import { ElMessage } from "element-plus";
-import { removeToken, setToken } from "@/utils/auth";
+import { getToken, removeToken, setToken } from "@/utils/auth";
 
 const DEFAULT_LOADING = true;
 
@@ -50,8 +50,10 @@ class MYRequest {
         if (data.returnCode === "-1001") {
           console.log("请求失败,错误信息");
         } else {
-          if(res.headers && res.headers["token"]){
-            setToken(res.headers["token"]);
+          if (res.headers && res.headers["token"]) {
+            if (getToken()) {
+              setToken(res.headers["token"]);
+            }
           }
           if (this.needHeader) return res;
           return data;

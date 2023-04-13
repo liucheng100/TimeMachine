@@ -39,8 +39,8 @@
 </template>
   
 <script>
-import { getToken, setToken } from "@/utils/auth";
-import { loginA, sendCode, verifyCode, register } from "@/api/login";
+import { getToken, setToken, setAdmin } from "@/utils/auth";
+import { loginA, sendCode, verifyCode, resetPass } from "@/api/login";
 export default {
   data() {
     return {
@@ -56,7 +56,7 @@ export default {
     };
   },
   methods: {
-    signUp(){
+    signUp() {
       if (!this.account) {
         ElMessage.warning("请输入您的邮箱并验证");
         return;
@@ -74,42 +74,38 @@ export default {
         return;
       }
 
-      verifyCode({
+
+      resetPass({
         code: this.authcode,
-        email: this.account
-      }).then(v=>{
-        console.log(v)
-        if(!v.code){
-          register({
-            password: this.password,
-            email: this.account
-          }).then(v=>{
-            // console.log(v)
-            if(!v.code){
-              ElMessage.success('注册成功！')
-              // 自动登录
-              this.toLogin();
-            }else{
-              ElMessage.error('注册失败: '+v.description)
-            }
-          })
-        }else{
-          ElMessage.error('验证码校验失败:'+v.msg)
+        newPassword: this.password,
+        email: this.account,
+      }).then(v => {
+        // console.log(v)
+        if (!v.code) {
+          ElMessage.success('密码修改成功！')
+          // 自动登录
+          this.toLogin();
+          this.$router.replace('loginA')
+        } else {
+          ElMessage.error('修改失败: ' + v.description)
         }
       })
+
     },
     toLogin() {
       loginA({ username: this.account, password: this.password })
-        .then(({ data: { code: code, msg: msg }, ...res }) => {
-          if (code === 0) {
+        .then(({ data: data, ...res }) => {
+          if (data.code === 0) {
             // ElMessage.success("登录成功");
+            setAdmin(data.data.isAdmin);
             setToken(res.headers["token"]);
             this.$router.push(this.$route.query.from || "/");
           } else {
-            ElMessage.error(msg);
+            ElMessage.error(data.description+': '+data.msg);
           }
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err)
           ElMessage.error("登录失败");
         });
     },
@@ -125,13 +121,13 @@ export default {
       //   ElMessage.info('请输入正确的邮箱格式');
       //   return false;
       // }
-      if(emailPattern.test(this.account)){
+      if (emailPattern.test(this.account)) {
         return true;
       }
       return false;
     },
     sendCode() {
-      if(!this.checkEmail()) {
+      if (!this.checkEmail()) {
         ElMessage.warning('请输入正确的邮箱格式')
         return
       }
@@ -147,11 +143,11 @@ export default {
         this.restTime--;
       }, 1000);
 
-      sendCode(this.account).then(v=>{
+      sendCode(this.account).then(v => {
         // console.log(v)
-        if(!v.code){
+        if (!v.code) {
           ElMessage.success('验证码已发送至邮箱')
-        }else{
+        } else {
           ElMessage.error(v.msg)
         }
       })
