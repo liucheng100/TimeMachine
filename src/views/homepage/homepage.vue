@@ -91,7 +91,7 @@ export default {
             let c = e.target.scrollHeight
             let d = c - b - a
             // console.log(d)
-            if (d < 80) {
+            if (d < 140) {
                 this.byEnd = true
             } else {
                 this.byEnd = false

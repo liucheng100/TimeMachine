@@ -41,3 +41,12 @@ export function newWork<T>(data:any){
         },
     })
 }
+
+export function workList<T>(makerId:any){
+    return http.get<T>({
+        url:'/work/list',
+        params: {
+            makerId: makerId,
+        },
+    })
+}
