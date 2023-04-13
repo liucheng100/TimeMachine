@@ -13,19 +13,21 @@
                 <card @click="$router.push({
                     path: '/WorkDetail',
                     query: { workId: 13 }
-                })" v-for="i in prize1List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
+                })" v-for="i in prize1List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
                 </card>
             </template>
             <template v-slot:tab1>
-                <card v-for="i in prize1List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
+                <card v-for="i in prize1List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
+                    :cover=i.cover>
                 </card>
             </template>
             <template v-slot:tab2>
-                <card v-for="i in prize1List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
+                <card v-for="i in prize1List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
+                    :cover=i.cover>
                 </card>
             </template>
             <template v-slot:tab3>
-                <card v-for="i in prize1List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
+                <card v-for="i in prize1List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
                 </card>
             </template>
         </TabMagic>
@@ -37,19 +39,21 @@
         <TabMagic :id="2" sticky="0" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']" @tab0Click="setPrize2State(0)"
             @tab1Click="setPrize2State(1)" @tab2Click="setPrize2State(2)" @tab3Click="setPrize2State(3)">
             <template v-slot:tab0>
-                <card v-for="i in prize2List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
+                <card v-for="i in prize2List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
                 </card>
             </template>
             <template v-slot:tab1>
-                <card v-for="i in prize2List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
+                <card v-for="i in prize2List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
+                    :cover=i.cover>
                 </card>
             </template>
             <template v-slot:tab2>
-                <card v-for="i in prize2List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
+                <card v-for="i in prize2List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
+                    :cover=i.cover>
                 </card>
             </template>
             <template v-slot:tab3>
-                <card v-for="i in prize2List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
+                <card v-for="i in prize2List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
                 </card>
             </template>
         </TabMagic>
@@ -61,19 +65,21 @@
         <TabMagic :id="3" sticky="0" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']" @tab0Click="setPrize3State(0)"
             @tab1Click="setPrize3State(1)" @tab2Click="setPrize3State(2)" @tab3Click="setPrize3State(3)">
             <template v-slot:tab0>
-                <card v-for="i in prize3List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
+                <card v-for="i in prize3List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
                 </card>
             </template>
             <template v-slot:tab1>
-                <card v-for="i in prize3List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
+                <card v-for="i in prize3List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
+                    :cover=i.cover>
                 </card>
             </template>
             <template v-slot:tab2>
-                <card v-for="i in prize3List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
+                <card v-for="i in prize3List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
+                    :cover=i.cover>
                 </card>
             </template>
             <template v-slot:tab3>
-                <card v-for="i in prize3List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
+                <card v-for="i in prize3List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
                 </card>
             </template>
         </TabMagic>
@@ -86,28 +92,28 @@
             @tab1Click="setPrize4State(1)" @tab2Click="setPrize4State(2)" @tab3Click="setPrize4State(3)">
             <template v-slot:tab0>
                 <div class="prize4_card">
-                    <cardMini v-for="i in prize4List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
+                    <cardMini v-for="i in prize4List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
                         :cover=i.cover>
                     </cardMini>
                 </div>
             </template>
             <template v-slot:tab1>
                 <div class="prize4_card">
-                    <cardMini v-for="i in prize4List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
+                    <cardMini v-for="i in prize4List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
                         :cover=i.cover>
                     </cardMini>
                 </div>
             </template>
             <template v-slot:tab2>
                 <div class="prize4_card">
-                    <cardMini v-for="i in prize4List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
+                    <cardMini v-for="i in prize4List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
                         :cover=i.cover>
                     </cardMini>
                 </div>
             </template>
             <template v-slot:tab3>
                 <div class="prize4_card">
-                    <cardMini v-for="i in prize4List" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
+                    <cardMini v-for="i in prize4List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
                         :cover=i.cover>
                     </cardMini>
                 </div>
@@ -151,50 +157,6 @@
         },
         inject: ['globalData'],
         methods: {
-            setPrize1State(i) {
-                if (i === 0) {
-                    this.prize1List = this.prize1List_df
-                } else if (i === 1) {
-                    this.prize1List = this.prize1List_ssp
-                } else if (i === 2) {
-                    this.prize1List = this.prize1List_dsp
-                } else if (i === 3) {
-                    this.prize1List = this.prize1List_ai
-                }
-            },
-            setPrize2State(i) {
-                if (i === 0) {
-                    this.prize2List = this.prize2List_df
-                } else if (i === 1) {
-                    this.prize2List = this.prize2List_ssp
-                } else if (i === 2) {
-                    this.prize2List = this.prize2List_dsp
-                } else if (i === 3) {
-                    this.prize2List = this.prize2List_ai
-                }
-            },
-            setPrize3State(i) {
-                if (i === 0) {
-                    this.prize3List = this.prize3List_df
-                } else if (i === 1) {
-                    this.prize3List = this.prize3List_ssp
-                } else if (i === 2) {
-                    this.prize3List = this.prize3List_dsp
-                } else if (i === 3) {
-                    this.prize3List = this.prize3List_ai
-                }
-            },
-            setPrize4State(i) {
-                if (i === 0) {
-                    this.prize4List = this.prize4List_df
-                } else if (i === 1) {
-                    this.prize4List = this.prize4List_ssp
-                } else if (i === 2) {
-                    this.prize4List = this.prize4List_dsp
-                } else if (i === 3) {
-                    this.prize4List = this.prize4List_ai
-                }
-            },
             replaceBlob(tarObject, attrList) {
                 attrList.forEach(attr => {
                     getSrc(tarObject[attr]).then(v => {
@@ -278,10 +240,6 @@
                                     }
 
                                 }
-                                this.setPrize1State(0)
-                                this.setPrize2State(0)
-                                this.setPrize3State(0)
-                                this.setPrize4State(0)
                             })
                         }
                     })
