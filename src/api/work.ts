@@ -19,3 +19,12 @@ export function workDetail<T>(workId:any){
         },
     })
 }
+
+export function getPrized<T>(contestId:number){
+    return http.get<T>({
+        url:'/work/contest/prized',
+        params: {
+            contestId: contestId,
+        },
+    })
+}

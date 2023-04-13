@@ -81,7 +81,7 @@
 
 
 <style scoped>
-    .homepage {}
+    /* .homepage {} */
 
     .banner {
         position: relative;
@@ -147,19 +147,5 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-    }
-
-    .tab-0 {
-        /* background-color: red; */
-    }
-
-    .tab-1 {
-        /* height: 1000px; */
-        /* background-color: green; */
-    }
-
-    .tab-2 {
-        /* height: 10000px;  */
-        /* background-color: blue; */
     }
 </style>
