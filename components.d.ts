@@ -26,6 +26,7 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     SeasonBtn: typeof import('./src/components/SeasonBtn.vue')['default']
     TabMagic: typeof import('./src/components/TabMagic/TabMagic.vue')['default']
+    WorkCard: typeof import('./src/components/admin/ReviewSubmissions/WorkCard.vue')['default']
   }
 }
 
