@@ -77,7 +77,7 @@
                         pageNum: this.pageNum,
                         pageSize: this.pageSize,
                     }).then(v => {
-                        // console.log(v)
+                        console.log(v)
                         if (!v.code) {
                             this.dataList = v.data
                             v.data.forEach(ele => {
@@ -95,7 +95,7 @@
         },
         methods: {
             replaceBlob(tarObject, attrList) {
-                // console.log(attrList)
+                console.log(attrList)
                 attrList.forEach(attr => {
                     getSrc(tarObject[attr]).then(v => {
                         // console.log(v)
@@ -106,7 +106,7 @@
                     //     ElMessage.error('图片加载失败')
                     // })
                     tarObject[attr] = pubuse('loading.gif')
-                    // console.log(this.dataList)
+                    console.log(this.dataList)
                 });
             }
         },

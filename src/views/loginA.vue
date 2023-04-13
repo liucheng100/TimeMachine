@@ -68,10 +68,11 @@ export default {
 
       this.loginLoading = true;
       loginA({ username: this.account, password: this.password })
-        .then((data) => {
+        .then(({ data: data, ...res }) => {
           if (data.code === 0) {
             ElMessage.success("登录成功");
             setAdmin(data.data.isAdmin);
+            setToken(res.headers["token"]);
             // console.log(data)
             this.loginLoading = false;
             this.$router.push(this.$route.query.from || "/");

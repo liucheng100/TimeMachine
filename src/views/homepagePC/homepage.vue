@@ -22,7 +22,6 @@
     </div>
 </template>
 <script setup>
-    import pubuse from '@/utils/pub-use'
 
     const img_data_front = [
         {

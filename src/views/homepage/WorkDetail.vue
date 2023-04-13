@@ -14,11 +14,11 @@
             <div class="bar">
                 <div class="flex">
                     <div class="avatar" :style="{ backgroundImage: `url('')` }"></div>
-                    <div class="info">暂无</div>
+                    <div class="info">{{workData.makerName}}</div>
                 </div>
                 <div class="flex">
                     <div class="eye"></div>
-                    <div class="info">1071</div>
+                    <div class="info">{{ workData.views }}</div>
                 </div>
             </div>
             <div class="psg">
@@ -64,6 +64,7 @@ export default {
         }
     },
     mounted() {
+        ElMessage.info('视频已为您静音')
         // alert(this.$route.query.workId)
         this.workId = this.$route.query.workId
         workDetail(this.workId).then(v => {
