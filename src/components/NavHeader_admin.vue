@@ -61,7 +61,7 @@
             }
         },
         watch: {
-            $router() {
+            $route() {
                 this.ON = false
             }
         },

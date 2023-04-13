@@ -2,16 +2,16 @@
     <div id="homepage" ref="homepage" class="homepage" @scroll="scroll">
         <div class="banner">
             <img class="banner-img" :src="contest.bannerPic" alt="">
-            <div class="banner-tip">还有24天截稿</div>
+            <div class="banner-tip">还有{{ restday }}天截稿</div>
         </div>
         <div class="info">
             <div class="info-left">
-                <div class="info-title">觅·新</div>
-                <div class="info-tip">第十三届方寸·流年摄影大赛</div>
+                <div class="info-title">{{ contest.title }}</div>
+                <div class="info-tip">{{ contest.subtitle }}</div>
             </div>
             <SeasonBtn @click.native="!seasonState ? ON = true : 0" :state="seasonState"></SeasonBtn>
         </div>
-        <TabMagic :id="1" sticky="0" :title_list="['赛事介绍', '全部作品', '获奖作品']" @tab0Click="seasonState = 0"
+        <TabMagic :id="11451" sticky="0" :title_list="['赛事介绍', '全部作品', '获奖作品']" @tab0Click="seasonState = 0"
             @tab1Click="seasonState = 1" @tab2Click="seasonState = 2">
             <template v-slot:tab0>
                 <div class="tab-0">
@@ -30,8 +30,10 @@
             </template>
         </TabMagic>
         <Pop :ON="ON" :model="0" title="我们更推荐在PC端投稿作品" tip="以避免在手机上找不到文件。"
-            :options="{ black: '', grey: '坚持投稿', blue: '好的' }" @blackClick="0"
-            @greyClick="$router.push('/submit'); ON = false" @blueClick="ON = false">
+            :options="{ black: '', grey: '坚持投稿', blue: '好的' }" @blackClick="0" @greyClick="$router.push({
+                path: '/submit',
+                query: { contestId: globalData.contestId }
+            }); ON = false" @blueClick="ON = false">
         </Pop>
     </div>
 </template>
@@ -60,6 +62,21 @@ export default {
             contest: {},
         }
     },
+    computed: {
+        restday() {
+            // stopTime: "1997-05-09T15:56:05"
+            let stopTime = this.contest.stopTime
+            let stopDate = new Date(stopTime);
+            let now = new Date();
+            let delta = stopDate - now; // 剩余毫秒数
+            let secondsPerDay = 1000 * 60 * 60 * 24; // 每天有多少毫秒
+            let daysLeft = Math.ceil(delta / secondsPerDay); // 向上取整，保证不误差
+            //console.log(daysLeft); // 输出距离截止时间还有多少天
+
+
+            return daysLeft
+        }
+    },
     methods: {
         click1() {
             this.ON = !this.ON
@@ -73,7 +90,8 @@ export default {
             let b = e.target.offsetHeight
             let c = e.target.scrollHeight
             let d = c - b - a
-            if (d < 50) {
+            // console.log(d)
+            if (d < 80) {
                 this.byEnd = true
             } else {
                 this.byEnd = false
@@ -95,7 +113,7 @@ export default {
     mounted() {
 
         contesting().then(v => {
-            console.log(v)
+            console.log(101, v)
             if (!v.code) {
                 this.contest = v.data
                 console.log(this.contest)
@@ -154,7 +172,7 @@ export default {
 .banner-tip {
     font-size: 14px;
     color: white;
-    text-shadow: 0 0 1px black;
+    text-shadow: 0 0 2px black;
     position: absolute;
     bottom: 10px;
     right: 19px;

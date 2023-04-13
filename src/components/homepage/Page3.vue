@@ -7,8 +7,7 @@
                 <div class="prize_font">一等奖</div>
             </div>
         </div>
-        <TabMagic :id="1" sticky="0" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']" @tab0Click="setPrize1State(0)"
-            @tab1Click="setPrize1State(1)" @tab2Click="setPrize1State(2)" @tab3Click="setPrize1State(3)">
+        <TabMagic :id="1" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']">
             <template v-slot:tab0>
                 <card @click="$router.push({
                     path: '/WorkDetail',
@@ -36,8 +35,7 @@
                 <div class="prize_font">二等奖</div>
             </div>
         </div>
-        <TabMagic :id="2" sticky="0" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']" @tab0Click="setPrize2State(0)"
-            @tab1Click="setPrize2State(1)" @tab2Click="setPrize2State(2)" @tab3Click="setPrize2State(3)">
+        <TabMagic :id="2" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']">
             <template v-slot:tab0>
                 <card v-for="i in prize2List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
                 </card>
@@ -62,8 +60,7 @@
                 <div class="prize_font">三等奖</div>
             </div>
         </div>
-        <TabMagic :id="3" sticky="0" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']" @tab0Click="setPrize3State(0)"
-            @tab1Click="setPrize3State(1)" @tab2Click="setPrize3State(2)" @tab3Click="setPrize3State(3)">
+        <TabMagic :id="3" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']">
             <template v-slot:tab0>
                 <card v-for="i in prize3List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
                 </card>
@@ -88,11 +85,10 @@
                 <div class="prize_font">优秀奖</div>
             </div>
         </div>
-        <TabMagic :id="4" sticky="0" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']" @tab0Click="setPrize4State(0)"
-            @tab1Click="setPrize4State(1)" @tab2Click="setPrize4State(2)" @tab3Click="setPrize4State(3)">
+        <TabMagic :id="4" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']">
             <template v-slot:tab0>
                 <div class="prize4_card">
-                    <cardMini v-for="i in prize4List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
+                    <cardMini :key="idx" v-for="(i,idx) in prize4List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
                         :cover=i.cover>
                     </cardMini>
                 </div>
@@ -160,8 +156,11 @@
             replaceBlob(tarObject, attrList) {
                 attrList.forEach(attr => {
                     getSrc(tarObject[attr]).then(v => {
+                        console.log(v)
                         tarObject[attr] = v
-                        this.$forceUpdate()
+                        setTimeout(() => {
+                            this.$forceUpdate()
+                        }, 100);
                     })
                     tarObject[attr] = pubuse('loading.gif')
                 });

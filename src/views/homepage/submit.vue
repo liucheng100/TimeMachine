@@ -11,7 +11,8 @@
                     </div>
                 </div>
                 <div v-if="source" class="overCover">
-                    <img ref="sourceImg" class="source-img" :src="source" alt="">
+                    <video v-if="contestgroup == 3" :controls="false" muted class="source-img" :src="source" alt=""></video>
+                    <img v-else ref="sourceImg" class="source-img" :src="source" alt="">
                     <div v-if="loading" class="mask-1">
                         <div class="loading-icon"></div>
                         <div class="loading-icon load-double"></div>
@@ -22,32 +23,66 @@
                 </div>
             </div>
         </div>
-        <TabMagic :id="0" :title_list="['单反组', '随手拍组', '短视频组','AI 组']" @tab0Click="1" @tab1Click="1" @tab2Click="1"></TabMagic>
+        <!-- <TabMagic :id="0" :title_list="['单反组', '随手拍组', '短视频组', 'AI 组']" @tab0Click="formdata.contestGroup = 1"
+            @tab1Click="formdata.contestGroup = 2" @tab2Click="formdata.contestGroup = 3"
+            @tab3Click="formdata.contestGroup = 4">
+        </TabMagic> -->
+        <div class="tab-bar">
+            <div class="tab-block-1">
+                <div @click="TabClick(idx + 1)" :class="{ 'tab-item': 1, 'tab-item-active': contestgroup == idx + 1 }"
+                    :key="idx" v-for="(title, idx) in ['单反组', '随手拍组', '短视频组', 'AI 组']">
+                    {{ title }}
+                </div>
+            </div>
+            <div class="desc" :style="{
+                left: ((contestgroup - 1) * (100 / 4)) + '%',
+                marginLeft: `calc(50%/${4})`
+            }"></div>
+        </div>
         <div class="tab tab-0">
             <p class="art-name">作品题目</p>
-            <el-input v-model="artName" placeholder="输入作品题目..." class="art-name-input">
+            <el-input v-model="formdata.workTitle" placeholder="输入作品题目..." class="art-name-input">
             </el-input>
             <p class="art-name">作品介绍</p>
-            <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 20 }" resize="none" v-model="artIntro" :rows="5"
-                placeholder="输入作品介绍..." class="art-name-textarea">
+            <el-input type="textarea" maxlength="300" :autosize="{ minRows: 4, maxRows: 20 }" resize="none"
+                v-model="formdata.description" :rows="5" placeholder="输入作品介绍..." class="art-name-textarea">
             </el-input>
         </div>
         <div class="dad-btn">
             <Protocol :ON="ON" @check="ON = !ON"></Protocol>
-            <div class="sub-btn">
+            <div class="sub-btn" @click="submit">
                 提交
             </div>
         </div>
+        <Pop :ON="pop1" :model="1" title="稿件已提交" tip="稍后请在个人中心查看" :options="{ black: '', grey: '', blue: '完成' }"
+            @blackClick="0" @blueClick="$router.back(); pop1 = false">
+        </Pop>
+        <Pop :ON="pop2" :model="0" title="提交不成功" tip="请检查网络或联系管理员" :options="{ black: '', grey: '', blue: '返回' }"
+            @blackClick="0" @blueClick="pop2 = false">
+        </Pop>
+        <Pop :ON="pop3" :model="0" title="确认要删除作品吗" tip="该操作无法被撤销。" :options="{ black: '删除', grey: '', blue: '取消' }"
+            @greyClick="0" @blueClick="pop3 = false" @blackClick="removeWork">
+        </Pop>
+        <Pop :ON="pop4" :model="0" title="确认要更换作品吗" tip="该操作无法被撤销。" :options="{ black: '更换', grey: '', blue: '取消' }"
+            @greyClick="0" @blueClick="pop4 = false" @blackClick="pop4 = false; removeWork(); upload()">
+        </Pop>
+        <Pop :ON="pop5" :model="0" title="更换类别将清空文件" tip="该操作无法被撤销。" :options="{ black: '确认', grey: '', blue: '取消' }"
+            @greyClick="0" @blueClick="pop5 = false"
+            @blackClick="pop5 = false; removeWork(); formdata.contestGroup = group_cache">
+        </Pop>
     </div>
 </template>
 
 <script>
-import { uploadFile, } from '@/api/file'
+import { uploadFile_t, concatSrc, } from '@/api/file'
+import { newWork, } from '@/api/work'
+import { contesting, } from '@/api/contest'
 export default {
     name: 'submit',
     emits: [],
     props: {
     },
+    inject: ['globalData'],
     data() {
         return {
             source: '',
@@ -56,59 +91,171 @@ export default {
             artIntro: '',
             artName: '',
             ON: false,
+
+            formdata: {
+                workTitle: '',
+                description: '',
+                workFile: 0,
+                contestGroup: 1,
+                contestId: -1,
+            },
+            group_cache: 0,
+            pop1: false,
+            pop2: false,
+            pop3: false,
+            pop4: false,
+            pop5: false,
+            net_event_id: 0,
         }
     },
+    computed: {
+        contestgroup() {
+            return this.formdata.contestGroup;
+        }
+    },
+    watch: {
+
+    },
     methods: {
+        TabClick(group) {
+            if ((group == 3 || this.contestgroup == 3) && (group != 3 || this.contestgroup != 3) && this.formdata.workFile) {
+                this.pop5 = true
+                this.group_cache = group
+            } else {
+                if (this.loading) {
+                    ElMessage.info('上传文件中')
+                } else {
+                    this.formdata.contestGroup = group
+                }
+            }
+        },
         trashFn() {
-            this.source = this.xheight = ''
+            if (this.formdata.workFile) {
+                this.pop3 = true
+            } else {
+                this.removeWork()
+            }
+        },
+        removeWork() {
+            this.pop3 = false
+            this.source = this.xheight = this.formdata.workFile = ''
             this.loading = false
+            this.net_event_id++;
         },
         upload() {
+            if (this.loading) {
+                ElMessage.info('文件上传中')
+                return
+            }
+            if (this.formdata.workFile) {
+                this.pop4 = true
+                return
+            }
+            this.save_the_event_id++;
             let input = document.createElement('input')
             input.setAttribute('type', 'file')
-            input.setAttribute('accept', "image/*")
+            if (this.formdata.contestGroup == 3) {
+                input.setAttribute('accept', "video/*")
+            } else {
+                input.setAttribute('accept', "image/*")
+            }
             input.click();
 
             input.onchange = (e) => {
                 // console.log(e.target.files[0])
+                let save_the_event_id = this.net_event_id
                 let file = e.target.files[0]
-                file = new window.File([file], file.name.slice(0,9), {type: file.type})
+                file = new window.File([file], file.name.slice(0, 9), { type: file.type })
                 let formData = new FormData();
                 formData.append('file', file)
                 let blob = window.URL.createObjectURL(file)
                 this.source = blob
                 this.loading = true
 
-                uploadFile(formData).then(v=>{
-                    console.log(typeof v)
-                    if(!v.code){
-                        let naturalHeight = this.$refs.sourceImg.naturalHeight
-                        let naturalWidth = this.$refs.sourceImg.naturalWidth
-                        // console.log(naturalHeight,naturalWidth)
-                        let rate = naturalHeight / naturalWidth
-                        // follow!
-                        let W = this.$refs.sourceImg.offsetWidth
-                        this.xheight = rate * W
-
-
-                        this.loading = false
+                uploadFile_t(formData).then(v => {
+                    if (save_the_event_id != this.net_event_id) {
+                        return
                     }
+                    console.log(v)
+                    if (!v.code) {
+                        ElMessage.success('上传成功')
+                        if (this.contestgroup != 3) {
+                            let naturalHeight = this.$refs.sourceImg.naturalHeight
+                            let naturalWidth = this.$refs.sourceImg.naturalWidth
+                            // console.log(naturalHeight,naturalWidth)
+                            let rate = naturalHeight / naturalWidth
+                            // follow!
+                            let W = this.$refs.sourceImg.offsetWidth
+                            this.xheight = rate * W
+                            this.formdata.workFile = v.data
+                            this.source = concatSrc(v.data)
+                            this.loading = false
+                        } else {
+                            this.formdata.workFile = v.data
+                            this.source = concatSrc(v.data)
+                            this.loading = false
+                        }
+
+                    } else {
+                        ElMessage.error('上传失败请重试')
+                    }
+                }).catch(err => {
+                    ElMessage.error('上传失败请重试' + err)
                 })
-                setTimeout(() => {
-                    let naturalHeight = this.$refs.sourceImg.naturalHeight
-                    let naturalWidth = this.$refs.sourceImg.naturalWidth
-                    // console.log(naturalHeight,naturalWidth)
-                    let rate = naturalHeight / naturalWidth
-                    // follow!
-                    let W = this.$refs.sourceImg.offsetWidth
-                    this.xheight = rate * W
 
-
-                    this.loading = false
-                }, 1000)
             }
+        },
+        submit() {
+            if (this.formdata.contestId == -1) {
+                ElMessage.warning('无法捕获赛事id,请刷新')
+                return
+            }
+            if (!this.formdata.workTitle) {
+                ElMessage.warning('作品名不能为空')
+                return
+            }
+            if (!this.formdata.description) {
+                ElMessage.warning('作品详情不能为空')
+                return
+            }
+            if (!this.formdata.workFile) {
+                ElMessage.warning('请先上传作品文件')
+                return
+            }
+            if (!this.ON) {
+                ElMessage.warning('请勾选隐私政策')
+                return
+            }
+            // if(!this.formdata.contestGroup){
+            //     ElMessage.warning('作品名不能为空')
+            // return
+            // }
+            newWork(this.formdata).then(v => {
+                console.log(v)
+                if (!v.code) {
+                    ElMessage.success('发布成功')
+                    this.pop1 = true
+                } else {
+                    ElMessage.error(v.description + v.msg)
+                    this.pop2 = true
+                }
+
+            }).catch(err => {
+                ElMessage.error('出错了')
+                this.pop2 = true
+            })
         }
     },
+    mounted() {
+        // 重新获取contestId
+        contesting().then(v => {
+            if (!v.code) {
+                this.formdata.contestId = v.data.contestId
+            } else {
+                ElMessage.error(v.msg)
+            }
+        })
+    }
 
 }
 </script>
@@ -223,7 +370,7 @@ export default {
 }
 
 .tool-box {
-    padding: 0 4px;
+    padding: 0 1.5px;
     position: absolute;
     bottom: 10px;
     left: 10px;
@@ -232,6 +379,7 @@ export default {
     border-radius: 6px;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.644);
+    border: solid 1px white;
 }
 
 .trash {
@@ -316,5 +464,57 @@ export default {
     to {
         transform: translate(-50%, -50%) rotate(-360deg);
     }
+}
+
+.tab-bar {
+    display: flex;
+    flex-direction: column;
+    height: 48px;
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    z-index: 99;
+    /* position: sticky; */
+    /* top: 0; */
+    border-left: solid 5px transparent;
+    border-right: solid 5px transparent;
+}
+
+.tab-block-1 {
+    height: 48px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.tab-item {
+    color: #999CA0;
+    font-size: 16px;
+    font-weight: 400;
+    transition: color 0.3s;
+    min-width: calc(100%/5);
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-item-active {
+    color: #1F1F1F;
+    font-weight: 500;
+}
+
+.desc {
+
+    width: 20px;
+    height: 2px;
+    bottom: 7px;
+    /* margin-left: calc(100%/6); */
+    transform: translateX(-50%);
+    position: absolute;
+    border-radius: 1px;
+    background-color: #4E46B4;
+    transition: .4s;
 }
 </style>

@@ -31,6 +31,10 @@
                 ON: false,
                 routeList: [
                     {
+                        name: '回到主页',
+                        path: '/'
+                    },
+                    {
                         name: '往届赛事',
                         path: '/preCamps'
                     },
@@ -57,7 +61,7 @@
             }
         },
         watch: {
-            $router() {
+            $route() {
                 this.ON = false
             }
         },

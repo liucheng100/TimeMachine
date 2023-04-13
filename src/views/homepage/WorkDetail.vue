@@ -1,11 +1,11 @@
 <template>
     <div class="work-detail">
-        <div v-if="0" @click="zoomOn = true" class="cover-box">
+        <div v-if="workData.contestGroup != 3" @click="zoomOn = true" class="cover-box">
             <img class="img" :src="workData.workFile" alt="">
         </div>
         <div v-else class="video-box">
-            <video controls muted class="video">
-                <source :src="testVideo" type="video/mp4">
+            <video controls muted class="video" :src="videoSrc">
+                <!-- <source :src="testVideo" type="video/mp4"> -->
             </video>
             <a :href="testVideo" class="videoErr">无法播放?点我下载到本地</a>
         </div>
@@ -13,8 +13,8 @@
             <div class="title">{{ workData.workTitle }}</div>
             <div class="bar">
                 <div class="flex">
-                    <div class="avatar" :style="{ backgroundImage: `url('')` }"></div>
-                    <div class="info">{{workData.makerName}}</div>
+                    <div class="avatar" :style="{ backgroundImage: `url('${workData.makerAvatar}')` }"></div>
+                    <div class="info">{{ workData.makerName }}</div>
                 </div>
                 <div class="flex">
                     <div class="eye"></div>
@@ -37,7 +37,7 @@
 
 <script>
 import { workDetail, } from '@/api/work'
-import { getSrc, uploadFile, } from '@/api/file'
+import { getSrc, uploadFile, concatSrc } from '@/api/file'
 import pubuse from '@/utils/pub-use'
 export default {
     name: 'WorkDetail',
@@ -48,6 +48,11 @@ export default {
             workData: {},
             testVideo: 'http://photo.twtstudio.com/file/get?path=media/2023_04/265e2dd0-805d-4c28-b9aa-dcc1ec48e8a9.flv',
             testVideo: 'http://photo.twtstudio.com/file/get?path=media/2023_04/c5352d51-e028-4dae-864f-c0161e590181.mp4',
+        }
+    },
+    computed: {
+        videoSrc() {
+            return concatSrc(this.workData.workFile)
         }
     },
     methods: {
@@ -64,16 +69,23 @@ export default {
         }
     },
     mounted() {
-        ElMessage.info('视频已为您静音')
+
+
         // alert(this.$route.query.workId)
         this.workId = this.$route.query.workId
         workDetail(this.workId).then(v => {
-            console.log(v)
+            console.log(71, v)
             if (!v.code) {
                 this.workData = v.data
-                this.replaceBlob(this.workData, [
-                    'workFile'
-                ])
+                if (this.workData.contestGroup == 3) {
+                    ElMessage.info('视频已为您静音')
+                } else {
+                    // 如果是图片则解析成blob
+                    this.replaceBlob(this.workData, [
+                        'workFile'
+                    ])
+                }
+
             }
         })
 
@@ -93,6 +105,7 @@ export default {
     width: 100%;
     overflow: hidden;
 }
+
 .video-box {
     height: calc(100% - 200px);
     width: 100%;
@@ -101,12 +114,14 @@ export default {
     flex-direction: column;
     align-items: center;
 }
-.video{
+
+.video {
     width: 100%;
     height: 350px;
     max-height: 30vh;
     background-color: black;
 }
+
 .img {
     height: 100%;
     width: 100%;
@@ -194,7 +209,8 @@ export default {
     color: rgba(78, 70, 180, 1);
     transform: translateY(-.6px);
 }
-.videoErr{
+
+.videoErr {
     color: rgba(78, 70, 180, 1);
     background-color: rgb(229, 227, 255);
     padding: 10px 25px;

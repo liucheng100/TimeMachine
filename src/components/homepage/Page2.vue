@@ -1,6 +1,6 @@
 <template>
     <div class="page2">
-        <CardMini :key="idx" v-for="(i, idx) in dataList" :title=i.workTitle :auth="'暂无'" :avatar=i.makerAvatar
+        <CardMini :key="idx" v-for="(i, idx) in dataList" :title=i.workTitle :auth="i.makerName" :avatar=i.makerAvatar
             :hot=i.views :cover=i.coverFile @click="$router.push({
                 path: '/WorkDetail',
                 query: { workId: i.workId }
@@ -53,7 +53,7 @@
                             pageNum: this.pageNum,
                             pageSize: this.pageSize,
                         }).then(v => {
-                            // console.log(v)
+                            console.log(v)
                             if (!v.code) {
                                 this.dataList = this.dataList.concat(v.data)
                                 v.data.forEach(ele => {
@@ -112,7 +112,8 @@
         },
         mounted() {
             bus.on('need-tab-idx', (ls) => {
-                if (ls[1] == 1) {
+                // 11451要和需要谁的id对应
+                if (ls[1] == 11451) {
                     this.tabIdx = ls[0]
                 }
             })
