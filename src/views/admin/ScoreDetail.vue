@@ -26,8 +26,58 @@
             </div>
         </div>
         <div class="score">
-
+            <img v-for="(item,index) in stars" :key="item" 
+            @mouseover="changeColorHover(index)"
+            @click="changeColorClick();"
+            @mouseleave="changeColorLeave()"
+             src="@/assets/star.svg" class="star"/>
+            <img v-for="(item,index) in stars_none" :key="item" 
+            @mouseover="changeColorHover(index + stars.length)" src="@/assets/star-none.svg" class="star"/>
         </div>
+        <div class="button-box">
+            <button class="button" :style="{ background:'#FF4E6450' }">
+                <img src="@/assets/trash-2.svg"/>
+            </button>
+            <button class="button" :style="{ background:'#F5F5F5' }">
+                <img src="@/assets/arrow-left.svg"/>
+            </button>
+            <button class="button" :style="{ background:'#F5F5F5' }">
+                <img src="@/assets/download.svg"/>
+            </button>
+            <button class="button" :style="{ background:'#FFD33750' }">
+                <img src="@/assets/award.svg"/>
+            </button>
+        </div>
+        <Pop
+            :ON="ON_setting"
+            :model="0"
+            :title="`确定要设置为${award.name}吗?`"
+            :tip="`设置后剩余${award.remaining - 1}个名额`"
+            :options="{black:'',grey:'取消',blue:'设置'}"
+            @blackClick="0"
+            @greyClick="ON_setting=false"
+            @blueClick="0"
+        />
+        <Pop
+            :ON="ON_refresh"
+            :model="1"
+            title="奖项已提交"
+            tip="请刷新此网页"
+            :options="{black:'',grey:'',blue:'完成'}"
+            @blackClick="0"
+            @greyClick="0"
+            @blueClick="ON_refresh=false"
+        />
+        <Pop
+            :ON="ON_error"
+            :model="0"
+            title="无法设置奖项"
+            tip="该奖项没有获奖名额"
+            :options="{black:'',grey:'',blue:'返回'}"
+            @blackClick="0"
+            @greyClick="0"
+            @blueClick="ON_error=false"
+        />
     </div>
 </template>
 
@@ -39,9 +89,39 @@
         data() {
             return {
                 work: { workTitle: '作品', auth: '城市作画', avatar: '', views: '1071', cover: '', description: '作品简介作品简介', contestGroup: 1 },
+                award:{ name: "一等奖", remaining: 1 },
+                ON_setting: false,
+                ON_refresh: false,
+                ON_error: false,
+                //stars.length 就是星星数量
+                stars:[],
+                stars_none:[{},{},{},{},{}],
+                stars_none_old:[],
+                stars_old:[],
+                click:false
             }
         },
         methods: {
+            changeColorHover:function(index){
+                let length = index + 1;
+                this.stars_old = this.stars;
+                this.stars_none_old = this.stars_none;
+                this.stars.length = 0;
+                this.stars_none.length = 0;
+                for(let a = 0; a < length; a++)this.stars.push({});
+                for(let a = 0; a < 5 - length; a++)this.stars_none.push({});
+            },
+            changeColorLeave:function(){
+                if(!this.click){
+                    this.stars = this.stars_old;
+                    this.stars_none = this.stars_none_old;
+                }
+                this.click = false;
+            },
+            changeColorClick:function(){
+                this.changeColorHover();
+                this.click = true;
+            }
         },
         mounted() {
         },
@@ -158,10 +238,34 @@
     .score {
         margin-top: 20px;
         margin-left: 20px;
-        box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.1);
+        display:flex;
+        flex-direction: row;
+        
         width: calc(100vw - 40px);
-        height: 48px;
+        height: 55px;
         border-radius: 6px;
-
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        align-items: center;
+    }
+    .star{
+        margin:5px;
+        height:25px;
+    }
+    .button-box {
+        margin-top: 20px;
+        margin-left: 20px;
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: calc(100vw - 40px);
+        height: 60px;
+        border-radius: 6px;
+    }
+    .button{
+        height:60px;
+        width:60px;
+        border-radius: 50%;
+        border:3px solid #FFFFFF;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     }
 </style>
