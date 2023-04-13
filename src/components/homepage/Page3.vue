@@ -196,18 +196,12 @@
                 }
             },
             replaceBlob(tarObject, attrList) {
-                // console.log(attrList)
                 attrList.forEach(attr => {
                     getSrc(tarObject[attr]).then(v => {
-                        // console.log(v)
                         tarObject[attr] = v
                         this.$forceUpdate()
                     })
-                    // .catch(err => {
-                    //     ElMessage.error('图片加载失败')
-                    // })
                     tarObject[attr] = pubuse('loading.gif')
-                    // console.log(this.dataList)
                 });
             },
             setPrizedArr(works) {
