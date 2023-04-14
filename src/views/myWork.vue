@@ -30,7 +30,7 @@
                     </div>
                     <div class="bar" v-if="item.prizeId">
 
-                        <div class="status_prized">{{ prize(i) }}</div>
+                        <div class="status_prized">{{ item.prizeName }}</div>
                         <div class="ques">填写收货信息</div>
 
                     </div>
@@ -52,10 +52,10 @@
                 name: "myWork",
                 avatar: "",
                 works: [
-                    { title: "我的作品", isPass: 0, prizeId: 0, Pic: "../../assets/admin/testpic.jpg", Time: "2023-08-24T14:15:22", view: 2123 },
-                    { title: "我的作品", isPass: 1, prizeId: 0, Pic: "../../assets/admin/testpic.jpg", Time: "2023-05-24T14:15:22", view: 2123 },
-                    { title: "我的作品", isPass: 2, prizeId: 0, Pic: "../../assets/admin/testpic.jpg", Time: "2021-08-24T14:15:22", view: 2123 },
-                    { title: "我的作品", isPass: 2, prizeId: 1, Pic: "../../assets/admin/testpic.jpg", Time: "2019-08-24T14:15:22", view: 2123 },
+                    { title: "我的作品", isPass: 0, prizeId: 0, prizeName: "", Pic: "../../assets/admin/testpic.jpg", Time: "2023-08-24T14:15:22", view: 2123 },
+                    { title: "我的作品", isPass: 1, prizeId: 0, prizeName: "", Pic: "../../assets/admin/testpic.jpg", Time: "2023-05-24T14:15:22", view: 2123 },
+                    { title: "我的作品", isPass: 2, prizeId: 0, prizeName: "", Pic: "../../assets/admin/testpic.jpg", Time: "2021-08-24T14:15:22", view: 2123 },
+                    { title: "我的作品", isPass: 2, prizeId: 1, prizeName: "优秀奖", Pic: "../../assets/admin/testpic.jpg", Time: "2019-08-24T14:15:22", view: 2123 },
                 ],
                 auth: "aaasajsh"
             }
@@ -82,14 +82,14 @@
                 else if (this.works[i].isPass == 1) { return "已通过" }
                 else if (this.works[i].isPass == 2) { return "未通过" }
             },
-            prize(i) {
-                if (this.works[i].prizeId == 0) { return "未获奖" }
-                else {
-                    getPrize(this.works[i].prizeId).then(w => {
-                        return w.data.prizeName
-                    })
-                }
-            }
+            // prize(i) {
+            //     if (this.works[i].prizeId == 0) { return "未获奖" }
+            //     else {
+            //         getPrize(this.works[i].prizeId).then(w => {
+            //             return w.data.prizeName
+            //         })
+            //     }
+            // }
         },
         mounted() {
             // workList()
