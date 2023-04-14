@@ -39,199 +39,220 @@
 </template>
 
 <script>
-import Page1 from '@/components/homepage/Page1.vue'
-import Page2 from '@/components/homepage/Page2.vue'
-import Page3 from '@/components/homepage/Page3.vue'
-import { getSrc, uploadFile, } from '@/api/file'
-import { contesting, } from '@/api/contest'
-import pubuse from '@/utils/pub-use'
-export default {
-    name: 'homepage',
-    components: [
-        Page1, Page2, Page3
-    ],
-    inject: ['globalData'],
-    data() {
-        return {
-            testList: [],
-            ON: false,
-            seasonState: 0,
-            byEnd: false,
-            catchTop: 0,
-
-            contest: {},
-        }
-    },
-    computed: {
-        restday() {
-            // stopTime: "1997-05-09T15:56:05"
-            let stopTime = this.contest.stopTime
-            let stopDate = new Date(stopTime);
-            let now = new Date();
-            let delta = stopDate - now; // 剩余毫秒数
-            let secondsPerDay = 1000 * 60 * 60 * 24; // 每天有多少毫秒
-            let daysLeft = Math.ceil(delta / secondsPerDay); // 向上取整，保证不误差
-            //console.log(daysLeft); // 输出距离截止时间还有多少天
+    import Page1 from '@/components/homepage/Page1.vue'
+    import Page2 from '@/components/homepage/Page2.vue'
+    import Page3 from '@/components/homepage/Page3.vue'
+    import { getSrc, uploadFile, } from '@/api/file'
+    import { contesting, } from '@/api/contest'
+    import pubuse from '@/utils/pub-use'
+    export default {
+        name: 'homepage',
+        components: [
+            Page1, Page2, Page3
+        ],
+        inject: ['globalData'],
+        data() {
+            return {
+                testList: [],
+                ON: false,
+                seasonState: 0,
+                byEnd: false,
+                catchTop: 0,
 
 
-            return daysLeft
-        }
-    },
-    methods: {
-        click1() {
-            this.ON = !this.ON
-        },
-        click2() {
-            console.log(9)
-        },
-        scroll(e) {
-            // console.log(e)
-            let a = e.target.scrollTop
-            let b = e.target.offsetHeight
-            let c = e.target.scrollHeight
-            let d = c - b - a
-            // console.log(d)
-            if (d < 140) {
-                this.byEnd = true
-            } else {
-                this.byEnd = false
+                contest: {},
             }
-            this.catchTop = a
         },
-        replaceBlob(tarObject, attrList) {
-            attrList.forEach(attr => {
-                getSrc(tarObject[attr]).then(v => {
-                    // console.log(v)
-                    tarObject[attr] = v
-                }).catch(err => {
-                    ElMessage.error('图片加载失败')
-                })
-                tarObject[attr] = pubuse('loading.gif')
-            });
-        }
-    },
-    mounted() {
+        computed: {
+            restday() {
+                // stopTime: "1997-05-09T15:56:05"
+                let stopTime = this.contest.stopTime
+                let stopDate = new Date(stopTime);
+                let now = new Date();
+                let delta = stopDate - now; // 剩余毫秒数
+                let secondsPerDay = 1000 * 60 * 60 * 24; // 每天有多少毫秒
+                let daysLeft = Math.ceil(delta / secondsPerDay); // 向上取整，保证不误差
+                //console.log(daysLeft); // 输出距离截止时间还有多少天
 
-        contesting().then(v => {
-            console.log(101, v)
-            if (!v.code) {
-                this.contest = v.data
-                console.log(this.contest)
-                this.replaceBlob(this.contest, [
-                    'bannerPic',
-                    'introductionPic',
-                    'tailPic',
-                ])
-                // prizes
-                this.contest.prizes['1'].forEach(ele => {
-                    this.replaceBlob(ele, ['goodPic',])
-                });
-                this.contest.prizes['2'].forEach(ele => {
-                    this.replaceBlob(ele, ['goodPic',])
-                });
-                this.contest.prizes['3'].forEach(ele => {
-                    this.replaceBlob(ele, ['goodPic',])
-                });
-                this.contest.prizes['4'].forEach(ele => {
-                    this.replaceBlob(ele, ['goodPic',])
-                });
-                this.globalData.contestId = this.contest.contestId
-                this.globalData.prizes = this.contest.prizes
-            } else {
-                ElMessage.error(v.msg)
+
+                return daysLeft
             }
-        })
+        },
+        methods: {
+            click1() {
+                this.ON = !this.ON
+            },
+            click2() {
+                console.log(9)
+            },
+            scroll(e) {
+                // console.log(e)
+                let a = e.target.scrollTop
+                let b = e.target.offsetHeight
+                let c = e.target.scrollHeight
+                let d = c - b - a
+                // console.log(d)
+                if (d < 140) {
+                    this.byEnd = true
+                } else {
+                    this.byEnd = false
+                }
+            },
 
-    },
-    activated() {
-        // 对路由变化做出响应...
-        this.$refs.homepage.scrollTop = this.catchTop
-    },
+            replaceBlob(tarObject, attrList) {
+                attrList.forEach(attr => {
+                    getSrc(tarObject[attr]).then(v => {
+                        // console.log(v)
+                        tarObject[attr] = v
+                    }).catch(err => {
+                        ElMessage.error('图片加载失败')
+                    })
+                    tarObject[attr] = pubuse('loading.gif')
+                });
+            }
+        },
+        mounted() {
 
-}
+            contesting().then(v => {
+                console.log(101, v)
+                if (!v.code) {
+                    this.contest = v.data
+                    console.log(this.contest)
+                    this.replaceBlob(this.contest, [
+                        'bannerPic',
+                        'introductionPic',
+                        'tailPic',
+                    ])
+                    // prizes
+                    this.contest.prizes['1'].forEach(ele => {
+                        this.replaceBlob(ele, ['goodPic',])
+                    });
+                }
+            })
+        },
+        mounted() {
+
+            contesting().then(v => {
+                console.log(v)
+                if (!v.code) {
+                    this.contest = v.data
+                    console.log(this.contest)
+                    this.replaceBlob(this.contest, [
+                        'bannerPic',
+                        'introductionPic',
+                        'tailPic',
+                    ])
+                    // prizes
+                    this.contest.prizes['1'].forEach(ele => {
+                        this.replaceBlob(ele, ['goodPic',])
+                    });
+                    this.contest.prizes['2'].forEach(ele => {
+                        this.replaceBlob(ele, ['goodPic',])
+                    });
+                    this.contest.prizes['3'].forEach(ele => {
+                        this.replaceBlob(ele, ['goodPic',])
+                    });
+                    this.contest.prizes['4'].forEach(ele => {
+                        this.replaceBlob(ele, ['goodPic',])
+                    });
+                    this.globalData.contestId = this.contest.contestId
+                    this.globalData.prizes = this.contest.prizes
+                } else {
+                    ElMessage.error(v.msg)
+                }
+            })
+
+        },
+        activated() {
+            // 对路由变化做出响应...
+            this.$refs.homepage.scrollTop = this.catchTop
+        },
+
+    }
 </script>
 
 
 <style scoped>
-.homepage {}
+    .homepage {}
 
-.banner {
-    position: relative;
-    width: 100%;
-    height: 221px;
-    overflow: hidden;
-    margin-bottom: 20px;
-}
+    .banner {
+        position: relative;
+        width: 100%;
+        height: 221px;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
 
-.banner-img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
+    .banner-img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
 
-.banner-tip {
-    font-size: 14px;
-    color: white;
-    text-shadow: 0 0 2px black;
-    position: absolute;
-    bottom: 10px;
-    right: 19px;
-}
 
-.info {
-    width: 100%;
-    height: 56px;
-    padding: 0 20px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    .banner-tip {
+        font-size: 14px;
+        color: white;
+        text-shadow: 0 0 2px black;
+        position: absolute;
+        bottom: 10px;
+        right: 19px;
+    }
 
-.info-left {
-    height: 100%;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-right: 15px;
+    .info {
+        width: 100%;
+        height: 56px;
+        padding: 0 20px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-    overflow: hidden;
-}
+    .info-left {
+        height: 100%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-right: 15px;
 
-.info-title {
-    width: 100%;
-    font-size: 24px;
-    color: rgba(31, 31, 31, 1);
-    font-weight: 500;
+        overflow: hidden;
+    }
 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+    .info-title {
+        width: 100%;
+        font-size: 24px;
+        color: rgba(31, 31, 31, 1);
+        font-weight: 500;
 
-.info-tip {
-    width: 100%;
-    font-size: 12px;
-    color: rgba(127, 127, 127, 1);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+    .info-tip {
+        width: 100%;
+        font-size: 12px;
+        color: rgba(127, 127, 127, 1);
 
-.tab-0 {
-    /* background-color: red; */
-}
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
-.tab-1 {
-    /* height: 1000px; */
-    /* background-color: green; */
-}
+    .tab-0 {
+        /* background-color: red; */
+    }
 
-.tab-2 {
-    /* height: 10000px;  */
-    /* background-color: blue; */
-}
+    .tab-1 {
+        /* height: 1000px; */
+        /* background-color: green; */
+    }
+
+    .tab-2 {
+        /* height: 10000px;  */
+        /* background-color: blue; */
+    }
 </style>
