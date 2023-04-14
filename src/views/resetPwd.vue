@@ -39,7 +39,7 @@
 </template>
   
 <script>
-import { getToken, setToken, setAdmin } from "@/utils/auth";
+import { getToken, setToken, setAdmin, setUserId } from "@/utils/auth";
 import { loginA, sendCode, verifyCode, resetPass } from "@/api/login";
 export default {
   data() {
@@ -84,7 +84,7 @@ export default {
         if (!v.code) {
           ElMessage.success('密码修改成功！')
           // 自动登录
-          this.toLogin();
+          // this.toLogin();
           this.$router.replace('loginA')
         } else {
           ElMessage.error('修改失败: ' + v.description)
@@ -97,6 +97,7 @@ export default {
         .then(({ data: data, ...res }) => {
           if (data.code === 0) {
             // ElMessage.success("登录成功");
+            setUserId(data.data.userId);
             setAdmin(data.data.isAdmin);
             setToken(res.headers["token"]);
             this.$router.push(this.$route.query.from || "/");

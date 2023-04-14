@@ -16,6 +16,10 @@ export function setToken(token: string) {
     return Cookies.set(TokenKey, token)
 }
 
+export function setUserId(token: string) {
+    return Cookies.set('UserId', token)
+}
+
 export function removeToken() {
     removeAdmin()
     return Cookies.remove(TokenKey)

@@ -65,9 +65,10 @@ class MYRequest {
           console.log("404的错误");
         } else if (err.response && err.response.status === 401) {
           // 不知道为什么这里写不生效！！
-          removeToken();
-          ElMessage.warning('token过期，请重新登录')
-          alert('token过期，请重新登录')
+          // removeToken();
+          // ElMessage.warning('token过期，请重新登录')
+          // alert('token过期，请重新登录')
+          // location.reload();
         }
         return err;
       }
