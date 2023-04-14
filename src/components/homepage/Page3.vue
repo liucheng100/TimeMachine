@@ -178,9 +178,7 @@
                     temp.cover = works[i].coverFile
                     arr.push(temp)
                 }
-                arr.forEach(ele => {
-                    this.replaceBlob(ele, ['cover'])
-                });
+
                 return arr
             }
         },
@@ -200,43 +198,91 @@
                                 if (prizeInfo.contestGroup === 1) {//单反组
                                     if (prizeInfo.prizeName === "一等奖") {
                                         this.prize1List_df = this.setPrizedArr(data[prizeId])
+                                        this.prize1List_df.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     } else if (prizeInfo.prizeName === "二等奖") {
                                         this.prize2List_df = this.setPrizedArr(data[prizeId])
+                                        this.prize2List_df.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     } else if (prizeInfo.prizeName === "三等奖") {
                                         this.prize3List_df = this.setPrizedArr(data[prizeId])
+                                        this.prize3List_df.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     } else if (prizeInfo.prizeName === "优秀奖") {
                                         this.prize4List_df = this.setPrizedArr(data[prizeId])
+                                        this.prize4List_df.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     }
                                 } else if (prizeInfo.contestGroup === 2) {//随手拍组
                                     if (prizeInfo.prizeName === "一等奖") {
                                         this.prize1List_ssp = this.setPrizedArr(data[prizeId])
+                                        this.prize1List_ssp.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     } else if (prizeInfo.prizeName === "二等奖") {
                                         this.prize2List_ssp = this.setPrizedArr(data[prizeId])
+                                        this.prize2List_ssp.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     } else if (prizeInfo.prizeName === "三等奖") {
                                         this.prize3List_ssp = this.setPrizedArr(data[prizeId])
+                                        this.prize3List_ssp.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     } else if (prizeInfo.prizeName === "优秀奖") {
                                         this.prize4List_ssp = this.setPrizedArr(data[prizeId])
+                                        this.prize4List_ssp.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     }
                                 } else if (prizeInfo.contestGroup === 3) {//短视频组
                                     if (prizeInfo.prizeName === "一等奖") {
                                         this.prize1List_dsp = this.setPrizedArr(data[prizeId])
+                                        this.prize1List_dsp.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     } else if (prizeInfo.prizeName === "二等奖") {
                                         this.prize2List_dsp = this.setPrizedArr(data[prizeId])
+                                        this.prize2List_dsp.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     } else if (prizeInfo.prizeName === "三等奖") {
                                         this.prize3List_dsp = this.setPrizedArr(data[prizeId])
+                                        this.prize3List_dsp.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     } else if (prizeInfo.prizeName === "优秀奖") {
                                         this.prize4List_dsp = this.setPrizedArr(data[prizeId])
+                                        this.prize4List_dsp.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     }
 
                                 } else if (prizeInfo.contestGroup === 4) {//AI组
                                     if (prizeInfo.prizeName === "一等奖") {
                                         this.prize1List_ai = this.setPrizedArr(data[prizeId])
+                                        this.prize1List_ai.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     } else if (prizeInfo.prizeName === "二等奖") {
                                         this.prize2List_ai = this.setPrizedArr(data[prizeId])
+                                        this.prize2List_ai.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     } else if (prizeInfo.prizeName === "三等奖") {
                                         this.prize3List_ai = this.setPrizedArr(data[prizeId])
+                                        this.prize3List_ai.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     } else if (prizeInfo.prizeName === "优秀奖") {
                                         this.prize4List_ai = this.setPrizedArr(data[prizeId])
+                                        this.prize4List_ai.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
                                     }
 
                                 }
