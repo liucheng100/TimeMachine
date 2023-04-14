@@ -28,3 +28,25 @@ export function getPrized<T>(contestId:number){
         },
     })
 }
+
+export function newWork<T>(data:any){
+    return http.post<T>({
+        url:'/work/new',
+        data: {
+            workTitle: data.workTitle,
+            description: data.description,
+            workFile: data.workFile,
+            contestGroup: data.contestGroup,
+            contestId: data.contestId,
+        },
+    })
+}
+
+export function workList<T>(makerId:any){
+    return http.get<T>({
+        url:'/work/list',
+        params: {
+            makerId: makerId,
+        },
+    })
+}

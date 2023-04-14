@@ -12,7 +12,7 @@
             <template v-slot:tab0>
                 <div>
                     <div class="box-1">
-                        <div class="box-1-item" v-for="i in prizes['1']">
+                        <a :href="i.goodLink" class="box-1-item" v-for="i in prizes['1']">
                             <div class="box-1-avatar">
                                 <img class="img-avatar" :src="i.goodPic" alt="">
                             </div>
@@ -22,14 +22,14 @@
                             <div class="box-1-tip">
                                 {{i.prizeName}}/{{i.totalNum}}名
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </template>
             <template v-slot:tab1>
                 <div>
                     <div class="box-1">
-                        <div class="box-1-item" v-for="i in prizes['2']">
+                        <a :href="i.goodLink" class="box-1-item" v-for="i in prizes['2']">
                             <div class="box-1-avatar">
                                 <img class="img-avatar" :src="i.goodPic" alt="">
                             </div>
@@ -39,14 +39,14 @@
                             <div class="box-1-tip">
                                 {{i.prizeName}}/{{i.totalNum}}名
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </template>
             <template v-slot:tab2>
                 <div>
                     <div class="box-1">
-                        <div class="box-1-item" v-for="i in prizes['3']">
+                        <a :href="i.goodLink" class="box-1-item" v-for="i in prizes['3']">
                             <div class="box-1-avatar">
                                 <img class="img-avatar" :src="i.goodPic" alt="">
                             </div>
@@ -56,14 +56,14 @@
                             <div class="box-1-tip">
                                 {{i.prizeName}}/{{i.totalNum}}名
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </template>
             <template v-slot:tab3>
                 <div>
                     <div class="box-1">
-                        <div class="box-1-item" v-for="i in prizes['4']">
+                        <a :href="i.goodLink" class="box-1-item" v-for="i in prizes['4']">
                             <div class="box-1-avatar">
                                 <img class="img-avatar" :src="i.goodPic" alt="">
                             </div>
@@ -73,7 +73,7 @@
                             <div class="box-1-tip">
                                 {{i.prizeName}}/{{i.totalNum}}名
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </template>

@@ -28,6 +28,7 @@ const myRequest = new MYRequest({
       if (err.response.status === 401) {
         removeToken();
         alert('token过期，请重新登录')
+        location.reload()
       }
       return err;
     },

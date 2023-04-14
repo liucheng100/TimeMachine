@@ -81,6 +81,7 @@ export default {
             // setTimeout(() => {
             //     dom.scrollTop = this.cacheTop[to] || 0
             // }, 100);
+            // console.log('need-tab-idx', [to, this.id])
             bus.emit('need-tab-idx', [to, this.id])
         }
     },

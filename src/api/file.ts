@@ -16,14 +16,32 @@ export function getSrc<T>(path:any){
             resolve(URL.createObjectURL(blob))
         }).catch(error => reject(error))
     })
-    return new Promise((resolve, reject) => {
-        resolve('/file/get?path='+path)
-    })
+}
+
+export function concatSrc<T>(path:any){
+    return '/file/get?path='+path;
 }
 
 export function uploadFile<T>(file:FormData){
     return http.post<T>({
         url: '/file/upload',
         data:file
+    })
+}
+
+export function uploadFile_t<T>(file:FormData){
+    return new Promise<T>((resolve, reject) => {
+        http.post<T>({
+            url: '/file/upload',
+            data:file
+        }).then(v=>{
+            if(typeof v === 'string'){
+                resolve(JSON.parse(('['+v+']').replace('}{','},{'))[0])
+            }else{
+                resolve(v)
+            }
+        }).catch(err=>{
+            reject()
+        })
     })
 }
