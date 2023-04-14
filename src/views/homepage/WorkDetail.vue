@@ -23,7 +23,7 @@
                     <div class="info">{{ workData.makerName }}</div>
                 </div>
                 <div class="groupType info">
-                    但凡组
+                    {{ groupType(workData.contestGroup) }}
                 </div>
             </div>
             <div class="psg">
@@ -61,6 +61,12 @@ export default {
         }
     },
     methods: {
+        groupType(i) {
+            if (i == 1) return '单反组'
+            else if (i == 2) return '随手拍组'
+            else if (i == 3) return "短视频组"
+            else return "AI组"
+        },
         replaceBlob(tarObject, attrList) {
             attrList.forEach(attr => {
                 getSrc(tarObject[attr]).then(v => {

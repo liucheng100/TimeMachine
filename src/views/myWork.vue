@@ -168,8 +168,8 @@ export default {
             return t.getFullYear() + "/" + (t.getMonth() + 1) + "/" + t.getDate()
         },
         groupType(i) {
-            if (i == 1) return '单反'
-            else if (i == 2) return '摄影'
+            if (i == 1) return '单反组'
+            else if (i == 2) return '随手拍'
             else if (i == 3) return "短视频"
             else return "AI组"
         },
