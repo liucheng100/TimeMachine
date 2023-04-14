@@ -62,3 +62,23 @@ export function resetPass<T>(data: any) {
     },
   });
 }
+
+export function getUserInfo<T>(userId: any) {
+  return http.get<T>({
+    url: "/user/info",
+    params: {
+      userId,
+    },
+  });
+}
+
+export function updateInfo<T>(data: any) {
+  return http.post<T>({
+    url: "/user/update",
+    data: {
+      userId:data.userId,
+      avatar:data.avatar,
+      nickname:data.nickname,
+    },
+  });
+}

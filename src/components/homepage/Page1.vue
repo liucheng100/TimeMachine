@@ -170,6 +170,8 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-decoration: none;
+    overflow: hidden;
 }
 
 .box-1-avatar {
@@ -189,15 +191,21 @@ export default {
     object-fit: cover;
 }
 .box-1-name {
+    width: 100%;
     font-size: 14px;
     color: rgba(31, 31, 31, 1);
     font-weight: 500;
     white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
 }
 
 .box-1-tip {
     color: rgba(153, 156, 160, 1);
     font-size: 12px;
     white-space: nowrap;
+    text-align: center;
+    overflow: hidden;
 }
 </style>

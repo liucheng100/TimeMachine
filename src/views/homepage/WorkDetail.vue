@@ -10,15 +10,20 @@
             <a :href="testVideo" class="videoErr">无法播放?点我下载到本地</a>
         </div>
         <div class="info-mask">
-            <div class="title">{{ workData.workTitle }}</div>
+            <div class="bar">
+                <div class="title">{{ workData.workTitle }}</div>
+                <div class="flex">
+                    <div class="eye"></div>
+                    <div class="info">{{ workData.views }}</div>
+                </div>
+            </div>
             <div class="bar">
                 <div class="flex">
                     <div class="avatar" :style="{ backgroundImage: `url('${workData.makerAvatar}')` }"></div>
                     <div class="info">{{ workData.makerName }}</div>
                 </div>
-                <div class="flex">
-                    <div class="eye"></div>
-                    <div class="info">{{ workData.views }}</div>
+                <div class="groupType info">
+                    但凡组
                 </div>
             </div>
             <div class="psg">
@@ -180,7 +185,7 @@ export default {
 .title {
     font-size: 20px;
     color: rgba(31, 31, 31, 1);
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 
 .psg {

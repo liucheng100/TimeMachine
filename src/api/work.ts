@@ -50,3 +50,12 @@ export function workList<T>(makerId:any){
         },
     })
 }
+
+export function removeWork<T>(workId:any){
+    return http.post<T>({
+        url:'/work/remove',
+        params: {
+            workId: workId,
+        },
+    })
+}
