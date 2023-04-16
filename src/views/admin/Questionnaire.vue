@@ -2,7 +2,7 @@
     <div class="questionnaire">
         <div class="top">
             <div class="back" @click="back">
-                <img src="src\assets\backArray.svg">
+                <img src="../../assets/backArray.svg">
                 <div class="backFont">返回</div>
             </div>
         </div>
