@@ -34,6 +34,7 @@ export default {
       let img = document.createElement('img')
       img.src = pubuse(i)
     }
+    
   }
 
 }

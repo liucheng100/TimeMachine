@@ -225,9 +225,12 @@ router.beforeEach(async (to, from, next) => {
 		}
 	} else {
 		if(to.meta.isPC){
-			setTimeout(() => {
-				alert('当前正在用手机访问电脑页面,为不影响体验请更换为手机页面')
-			}, 1000);
+			// setTimeout(() => {
+			// 	alert('当前正在用手机访问电脑页面,为不影响体验请更换为手机页面')
+			// }, 1000);
+			next({
+				path: "/"
+			});
 		}
 		// 以下为手机端
 		if (to.meta.requireAuth && !token) {
