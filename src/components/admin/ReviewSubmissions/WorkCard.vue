@@ -1,24 +1,35 @@
 <script setup>
 import { onMounted, computed, ref, reactive} from "vue"
 import { useRouter } from "vue-router"
-let touchEvent = "";
+
 const router = useRouter();
 const WorkCard = ref();
 
-const emit = defineEmits(["multi"]);
-
 const props = defineProps({
     WorkName: String,
-    PublishTime: String,
+    contestGroup: Number,
     Status: Number,
     is_choose: Boolean,
     is_multiply:Boolean,
-    ViewVolume: Number
+    ViewVolume: Number,
+    info:Object
 })
+
+const contestGroupName = computed(() => {
+    switch(props.contestGroup){
+        case 1: return "单反组";
+        case 2: return "随手拍组";
+        case 3: return "短视频组";
+        case 4: return "AI组";
+    }
+})
+
 
 const status_text = computed(() => {
     switch(props.Status){
         case 0: return "评审中";
+        case 1: return "通过";
+        case 2: return "未通过"; 
     }
 })
 const image_style = reactive({
@@ -31,22 +42,15 @@ onMounted(() => {
     image_style.width = WorkCard.value.offsetWidth + "px";
 }
 )
-
-function clearTouch(){
-    clearTimeout(touchEvent);
-}
-
-function multi(){
-    emit("multi");
-}
 function checkDetail(){
-    router.push({
-        query:{
-            name:"Jerry",
-            number:1000
-        },
-        path:"/admin/WorkDetail"
-    })
+    if(!props.is_multiply){
+        router.push({
+            query:{
+                workId:props.info.workId
+            },
+            path:"/admin/WorkDetail"
+        })
+    }
 }
 </script>
 
@@ -54,17 +58,17 @@ function checkDetail(){
     <div class="work-card" ref="WorkCard" @click="checkDetail()">
         <img src="https://i.328888.xyz/2023/04/11/ipdpXU.jpeg" :style="image_style" class="image"/>
         <p class="work-name">{{ WorkName }}</p>
-        <p class="small-text">{{ PublishTime }}</p>
+        <p class="small-text text-out">{{ contestGroupName }}</p>
         <div class="small-box">
             <img src="@/assets/eye.svg" class="icon"/>
             <p class="small-text-inside">{{ ViewVolume }}</p>
         </div>
-        <p class="small-text">{{ status_text }}</p>
+        <p class="small-text text-out">{{ status_text }}</p>
         <div class="small-box" >
             <img src="@/assets/trash-2.svg" class="icon"/>
             <p class="small-text-inside">删除</p>
         </div>
-        <div class="circle" v-show="is_multiply" @click="multi()">
+        <div class="circle" v-show="is_multiply" @click="$emit('multi')">
             <img src="@/assets/check-circle.svg" class="check-circle" v-show="is_choose"/>
         </div>
     </div>
@@ -102,6 +106,7 @@ function checkDetail(){
     justify-content: flex-end;
     transform: scale(.95, .95);
     align-items: center;
+    width:40%;
 }
 .small-text{
     font-size: 11px;
@@ -130,5 +135,8 @@ function checkDetail(){
 }
 .check-circle{
     height: 110%;
+}
+.text-out{
+    width:40%;
 }
 </style>

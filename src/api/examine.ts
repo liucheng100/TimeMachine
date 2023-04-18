@@ -6,3 +6,17 @@ export function getUnExamined<T>(parmas:any){
         responseType: "json",
     })
 }
+
+export function unPass<T>(data:any){
+    return http.post<T>({
+        url: "/examine/back",
+        data:data
+    })
+}
+
+export function pass<T>(data:any){
+    return http.post<T>({
+        url: "/examine/pass",
+        data:data
+    })
+}
