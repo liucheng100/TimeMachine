@@ -51,7 +51,7 @@ export default {
                         pageNum: this.pageNum,
                         pageSize: this.pageSize,
                     }).then(v => {
-                        console.log(v)
+                        // console.log(v)
                         if (!v.code) {
                             this.dataList = this.dataList.concat(v.data)
                             v.data.forEach(ele => {
@@ -67,15 +67,19 @@ export default {
             }
         },
         contestId(to) {
+            alert('contestId改变'+to)
+            // 初始化
+            this.pageNum = 0
+            this.loading = false
             if (to !== -1) {
-                // alert(this.globalData.contestId)
+                // alert('page2 reload'+this.globalData.contestId)
                 this.loading = true
                 getAllWorks({
                     contestId: this.globalData.contestId,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 }).then(v => {
-                    console.log(v)
+                    // console.log(v)
                     if (!v.code) {
                         this.dataList = v.data
                         v.data.forEach(ele => {
@@ -93,7 +97,7 @@ export default {
     },
     methods: {
         replaceBlob(tarObject, attrList) {
-            console.log(attrList)
+            // console.log(attrList)
             attrList.forEach(attr => {
                 getSrc(tarObject[attr]).then(v => {
                     // console.log(v)
@@ -104,7 +108,7 @@ export default {
                 //     ElMessage.error('图片加载失败')
                 // })
                 tarObject[attr] = pubuse('loading.gif')
-                console.log(this.dataList)
+                // console.log(this.dataList)
             });
         }
     },

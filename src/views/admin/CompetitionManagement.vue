@@ -1,5 +1,5 @@
 <template>
-    <div class="management">
+    <div class="management" @scroll="scroll">
         <div class="top">
             <div class="title">管理赛事</div>
             <img src="../../assets/admin/box.svg" @click="setQues">
@@ -9,7 +9,7 @@
         </div>
         <div class="comps">
             <div class="compCard" v-for="(item,index) in comps">
-                <div class="compPic" :style="{backgroundImage:'url('+NewURL(item.bannerPic)+')'}"></div>
+                <div class="compPic" :style="{backgroundImage:`url('${item.bannerPic}')`}"></div>
                 <div class="compBottom">
                     <div class="campTitles">
                         <div class="campTitle">{{item.title}}</div>
@@ -28,6 +28,9 @@
 
 <script>
     import { isSafari } from '@/utils/common'
+    import { getCompetitions } from '@/api/competition'
+    import { getSrc, uploadFile, } from '@/api/file'
+    import pubuse from '@/utils/pub-use'
     export default {
         name: "CompetitionManagement",
         props: {
@@ -35,19 +38,41 @@
         data() {
             return {
                 comps: [
-                    { title: "光·迹", subtitle: "第十三届方寸·流年摄影大赛", status: 1, bannerPic: "../../assets/admin/testpic.jpg", stopTime: "2023-08-24T14:15:22", startTime: "2023-07-24T14:15:22" },
-                    { title: "光·迹", subtitle: "第十三届方寸·流年摄影大赛", status: 2, bannerPic: "../../assets/admin/testpic.jpg", stopTime: "2023-05-24T14:15:22", startTime: "2023-03-24T14:15:22" },
-                    { title: "光·迹", subtitle: "第十三届方寸·流年摄影大赛", status: 3, bannerPic: "../../assets/admin/testpic.jpg", stopTime: "2021-08-24T14:15:22", startTime: "2021-07-24T14:15:22" },
-                    { title: "光·迹", subtitle: "第十三届方寸·流年摄影大赛", status: 4, bannerPic: "../../assets/admin/testpic.jpg", stopTime: "2019-08-24T14:15:22", startTime: "2019-07-24T14:15:22" },
                 ],
                 isSafari: true,
-
+                loading: false,
+                pageNum: 1,
+                pageSize: 5,
+                catchTop: 0,
+                byEnd: false,
             }
         },
-        methods: {
-            NewURL(url) {
-                return new URL(`../assets/${url}`, import.meta.url).href
+        watch: {
+            byEnd(to) {
+                console.log(this.pageNum)
+                if (to) {
+                    if (!this.loading) {
+                        this.loading = true
+                        // loadmore here
+                        getCompetitions({
+                            pageNum: this.pageNum,
+                            pageSize: this.pageSize,
+                        }).then(v => {
+                            console.log(123123123, v)
+                            if (!v.code) {
+                                this.comps = this.comps.concat(v.data)
+                                v.data.forEach(ele => {
+                                    this.replaceBlob(ele, ['bannerPic'])
+                                });
+                                this.pageNum++;
+                            }
+                            this.loading = false
+                        })
+                    }
+                }
             },
+        },
+        methods: {
             newCompetition() {
                 this.$router.push("/admin/new-competition")
             },
@@ -71,11 +96,60 @@
                 }
                 else if (this.comps[i].status === 3) { return "评审中" }
                 else if (this.comps[i].status === 4) { return "已结束" }
-            }
+            },
+            replaceBlob(tarObject, attrList) {
+                console.log(attrList)
+                attrList.forEach(attr => {
+                    getSrc(tarObject[attr]).then(v => {
+                        // console.log(v)
+                        tarObject[attr] = v
+                        this.$forceUpdate()
+                    })
+                    // .catch(err => {
+                    //     ElMessage.error('图片加载失败')
+                    // })
+                    tarObject[attr] = pubuse('loading.gif')
+                    // console.log(this.dataList)
+                });
+            },
+            scroll(e) {
+                // console.log(e)
+                let a = e.target.scrollTop
+                this.catchTop = a
+                let b = e.target.offsetHeight
+                let c = e.target.scrollHeight
+                let d = c - b - a
+                // console.log(d)
+                if (d < 140) {
+                    this.byEnd = true
+                } else {
+                    this.byEnd = false
+                }
+            },
         },
         mounted() {
+            this.loading = true
+            getCompetitions({
+                pageNum: this.pageNum,
+                pageSize: this.pageSize,
+            }).then(v => {
+                console.log(v)
+                if (!v.code) {
+                    this.comps = v.data
+                    v.data.forEach(ele => {
+                        this.replaceBlob(ele, ['bannerPic'])
+                    });
+                    this.pageNum++;
+                }
+                this.loading = false
+            })
             this.isSafari = isSafari()
         },
+        // activated() {
+        //     // 对路由变化做出响应...
+        //     // alert(this.catchTop)
+        //     this.$refs.management.scrollTop = this.catchTop
+        // },
     }
 </script>
 
@@ -163,7 +237,7 @@
 
     .campTitle {
         font-size: 16px;
-        width: 40px;
+        /* width: 40px; */
         height: 22px;
         color: #000;
         font-weight: 500;

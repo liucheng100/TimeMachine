@@ -8,3 +8,16 @@ export function getPrize<T>(prizeId:number){
         },
     })
 }
+
+
+// 获取带均分信息的作品列表
+export function getAllWorks<T>(data:any){
+    return http.get<T>({
+        url:'/prize/works',
+        params: {
+            contestId: data.contestId,
+            pageNum: data.pageNum,
+            pageSize: data.pageSize,
+        },
+    })
+}

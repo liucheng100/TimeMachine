@@ -16,3 +16,13 @@ export function contesting<T>(){
     })
 }
 
+
+export function getContest<T>(contestId:any){
+    return http.get<T>({
+        url:'/contest/get',
+        params: {
+            contestId,
+        },
+    })
+}
+

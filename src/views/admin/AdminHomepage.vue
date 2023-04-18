@@ -5,40 +5,36 @@
                 <div class="info-title">{{ contest.title }}</div>
                 <div class="info-tip">{{ contest.subtitle }}</div>
             </div>
-            <SeasonBtn @click.native="contest.status==2 ? ON = true : 0" :state="contest.status-1 || 0"></SeasonBtn>
+            <SeasonBtn_admin @click.native="contest.status==2 ? 1 : 0" :state="contest.status-1 || 0">
+            </SeasonBtn_admin>
         </div>
-        <TabMagic :id="11451" sticky="0" :title_list="['赛事介绍', '全部作品', '获奖作品']" @tab0Click="seasonState = 0"
-            :activeIdx="1" @tab1Click="seasonState = 1" @tab2Click="seasonState = 2">
+        <TabMagic :id="114514" sticky="0" :title_list="['赛事介绍', '全部作品', '获奖作品']" @tab0Click="seasonState = 0" :tabId="1"
+            @tab1Click="seasonState = 1" @tab2Click="seasonState = 2">
             <template v-slot:tab0>
                 <div class="tab-0">
-                    <Page1 :contest="contest"></Page1>
+                    <Page1_admin :contest="contest"></Page1_admin>
                 </div>
             </template>
             <template v-slot:tab1>
                 <div class="tab-1">
-                    <Page2 :loadMore="byEnd"></Page2>
+                    <Page2_admin :loadMore="byEnd"></Page2_admin>
                 </div>
             </template>
             <template v-slot:tab2>
                 <div class="tab-2">
-                    <Page3></Page3>
+                    <Page3_admin></Page3_admin>
                 </div>
             </template>
         </TabMagic>
-        <Pop :ON="ON" :model="0" title="我们更推荐在PC端投稿作品" tip="以避免在手机上找不到文件。"
-            :options="{ black: '', grey: '坚持投稿', blue: '好的' }" @blackClick="0" @greyClick="$router.push({
-                path: '/submit',
-                query: { contestId: globalData.contestId }
-            }); ON = false" @blueClick="ON = false">
-        </Pop>
         <div :class="isSafari ? 'footer' : ''"></div>
     </div>
 </template>
 
 <script>
-    import Page1 from '@/components/homepage/Page1.vue'
-    import Page2 from '@/components/homepage/Page2.vue'
-    import Page3 from '@/components/homepage/Page3.vue'
+    import Page1_admin from '@/components/homepage_admin/Page1_admin.vue'
+    import Page2_admin from '@/components/homepage_admin/Page2_admin.vue'
+    import Page3_admin from '@/components/homepage_admin/Page3_admin.vue'
+    import SeasonBtn_admin from '@/components/homepage_admin/SeasonBtn_admin.vue'
     import { getSrc, uploadFile, } from '@/api/file'
     import { contesting, } from '@/api/contest'
     import { isSafari } from '@/utils/common'
@@ -46,13 +42,12 @@
     export default {
         name: 'homepage',
         components: [
-            Page1, Page2, Page3
+            Page1_admin, Page2_admin, Page3_admin, SeasonBtn_admin
         ],
         inject: ['globalData'],
         data() {
             return {
                 testList: [],
-                ON: false,
                 seasonState: 0,
                 byEnd: false,
                 catchTop: 0,

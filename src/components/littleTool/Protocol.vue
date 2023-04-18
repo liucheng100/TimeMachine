@@ -8,12 +8,25 @@
         </div>
         <div class="text">
             <div>我已阅读并同意</div>
-            <div class="a">隐私政策</div>
+            <div @click="pro_box=true" class="a">隐私政策</div>
         </div>
+        <teleport to="body">
+            <div class="proBox" v-if="pro_box">
+                <div class="header">
+                    <div @click="pro_box=false" class="back">
+                        {{'<返回'}}
+                    </div>
+                </div>
+                <div class="content">
+                    <iframe :src="iframeSrc"></iframe>
+                </div>
+            </div>
+        </teleport>
     </div>
 </template>
 
 <script>
+import longText from './proto';
 export default {
     name: 'Protocol',
     emits:['check'],
@@ -25,7 +38,13 @@ export default {
     },
     data(){
         return{
-
+            pro_box: false,
+            longText: longText,
+        }
+    },
+    computed:{
+        iframeSrc(){
+            return new URL(`./privacy.html`, import.meta.url).href
         }
     },
     methods:{
@@ -87,5 +106,38 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
     opacity: .0;
+}
+
+.proBox{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+}
+.header{
+    height: 50px;
+    /* background-color: blue; */
+    box-shadow: 0 9px 9px rgba(0, 0, 0, .05);
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+.content{
+    flex: 1;
+    overflow: auto;
+    white-space: pre-wrap;
+    text-align: center;
+    line-height: 30px;
+
+}
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 </style>
