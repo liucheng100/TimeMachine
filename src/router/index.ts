@@ -187,17 +187,27 @@ const routes = [
 		redirect: "/PC/homepage",
 		meta: {
 			title: "首页",
-			requireAuth: true,
+			requireAuth: false,
 			isPC: true
 		},
 		children: [
 			{
 				path: "/PC/homepage",
-				component: () => import("@/views/homepagePC/homepage.vue")
+				component: () => import("@/views/homepagePC/homepage.vue"),
+				meta: {
+					title:"首页",
+					requireAuth: false,
+					isPC :true
+				}
 			},
 			{
 				path: "/PC/submit",
-				component: () => import("@/views/homepagePC/submit.vue")
+				component: () => import("@/views/homepagePC/submit.vue"),
+				meta: {
+					title:"提交作品",
+					requireAuth: true,
+					isPC :true
+				}
 			}
 		]
 	}
@@ -220,18 +230,26 @@ router.beforeEach(async (to, from, next) => {
 			next({
 				path: "/PC"
 			});
-		} else {
+		} 
+		if(to.meta.requireAuth && !token){
+			next({
+				path: "/PC/homepage",
+			})
+		}
+		else {
 			window.document.title =
 				to.meta.title == undefined
 					? "方寸流年"
 					: `${to.meta.title} - 方寸流年`;
 			next();
 		}
-	} else {
+	} 
+	else {
 		if(to.meta.isPC){
 			// setTimeout(() => {
 			// 	alert('当前正在用手机访问电脑页面,为不影响体验请更换为手机页面')
 			// }, 1000);
+			// 
 			next({
 				path: "/"
 			});

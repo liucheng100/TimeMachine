@@ -7,20 +7,21 @@
         <div class="right">
             <img src="../../assets/clock.svg" class="icon"/>
             <p class="info">还有24天截稿</p>
-            <div class="to-pull">
+            <div class="to-pull" @click="toSubmit()">
                 <img src="../../assets/plus-circle.svg" class="icon"/>
-                <p class="to-pull-text" @click="toSubmit()">去投稿</p>
+                <p class="to-pull-text">去投稿</p>
             </div>
         </div>
     </div>
 </template>
 <script setup>
 import { useRouter } from "vue-router"
-
+import { getToken } from "@/utils/auth"
 const router = useRouter();
 
 function toSubmit(){
-    router.push("/PC/submit");
+    if(getToken())router.push("/PC/submit");
+    else alert("请先登录!");
 }
 </script>
 <style scoped>
@@ -49,6 +50,7 @@ function toSubmit(){
     width:25px;
     border-radius: 2px;
     padding:2px;
+    cursor:pointer;
 }
 .to-pull-text{
     margin: 0;

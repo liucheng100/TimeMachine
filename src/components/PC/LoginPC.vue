@@ -149,7 +149,6 @@ export default {
    
   },
   mounted(){
-    console.log(getToken());
     if(getToken()) {
       this.$emit("tokenGet");
     }
