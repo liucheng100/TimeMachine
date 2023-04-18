@@ -1,5 +1,6 @@
 <template>
-    <div class="work-detail">
+    <div class="work-detail" 
+    :style="{maxHeight: isSafari?'calc(100% - 100px)':''}">
         <div v-if="workData.contestGroup != 3" @click="zoomOn = true" class="cover-box">
             <img class="img" :src="workData.workFile" alt="">
         </div>
