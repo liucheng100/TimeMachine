@@ -7,7 +7,7 @@
             <video controls muted class="video" :src="videoSrc">
                 <!-- <source :src="testVideo" type="video/mp4"> -->
             </video>
-            <a :href="testVideo" class="videoErr">无法播放?点我下载到本地</a>
+            <a :href="videoSrc" class="videoErr">无法播放?点我下载到本地</a>
         </div>
         <div class="info-mask">
             <div class="bar">

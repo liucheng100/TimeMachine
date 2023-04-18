@@ -43,12 +43,14 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 .btn{
     position: relative;
     height: 17px;
     width: 17px;
     transform: translateY(.5px);
+    overflow: hidden;
 }
 .text{
     font-size: 12px;

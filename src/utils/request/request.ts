@@ -33,7 +33,15 @@ class MYRequest {
     );
     this.instance.interceptors.request.use(
       (config) => {
-        // console.log("所有实例已经拦截");
+        console.log("所有实例已经拦截12");
+        // 在每个请求发送前，将 baseurl 设置为 $env.VITE_APP_SERVER_URL
+        // 这个作为方便部署时调整服务器url使用，正式上线请注释
+        // console.log('%c此时的baseUrl为: '+config.baseURL, 'color: pink');
+        // if ('news_photo_BASEURL' in window) {
+        //   config.baseURL = (window as any).news_photo_BASEURL as string;
+        //   // console.log('当前请求的BASEURL已被拦截并更换为:'+window.news_photo_BASEURL);
+        //   console.log('%c当前请求的BASEURL已被拦截并更换为:' + (window as any).news_photo_BASEURL, 'color: orange; font-weight: bold;');
+        // }
         if (this.showLoading) {
           // console.log("HERE IS THE LOADING");
         }

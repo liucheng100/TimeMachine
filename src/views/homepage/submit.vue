@@ -11,7 +11,8 @@
                     </div>
                 </div>
                 <div v-if="source" class="overCover">
-                    <video v-if="contestgroup == 3" :controls="false" muted class="source-img" :src="source" alt=""></video>
+                    <video ref="videoEle" v-if="contestgroup == 3" :controls="false" muted class="source-img" :src="source"
+                        alt=""></video>
                     <img v-else ref="sourceImg" class="source-img" :src="source" alt="">
                     <div v-if="loading" class="mask-1">
                         <div class="loading-icon"></div>
@@ -114,7 +115,25 @@ export default {
         }
     },
     watch: {
+        contestgroup(to) {
 
+        },
+        source(to) {
+            if (to) {
+                if (this.contestgroup == 3) {
+                    this.$nextTick(() => {
+                        this.$refs.videoEle.addEventListener('playing', () => {
+                            // 在 playing 事件处理函数中暂停播放并跳转到第一帧
+                            this.$refs.videoEle.pause();
+                            this.$refs.videoEle.currentTime = 0;
+                        });
+                        this.$refs.videoEle.addEventListener('loadeddata', () => {
+                            this.$refs.videoEle.play();
+                        });
+                    })
+                }
+            }
+        }
     },
     methods: {
         TabClick(group) {
@@ -165,7 +184,9 @@ export default {
                 // console.log(e.target.files[0])
                 let save_the_event_id = this.net_event_id
                 let file = e.target.files[0]
-                file = new window.File([file], file.name.slice(0, 9), { type: file.type })
+                // file = new window.File([file], file.name.slice(0, 9), { type: file.type })
+                file = new window.File([file], file.name, { type: file.type })
+                // alert(file.type)
                 let formData = new FormData();
                 formData.append('file', file)
                 let blob = window.URL.createObjectURL(file)
@@ -193,7 +214,17 @@ export default {
                         } else {
                             this.formdata.workFile = v.data
                             this.source = concatSrc(v.data)
-                            this.loading = false
+                            // this.loading = false
+                            this.$refs.videoEle.addEventListener('loadeddata', () => {
+                                let naturalHeight = this.$refs.videoEle.videoHeight
+                                let naturalWidth = this.$refs.videoEle.videoWidth
+                                let rate = naturalHeight / naturalWidth
+                                let W = this.$refs.videoEle.offsetWidth
+                                this.xheight = rate * W
+                                setTimeout(() => {
+                                    this.loading = false
+                                }, 1000);
+                            });
                         }
 
                     } else {
@@ -201,6 +232,7 @@ export default {
                     }
                 }).catch(err => {
                     ElMessage.error('上传失败请重试' + err)
+                    console.log(err)
                 })
 
             }

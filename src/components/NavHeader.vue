@@ -69,6 +69,7 @@
             navEvent(i) {
                 if (i.path) {
                     this.$router.push(i.path)
+                    this.ON = false
                 } else if (i.event) {
                     i.event();
                 }

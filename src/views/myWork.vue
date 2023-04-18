@@ -304,7 +304,7 @@ export default {
     max-width: 43vw;
     min-width: 40vw;
     margin-bottom: 20px;
-    height: 252px;
+    /* height: 252px; */
     display: flex;
     flex-direction: column;
     border-radius: 6px;
@@ -329,9 +329,11 @@ export default {
 }
 
 .time {
-    height: 17px;
+    /* height: 17px; */
     font-size: 12px;
     color: #999CA0;
+    /* display: flex; */
+    /* align-items: center; */
 }
 
 .title {
@@ -340,10 +342,11 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .bar {
-    margin-top: 5px;
+    /* margin-top: 5px; */
     display: flex;
     justify-content: space-between;
     align-items: center;

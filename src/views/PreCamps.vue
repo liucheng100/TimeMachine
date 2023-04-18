@@ -1,7 +1,7 @@
 <template>
     <div class="preCamps" @scroll="scroll">
         <div class="comps">
-            <div class="compCard" v-for="(item, index) in comps">
+            <div @click="clickFn(item)" class="compCard" v-for="(item, index) in comps">
                 <div class="compPic" :style="{ backgroundImage: `url('${item.bannerPic}')` }"></div>
                 <div class="compBottom">
                     <div class="campTitles">
@@ -19,13 +19,14 @@
 
 <script>
 import { getSrc, } from '@/api/file'
-import { contestList, } from '@/api/contest'
+import { contestList, contesting } from '@/api/contest'
 import pubuse from '@/utils/pub-use'
 
 export default {
     name: "preCamps",
     props: {
     },
+    inject:['globalData'],
     data() {
         return {
             comps: [
@@ -68,6 +69,12 @@ export default {
         }
     },
     methods: {
+        clickFn(item){
+            let j = (item.contestId==this.globalData.contestId)
+            if(j){
+                this.$router.push('/submit')
+            }
+        },
         replaceBlob(tarObject, attrList) {
             console.log(attrList)
             attrList.forEach(attr => {
@@ -136,6 +143,17 @@ export default {
                 this.pageNum++;
             }
             this.loading = false
+        })
+        contesting().then(v => {
+            // console.log(v)
+            if (!v.code) {
+                // this.contest = v.data
+                // console.log(this.contest)
+                this.globalData.contestId = v.data.contestId
+                // this.globalData.prizes = v.data.prizes
+            } else {
+                ElMessage.error(v.msg)
+            }
         })
     },
 }
