@@ -27,16 +27,16 @@ export default defineConfig({
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '')
         },
-        '/file/get': {
-          target: 'http://photo.twtstudio.com',
-          changeOrigin: true,
-          // rewrite: (path) => path.replace(/^\/api/, '')
-        },
-      },
+      //   '/file/get': {
+      //     target: 'http://photo.twtstudio.com',
+      //     changeOrigin: true,
+      //     // rewrite: (path) => path.replace(/^\/api/, '')
+      //   },
+      // },
       // hmr: {
       //   protocol: 'ws',
       //   host: 'localhost',
-      // },
+      },
   },
   define: {
     'process.env': {}
