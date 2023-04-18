@@ -176,7 +176,7 @@
     import { getPrized, } from '@/api/work'
     import { getPrize, } from '@/api/prize'
     export default {
-        name: 'page3',
+        name: 'page3_admin',
         data() {
             return {
                 zoomOn: false,

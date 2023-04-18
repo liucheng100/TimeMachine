@@ -29,7 +29,7 @@
 
 <script>
     export default {
-        name: "CardMini",
+        name: "CardMini_admin",
         props: {
             title: {
                 type: String,

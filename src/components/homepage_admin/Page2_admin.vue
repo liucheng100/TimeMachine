@@ -15,7 +15,7 @@
     import { getAllWorks, } from '@/api/work'
     import pubuse from '@/utils/pub-use'
     export default {
-        name: 'page2',
+        name: 'page2_admin',
         props: {
             loadMore: {
                 default: false,
@@ -29,7 +29,7 @@
         data() {
             return {
                 loading: false,
-                tabIdx: 0,
+                tabIdx: 1,
                 dataList: [],
                 pageNum: 1,
                 pageSize: 10,
@@ -43,6 +43,7 @@
         watch: {
             loadMore(to) {
                 if (this.tabIdx == 1 && to) {
+                    console.log(11)
                     if (!this.loading) {
                         this.loading = true
                         // loadmore here
@@ -76,7 +77,6 @@
                         console.log(v)
                         if (!v.code) {
                             this.dataList = v.data
-                            console.log(8767868686, this.dataList)
                             v.data.forEach(ele => {
                                 this.replaceBlob(ele, ['coverFile'])
                             });
@@ -110,12 +110,28 @@
         mounted() {
             bus.on('need-tab-idx', (ls) => {
                 // 11451要和需要谁的id对应
-                if (ls[1] == 11451) {
+                if (ls[1] == 114514) {
                     this.tabIdx = ls[0]
                 }
             })
 
-
+            // alert(this.globalData.contestId)
+            // this.loading = true
+            // getAllWorks({
+            //     contestId: this.globalData.contestId,
+            //     pageNum: this.pageNum,
+            //     pageSize: this.pageSize,
+            // }).then(v => {
+            //     console.log(v)
+            //     if (!v.code) {
+            //         this.dataList = v.data
+            //         v.data.forEach(ele => {
+            //             this.replaceBlob(ele, ['coverFile'])
+            //         });
+            //         this.pageNum++;
+            //     }
+            //     this.loading = false
+            // })
 
         },
 

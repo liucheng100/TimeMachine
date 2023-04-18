@@ -116,7 +116,7 @@
         mounted() {
             this.isSafari = isSafari()
             contesting().then(v => {
-                console.log(118,v)
+                console.log(118, v)
                 if (!v.code) {
                     this.contest = v.data
                     console.log(this.contest)

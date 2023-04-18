@@ -57,16 +57,17 @@
                 type: [String],
                 default: '',
             },
-            activeIdx: {
+            tabId: {
                 type: Number,
                 default: 0
             }
         },
         data() {
             return {
-                // activeIdx: 0,
                 observer: null,
+                activeIdx: this.tabId,
                 tabHeight: 100,
+
                 cacheTop: [0, 0, 0, 0],
             }
         },
@@ -78,6 +79,9 @@
             }
         },
         watch: {
+            tabId(to) {
+                this.activeIdx = to
+            },
             activeIdx(to, from) {
                 let dom = document.getElementById('homepage')
                 if (dom) {

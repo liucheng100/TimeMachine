@@ -24,7 +24,7 @@
 
 <script>
     export default {
-        name: "Card",
+        name: "Card_admin",
         props: {
             title: {
                 type: String,

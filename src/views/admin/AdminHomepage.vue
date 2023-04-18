@@ -8,8 +8,8 @@
             <SeasonBtn_admin @click.native="contest.status==2 ? 1 : 0" :state="contest.status-1 || 0">
             </SeasonBtn_admin>
         </div>
-        <TabMagic :id="11451" sticky="0" :title_list="['赛事介绍', '全部作品', '获奖作品']" @tab0Click="seasonState = 0"
-            :activeIdx="1" @tab1Click="seasonState = 1" @tab2Click="seasonState = 2">
+        <TabMagic :id="114514" sticky="0" :title_list="['赛事介绍', '全部作品', '获奖作品']" @tab0Click="seasonState = 0" :tabId="1"
+            @tab1Click="seasonState = 1" @tab2Click="seasonState = 2">
             <template v-slot:tab0>
                 <div class="tab-0">
                     <Page1_admin :contest="contest"></Page1_admin>
