@@ -9,7 +9,7 @@
                 <div class="info-title">{{ contest.title }}</div>
                 <div class="info-tip">{{ contest.subtitle }}</div>
             </div>
-            <SeasonBtn @click.native="contest.status==2 ? ON = true : 0" :state="contest.status-1 || 0"></SeasonBtn>
+            <SeasonBtn @click.native="contest.status == 2 ? ON = true : 0" :state="contest.status - 1 || 0"></SeasonBtn>
         </div>
         <TabMagic :id="11451" sticky="0" :title_list="['赛事介绍', '全部作品', '获奖作品']" @tab0Click="seasonState = 0"
             @tab1Click="seasonState = 1" @tab2Click="seasonState = 2">
@@ -25,7 +25,8 @@
             </template>
             <template v-slot:tab2>
                 <div class="tab-2">
-                    <Page3></Page3>
+                    <Page3 v-if="(contest.status == 4)"></Page3>
+                    <img v-else class="default-img" src="../../assets/Frame112.svg" alt="">
                 </div>
             </template>
         </TabMagic>
@@ -44,7 +45,7 @@
     import Page2 from '@/components/homepage/Page2.vue'
     import Page3 from '@/components/homepage/Page3.vue'
     import { getSrc, uploadFile, } from '@/api/file'
-    import { contesting, } from '@/api/contest'
+    import { contesting, getContest, } from '@/api/contest'
     import { isSafari } from '@/utils/common'
     import pubuse from '@/utils/pub-use'
     export default {
@@ -60,6 +61,7 @@
                 seasonState: 0,
                 byEnd: false,
                 catchTop: 0,
+                catchId: -1,
                 isSafari: true,
                 contest: {},
             }
@@ -115,11 +117,17 @@
         },
         mounted() {
             this.isSafari = isSafari()
+            if (this.$route.query.contestId) {
+                // alert(this.$route.query.contestId)
+                // alert(9)
+                // 跳出mounted默认当前进行赛事处理逻辑
+                return
+            }
             contesting().then(v => {
-                console.log(118, v)
+                // console.log(118, v)
                 if (!v.code) {
                     this.contest = v.data
-                    console.log(this.contest)
+                    // console.log(this.contest)
                     this.replaceBlob(this.contest, [
                         'bannerPic',
                         'introductionPic',
@@ -149,7 +157,115 @@
         activated() {
             // 对路由变化做出响应...
             // alert(this.catchTop)
+            // 从其他路由切换回本路由触发
             this.$refs.homepage.scrollTop = this.catchTop
+
+            if (this.$route.query.contestId) {
+                if (this.catchId == this.$route.query.contestId) {
+
+                } else {
+                    getContest(this.$route.query.contestId).then(v => {
+                        // console.log(118, v)
+                        if (!v.code) {
+                            this.contest = v.data
+                            console.log(this.contest)
+                            this.replaceBlob(this.contest, [
+                                'bannerPic',
+                                'introductionPic',
+                                'tailPic',
+                            ])
+                            // prizes
+                            this.contest.prizes['1'].forEach(ele => {
+                                this.replaceBlob(ele, ['goodPic',])
+                            });
+                            this.contest.prizes['2'].forEach(ele => {
+                                this.replaceBlob(ele, ['goodPic',])
+                            });
+                            this.contest.prizes['3'].forEach(ele => {
+                                this.replaceBlob(ele, ['goodPic',])
+                            });
+                            this.contest.prizes['4'].forEach(ele => {
+                                this.replaceBlob(ele, ['goodPic',])
+                            });
+                            this.globalData.contestId = this.contest.contestId
+                            this.globalData.prizes = this.contest.prizes
+                        } else {
+                            ElMessage.error(v.description)
+                        }
+                    })
+                }
+                this.catchId = this.$route.query.contestId
+
+            } else {
+                if (this.catchId != -1) {
+                    this.catchId = -1
+                    contesting().then(v => {
+                        // console.log(118, v)
+                        if (!v.code) {
+                            this.contest = v.data
+                            // console.log(this.contest)
+                            this.replaceBlob(this.contest, [
+                                'bannerPic',
+                                'introductionPic',
+                                'tailPic',
+                            ])
+                            // prizes
+                            this.contest.prizes['1'].forEach(ele => {
+                                this.replaceBlob(ele, ['goodPic',])
+                            });
+                            this.contest.prizes['2'].forEach(ele => {
+                                this.replaceBlob(ele, ['goodPic',])
+                            });
+                            this.contest.prizes['3'].forEach(ele => {
+                                this.replaceBlob(ele, ['goodPic',])
+                            });
+                            this.contest.prizes['4'].forEach(ele => {
+                                this.replaceBlob(ele, ['goodPic',])
+                            });
+                            this.globalData.contestId = this.contest.contestId
+                            this.globalData.prizes = this.contest.prizes
+                        } else {
+                            ElMessage.error(v.msg)
+                        }
+                    })
+                }
+            }
+
+        },
+        beforeRouteUpdate(to, from, next) {
+            // 对路由变化做出响应...
+            // 从本路由切换回本路由其他参数query触发
+            // 当前为往届赛事，点击回到主页（当前赛事）时触发
+            contesting().then(v => {
+                // console.log(118, v)
+                if (!v.code) {
+                    this.contest = v.data
+                    // console.log(this.contest)
+                    this.replaceBlob(this.contest, [
+                        'bannerPic',
+                        'introductionPic',
+                        'tailPic',
+                    ])
+                    // prizes
+                    this.contest.prizes['1'].forEach(ele => {
+                        this.replaceBlob(ele, ['goodPic',])
+                    });
+                    this.contest.prizes['2'].forEach(ele => {
+                        this.replaceBlob(ele, ['goodPic',])
+                    });
+                    this.contest.prizes['3'].forEach(ele => {
+                        this.replaceBlob(ele, ['goodPic',])
+                    });
+                    this.contest.prizes['4'].forEach(ele => {
+                        this.replaceBlob(ele, ['goodPic',])
+                    });
+                    this.globalData.contestId = this.contest.contestId
+                    this.globalData.prizes = this.contest.prizes
+                } else {
+                    ElMessage.error(v.msg)
+                }
+            })
+            next()
         },
 
     }
@@ -243,5 +359,9 @@
     .tab-2 {
         /* height: 10000px;  */
         /* background-color: blue; */
+    }
+
+    .default-img {
+        width: 100%;
     }
 </style>
