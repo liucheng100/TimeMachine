@@ -9,32 +9,36 @@
         </div>
         <TabMagic :id="1" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']">
             <template v-slot:tab0>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize1List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize1List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab1>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize1List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize1List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab2>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize1List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize1List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab3>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize1List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize1List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
         </TabMagic>
         <div class="prize_out">
@@ -44,32 +48,36 @@
         </div>
         <TabMagic :id="2" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']">
             <template v-slot:tab0>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize2List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize2List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab1>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize2List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize2List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab2>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize2List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize2List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab3>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize2List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize2List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
         </TabMagic>
         <div class="prize_out">
@@ -79,32 +87,36 @@
         </div>
         <TabMagic :id="3" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']">
             <template v-slot:tab0>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize3List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize3List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab1>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize3List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize3List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab2>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize3List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize3List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab3>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize3List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize3List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
         </TabMagic>
         <div class="prize_out">
@@ -115,42 +127,42 @@
         <TabMagic :id="4" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']">
             <template v-slot:tab0>
                 <div class="prize4_card">
-                    <cardMini @click="$router.push({
-                        path: '/WorkDetail',
+                    <cardMini_admin @click="$router.push({
+                        path: '/admin/workDetail',
                         query: { workId: i.workId }
                     })" :key="idx" v-for="(i, idx) in prize4List_df" :title=i.title :auth=i.auth :avatar=i.avatar
-                        :hot=i.hot :cover=i.cover>
-                    </cardMini>
+                        :hot=i.hot :cover=i.cover :score=4.7>
+                    </cardMini_admin>
                 </div>
             </template>
             <template v-slot:tab1>
                 <div class="prize4_card">
-                    <cardMini @click="$router.push({
-                        path: '/WorkDetail',
+                    <cardMini_admin @click="$router.push({
+                        path: '/admin/workDetail',
                         query: { workId: i.workId }
                     })" v-for="i in prize4List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
-                        :cover=i.cover>
-                    </cardMini>
+                        :cover=i.cover :score=4.7>
+                    </cardMini_admin>
                 </div>
             </template>
             <template v-slot:tab2>
                 <div class="prize4_card">
-                    <cardMini @click="$router.push({
-                        path: '/WorkDetail',
+                    <cardMini_admin @click="$router.push({
+                        path: '/admin/workDetail',
                         query: { workId: i.workId }
                     })" v-for="i in prize4List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
-                        :cover=i.cover>
-                    </cardMini>
+                        :cover=i.cover :score=4.7>
+                    </cardMini_admin>
                 </div>
             </template>
             <template v-slot:tab3>
                 <div class="prize4_card">
-                    <cardMini @click="$router.push({
-                        path: '/WorkDetail',
+                    <cardMini_admin @click="$router.push({
+                        path: '/admin/workDetail',
                         query: { workId: i.workId }
                     })" v-for="i in prize4List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
-                        :cover=i.cover>
-                    </cardMini>
+                        :cover=i.cover :score=4.7>
+                    </cardMini_admin>
                 </div>
             </template>
         </TabMagic>
@@ -158,64 +170,64 @@
 </template>
 
 <script>
-import Card from '@/components/Card/Card.vue'
-import { getSrc, uploadFile, } from '@/api/file'
-import pubuse from '@/utils/pub-use'
-import { getPrized, } from '@/api/work'
-import { getPrize, } from '@/api/prize'
-export default {
-    name: 'page3',
-    data() {
-        return {
-            zoomOn: false,
-            prize1List: [],
-            prize1List_df: [],
-            prize1List_ssp: [],
-            prize1List_dsp: [],
-            prize1List_ai: [],
-            prize2List: [],
-            prize2List_df: [],
-            prize2List_ssp: [],
-            prize2List_dsp: [],
-            prize2List_ai: [],
-            prize3List: [],
-            prize3List_df: [],
-            prize3List_ssp: [],
-            prize3List_dsp: [],
-            prize3List_ai: [],
-            prize4List: [],
-            prize4List_df: [],
-            prize4List_ssp: [],
-            prize4List_dsp: [],
-            prize4List_ai: [],
-        }
-    },
-    inject: ['globalData'],
-    methods: {
-        replaceBlob(tarObject, attrList) {
-            attrList.forEach(attr => {
-                getSrc(tarObject[attr]).then(v => {
-                    console.log(v)
-                    tarObject[attr] = v
-                    setTimeout(() => {
-                        this.$forceUpdate()
-                    }, 100);
-                })
-                tarObject[attr] = pubuse('loading.gif')
-            });
-        },
-        setPrizedArr(works) {
-            let arr = []
-            for (let i in works) {
-                let temp = {}
-                temp.workId = works[i].workId
-                temp.title = works[i].workTitle
-                temp.auth = works[i].makerName
-                temp.hot = works[i].views
-                temp.avatar = works[i].makerAvatar
-                temp.cover = works[i].coverFile
-                arr.push(temp)
+    import Card_admin from '@/components/Card/Card_admin.vue'
+    import { getSrc, uploadFile, } from '@/api/file'
+    import pubuse from '@/utils/pub-use'
+    import { getPrized, } from '@/api/work'
+    import { getPrize, } from '@/api/prize'
+    export default {
+        name: 'page3',
+        data() {
+            return {
+                zoomOn: false,
+                prize1List: [],
+                prize1List_df: [],
+                prize1List_ssp: [],
+                prize1List_dsp: [],
+                prize1List_ai: [],
+                prize2List: [],
+                prize2List_df: [],
+                prize2List_ssp: [],
+                prize2List_dsp: [],
+                prize2List_ai: [],
+                prize3List: [],
+                prize3List_df: [],
+                prize3List_ssp: [],
+                prize3List_dsp: [],
+                prize3List_ai: [],
+                prize4List: [],
+                prize4List_df: [],
+                prize4List_ssp: [],
+                prize4List_dsp: [],
+                prize4List_ai: [],
             }
+        },
+        inject: ['globalData'],
+        methods: {
+            replaceBlob(tarObject, attrList) {
+                attrList.forEach(attr => {
+                    getSrc(tarObject[attr]).then(v => {
+                        console.log(v)
+                        tarObject[attr] = v
+                        setTimeout(() => {
+                            this.$forceUpdate()
+                        }, 100);
+                    })
+                    tarObject[attr] = pubuse('loading.gif')
+                });
+            },
+            setPrizedArr(works) {
+                let arr = []
+                for (let i in works) {
+                    let temp = {}
+                    temp.workId = works[i].workId
+                    temp.title = works[i].workTitle
+                    temp.auth = works[i].makerName
+                    temp.hot = works[i].views
+                    temp.avatar = works[i].makerAvatar
+                    temp.cover = works[i].coverFile
+                    arr.push(temp)
+                }
 
                 return arr
             }
@@ -230,9 +242,11 @@ export default {
                 if (to !== -1) {
                     getPrized(this.globalData.contestId).then(v => {
                         let data = v.data
+                        // console.log(222222222, data)
                         for (let prizeId in data) {
                             getPrize(prizeId).then(w => {
                                 let prizeInfo = w.data
+                                // console.log(999999898, prizeInfo)
                                 if (prizeInfo.contestGroup === 1) {//单反组
                                     if (prizeInfo.prizeName === "一等奖") {
                                         this.prize1List_df = this.setPrizedArr(data[prizeId])
@@ -301,79 +315,79 @@ export default {
                                         });
                                     }
 
-                            } else if (prizeInfo.contestGroup === 4) {//AI组
-                                if (prizeInfo.prizeName === "一等奖") {
-                                    this.prize1List_ai = this.setPrizedArr(data[prizeId])
-                                    this.prize1List_ai.forEach(ele => {
-                                        this.replaceBlob(ele, ['cover'])
-                                    });
-                                } else if (prizeInfo.prizeName === "二等奖") {
-                                    this.prize2List_ai = this.setPrizedArr(data[prizeId])
-                                    this.prize2List_ai.forEach(ele => {
-                                        this.replaceBlob(ele, ['cover'])
-                                    });
-                                } else if (prizeInfo.prizeName === "三等奖") {
-                                    this.prize3List_ai = this.setPrizedArr(data[prizeId])
-                                    this.prize3List_ai.forEach(ele => {
-                                        this.replaceBlob(ele, ['cover'])
-                                    });
-                                } else if (prizeInfo.prizeName === "优秀奖") {
-                                    this.prize4List_ai = this.setPrizedArr(data[prizeId])
-                                    this.prize4List_ai.forEach(ele => {
-                                        this.replaceBlob(ele, ['cover'])
-                                    });
-                                }
+                                } else if (prizeInfo.contestGroup === 4) {//AI组
+                                    if (prizeInfo.prizeName === "一等奖") {
+                                        this.prize1List_ai = this.setPrizedArr(data[prizeId])
+                                        this.prize1List_ai.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
+                                    } else if (prizeInfo.prizeName === "二等奖") {
+                                        this.prize2List_ai = this.setPrizedArr(data[prizeId])
+                                        this.prize2List_ai.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
+                                    } else if (prizeInfo.prizeName === "三等奖") {
+                                        this.prize3List_ai = this.setPrizedArr(data[prizeId])
+                                        this.prize3List_ai.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
+                                    } else if (prizeInfo.prizeName === "优秀奖") {
+                                        this.prize4List_ai = this.setPrizedArr(data[prizeId])
+                                        this.prize4List_ai.forEach(ele => {
+                                            this.replaceBlob(ele, ['cover'])
+                                        });
+                                    }
 
-                            }
-                        })
-                    }
-                })
+                                }
+                            })
+                        }
+                    })
+                }
+            },
+            prize1List_ssp(to) {
+                console.log(99999, to)
             }
         },
-        prize1List_ssp(to) {
-            console.log(99999, to)
-        }
-    },
-}
+    }
 </script>
 
 
 <style scoped>
-.page3 {
-    width: 100%;
-}
+    .page3 {
+        width: 100%;
+    }
 
-.prize_out {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 36.54px;
-    width: 100%;
-}
+    .prize_out {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 36.54px;
+        width: 100%;
+    }
 
-.prize {
-    height: 36.54px;
-    width: 156.54px;
-    background: url('../../assets/homepage_page3/prize.svg') center center / 100% no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    .prize {
+        height: 36.54px;
+        width: 156.54px;
+        background: url('../../assets/homepage_page3/prize.svg') center center / 100% no-repeat;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-.prize_font {
-    line-height: 36.54px;
-    font-size: 24px
-}
+    .prize_font {
+        line-height: 36.54px;
+        font-size: 24px
+    }
 
-.prize4_card {
-    width: 100%;
-    min-height: 300px;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    background-color: #fff;
-    margin-bottom: 100px;
+    .prize4_card {
+        width: 100%;
+        min-height: 300px;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        background-color: #fff;
+        margin-bottom: 100px;
 
-}
+    }
 </style>

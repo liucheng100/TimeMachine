@@ -138,6 +138,14 @@ const routes = [
 					requireAuth: true
 				}
 			},
+			{
+				path: "admin/workDetail",
+				component: () => import("@/views/homepage/WorkDetail.vue"),
+				meta: {
+					title: "作品详情",
+					requireAuth: true,
+				},
+			},
 		]
 	},
 	{
