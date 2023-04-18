@@ -83,6 +83,7 @@
 import { uploadFile_t, concatSrc, } from '@/api/file'
 import { newWork, } from '@/api/work'
 import { contesting, } from '@/api/contest'
+import { getToken } from '@/utils/auth'
 export default {
     name: 'submit',
     emits: [],
@@ -252,7 +253,13 @@ export default {
             })
         }
     },
+    created(){
+        if(!getToken()){
+            this.$router.push("/PC/homepage");
+        }
+    },
     mounted() {
+        
         // 重新获取contestId
         contesting().then(v => {
             if (!v.code) {
