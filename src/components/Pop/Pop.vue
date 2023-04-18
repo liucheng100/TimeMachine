@@ -165,4 +165,9 @@ export default {
     transform: translateY(20%);
     /* transform: rotate3d(0,0,1,60deg); */
 }
+@media screen and (min-width: 500px){
+    .box{
+        transform: scale(.4, .4);
+    }
+}
 </style>
