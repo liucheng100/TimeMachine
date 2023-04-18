@@ -91,14 +91,6 @@ const routes = [
 				}
 			},
 			{
-				path: "/admin/all",
-				component: () => import("@/views/admin/AllWork.vue"),
-				meta: {
-					title: "所有作品",
-					requireAuth: true
-				}
-			},
-			{
 				path:"/admin/score",
 				component: () => import("@/views/admin/Score.vue"),
 				meta: {
