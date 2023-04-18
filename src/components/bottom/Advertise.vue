@@ -9,13 +9,19 @@
             <p class="info">还有24天截稿</p>
             <div class="to-pull">
                 <img src="../../assets/plus-circle.svg" class="icon"/>
-                <p class="to-pull-text">去投稿</p>
+                <p class="to-pull-text" @click="toSubmit()">去投稿</p>
             </div>
         </div>
     </div>
 </template>
 <script setup>
+import { useRouter } from "vue-router"
 
+const router = useRouter();
+
+function toSubmit(){
+    router.push("/PC/submit");
+}
 </script>
 <style scoped>
 .advertise{

@@ -21,10 +21,13 @@
                 </div>
             </div>
         </div>
+        <div :class="isSafari ? 'footer' : ''"></div>
+
     </div>
 </template>
 
 <script>
+    import { isSafari } from '@/utils/common'
     export default {
         name: "CompetitionManagement",
         props: {
@@ -36,8 +39,9 @@
                     { title: "光·迹", subtitle: "第十三届方寸·流年摄影大赛", status: 2, bannerPic: "../../assets/admin/testpic.jpg", stopTime: "2023-05-24T14:15:22", startTime: "2023-03-24T14:15:22" },
                     { title: "光·迹", subtitle: "第十三届方寸·流年摄影大赛", status: 3, bannerPic: "../../assets/admin/testpic.jpg", stopTime: "2021-08-24T14:15:22", startTime: "2021-07-24T14:15:22" },
                     { title: "光·迹", subtitle: "第十三届方寸·流年摄影大赛", status: 4, bannerPic: "../../assets/admin/testpic.jpg", stopTime: "2019-08-24T14:15:22", startTime: "2019-07-24T14:15:22" },
+                ],
+                isSafari: true,
 
-                ]
             }
         },
         methods: {
@@ -70,6 +74,7 @@
             }
         },
         mounted() {
+            this.isSafari = isSafari()
         },
     }
 </script>
@@ -94,7 +99,7 @@
         color: #000;
         font-weight: 500;
         height: 45px;
-        width: 128px;
+        /* width: 128px; */
     }
 
     .top img {
@@ -187,5 +192,9 @@
         color: #999ca0;
         line-height: 17px;
         margin-right: 10px;
+    }
+
+    .footer {
+        height: 100px;
     }
 </style>

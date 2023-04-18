@@ -11,7 +11,8 @@
                     </div>
                 </div>
                 <div v-if="source" class="overCover">
-                    <video v-if="contestgroup == 3" :controls="false" muted class="source-img" :src="source" alt=""></video>
+                    <video ref="videoEle" v-if="contestgroup == 3" :controls="false" muted class="source-img"
+                        :src="source" alt=""></video>
                     <img v-else ref="sourceImg" class="source-img" :src="source" alt="">
                     <div v-if="loading" class="mask-1">
                         <div class="loading-icon"></div>
@@ -70,451 +71,490 @@
             @greyClick="0" @blueClick="pop5 = false"
             @blackClick="pop5 = false; removeWork(); formdata.contestGroup = group_cache">
         </Pop>
+        <div :class="isSafari ? 'footer' : ''"></div>
     </div>
 </template>
 
 <script>
-import { uploadFile_t, concatSrc, } from '@/api/file'
-import { newWork, } from '@/api/work'
-import { contesting, } from '@/api/contest'
-export default {
-    name: 'submit',
-    emits: [],
-    props: {
-    },
-    inject: ['globalData'],
-    data() {
-        return {
-            source: '',
-            xheight: '',
-            loading: false,
-            artIntro: '',
-            artName: '',
-            ON: false,
+    import { uploadFile_t, concatSrc, } from '@/api/file'
+    import { newWork, } from '@/api/work'
+    import { contesting, } from '@/api/contest'
+    import { isSafari } from '@/utils/common'
+    export default {
+        name: 'submit',
+        emits: [],
+        props: {
+        },
+        inject: ['globalData'],
+        data() {
+            return {
+                source: '',
+                xheight: '',
+                loading: false,
+                artIntro: '',
+                artName: '',
+                ON: false,
 
-            formdata: {
-                workTitle: '',
-                description: '',
-                workFile: 0,
-                contestGroup: 1,
-                contestId: -1,
+                formdata: {
+                    workTitle: '',
+                    description: '',
+                    workFile: 0,
+                    contestGroup: 1,
+                    contestId: -1,
+                },
+                group_cache: 0,
+                pop1: false,
+                pop2: false,
+                pop3: false,
+                pop4: false,
+                pop5: false,
+                net_event_id: 0,
+                isSafari: true,
+            }
+        },
+        computed: {
+            contestgroup() {
+                return this.formdata.contestGroup;
+            }
+        },
+        watch: {
+            contestgroup(to) {
+
             },
-            group_cache: 0,
-            pop1: false,
-            pop2: false,
-            pop3: false,
-            pop4: false,
-            pop5: false,
-            net_event_id: 0,
-        }
-    },
-    computed: {
-        contestgroup() {
-            return this.formdata.contestGroup;
-        }
-    },
-    watch: {
-
-    },
-    methods: {
-        TabClick(group) {
-            if ((group == 3 || this.contestgroup == 3) && (group != 3 || this.contestgroup != 3) && this.formdata.workFile) {
-                this.pop5 = true
-                this.group_cache = group
-            } else {
-                if (this.loading) {
-                    ElMessage.info('上传文件中')
-                } else {
-                    this.formdata.contestGroup = group
+            source(to) {
+                if (to) {
+                    if (this.contestgroup == 3) {
+                        this.$nextTick(() => {
+                            this.$refs.videoEle.addEventListener('playing', () => {
+                                // 在 playing 事件处理函数中暂停播放并跳转到第一帧
+                                this.$refs.videoEle.pause();
+                                this.$refs.videoEle.currentTime = 0;
+                            });
+                            this.$refs.videoEle.addEventListener('loadeddata', () => {
+                                this.$refs.videoEle.play();
+                            });
+                        })
+                    }
                 }
             }
         },
-        trashFn() {
-            if (this.formdata.workFile) {
-                this.pop3 = true
-            } else {
-                this.removeWork()
-            }
-        },
-        removeWork() {
-            this.pop3 = false
-            this.source = this.xheight = this.formdata.workFile = ''
-            this.loading = false
-            this.net_event_id++;
-        },
-        upload() {
-            if (this.loading) {
-                ElMessage.info('文件上传中')
-                return
-            }
-            if (this.formdata.workFile) {
-                this.pop4 = true
-                return
-            }
-            this.save_the_event_id++;
-            let input = document.createElement('input')
-            input.setAttribute('type', 'file')
-            if (this.formdata.contestGroup == 3) {
-                input.setAttribute('accept', "video/*")
-            } else {
-                input.setAttribute('accept', "image/*")
-            }
-            input.click();
-
-            input.onchange = (e) => {
-                // console.log(e.target.files[0])
-                let save_the_event_id = this.net_event_id
-                let file = e.target.files[0]
-                file = new window.File([file], file.name.slice(0, 9), { type: file.type })
-                let formData = new FormData();
-                formData.append('file', file)
-                let blob = window.URL.createObjectURL(file)
-                this.source = blob
-                this.loading = true
-
-                uploadFile_t(formData).then(v => {
-                    if (save_the_event_id != this.net_event_id) {
-                        return
+        methods: {
+            TabClick(group) {
+                if ((group == 3 || this.contestgroup == 3) && (group != 3 || this.contestgroup != 3) && this.formdata.workFile) {
+                    this.pop5 = true
+                    this.group_cache = group
+                } else {
+                    if (this.loading) {
+                        ElMessage.info('上传文件中')
+                    } else {
+                        this.formdata.contestGroup = group
                     }
+                }
+            },
+            trashFn() {
+                if (this.formdata.workFile) {
+                    this.pop3 = true
+                } else {
+                    this.removeWork()
+                }
+            },
+            removeWork() {
+                this.pop3 = false
+                this.source = this.xheight = this.formdata.workFile = ''
+                this.loading = false
+                this.net_event_id++;
+            },
+            upload() {
+                if (this.loading) {
+                    ElMessage.info('文件上传中')
+                    return
+                }
+                if (this.formdata.workFile) {
+                    this.pop4 = true
+                    return
+                }
+                this.save_the_event_id++;
+                let input = document.createElement('input')
+                input.setAttribute('type', 'file')
+                if (this.formdata.contestGroup == 3) {
+                    input.setAttribute('accept', "video/*")
+                } else {
+                    input.setAttribute('accept', "image/*")
+                }
+                input.click();
+
+                input.onchange = (e) => {
+                    // console.log(e.target.files[0])
+                    let save_the_event_id = this.net_event_id
+                    let file = e.target.files[0]
+                    // file = new window.File([file], file.name.slice(0, 9), { type: file.type })
+                    file = new window.File([file], file.name, { type: file.type })
+                    // alert(file.type)
+                    let formData = new FormData();
+                    formData.append('file', file)
+                    let blob = window.URL.createObjectURL(file)
+                    this.source = blob
+                    this.loading = true
+
+                    uploadFile_t(formData).then(v => {
+                        if (save_the_event_id != this.net_event_id) {
+                            return
+                        }
+                        console.log(v)
+                        if (!v.code) {
+                            ElMessage.success('上传成功')
+                            if (this.contestgroup != 3) {
+                                let naturalHeight = this.$refs.sourceImg.naturalHeight
+                                let naturalWidth = this.$refs.sourceImg.naturalWidth
+                                // console.log(naturalHeight,naturalWidth)
+                                let rate = naturalHeight / naturalWidth
+                                // follow!
+                                let W = this.$refs.sourceImg.offsetWidth
+                                this.xheight = rate * W
+                                this.formdata.workFile = v.data
+                                this.source = concatSrc(v.data)
+                                this.loading = false
+                            } else {
+                                this.formdata.workFile = v.data
+                                this.source = concatSrc(v.data)
+                                // this.loading = false
+                                this.$refs.videoEle.addEventListener('loadeddata', () => {
+                                    let naturalHeight = this.$refs.videoEle.videoHeight
+                                    let naturalWidth = this.$refs.videoEle.videoWidth
+                                    let rate = naturalHeight / naturalWidth
+                                    let W = this.$refs.videoEle.offsetWidth
+                                    this.xheight = rate * W
+                                    setTimeout(() => {
+                                        this.loading = false
+                                    }, 1000);
+                                });
+                            }
+
+                        } else {
+                            ElMessage.error('上传失败请重试')
+                        }
+                    }).catch(err => {
+                        ElMessage.error('上传失败请重试' + err)
+                        console.log(err)
+                    })
+
+                }
+            },
+            submit() {
+                if (this.formdata.contestId == -1) {
+                    ElMessage.warning('无法捕获赛事id,请刷新')
+                    return
+                }
+                if (!this.formdata.workTitle) {
+                    ElMessage.warning('作品名不能为空')
+                    return
+                }
+                if (!this.formdata.description) {
+                    ElMessage.warning('作品详情不能为空')
+                    return
+                }
+                if (!this.formdata.workFile) {
+                    ElMessage.warning('请先上传作品文件')
+                    return
+                }
+                if (!this.ON) {
+                    ElMessage.warning('请勾选隐私政策')
+                    return
+                }
+                // if(!this.formdata.contestGroup){
+                //     ElMessage.warning('作品名不能为空')
+                // return
+                // }
+                newWork(this.formdata).then(v => {
                     console.log(v)
                     if (!v.code) {
-                        ElMessage.success('上传成功')
-                        if (this.contestgroup != 3) {
-                            let naturalHeight = this.$refs.sourceImg.naturalHeight
-                            let naturalWidth = this.$refs.sourceImg.naturalWidth
-                            // console.log(naturalHeight,naturalWidth)
-                            let rate = naturalHeight / naturalWidth
-                            // follow!
-                            let W = this.$refs.sourceImg.offsetWidth
-                            this.xheight = rate * W
-                            this.formdata.workFile = v.data
-                            this.source = concatSrc(v.data)
-                            this.loading = false
-                        } else {
-                            this.formdata.workFile = v.data
-                            this.source = concatSrc(v.data)
-                            this.loading = false
-                        }
-
+                        ElMessage.success('发布成功')
+                        this.pop1 = true
                     } else {
-                        ElMessage.error('上传失败请重试')
+                        ElMessage.error(v.description + v.msg)
+                        this.pop2 = true
                     }
-                }).catch(err => {
-                    ElMessage.error('上传失败请重试' + err)
-                })
 
+                }).catch(err => {
+                    ElMessage.error('出错了')
+                    this.pop2 = true
+                })
             }
         },
-        submit() {
-            if (this.formdata.contestId == -1) {
-                ElMessage.warning('无法捕获赛事id,请刷新')
-                return
-            }
-            if (!this.formdata.workTitle) {
-                ElMessage.warning('作品名不能为空')
-                return
-            }
-            if (!this.formdata.description) {
-                ElMessage.warning('作品详情不能为空')
-                return
-            }
-            if (!this.formdata.workFile) {
-                ElMessage.warning('请先上传作品文件')
-                return
-            }
-            if (!this.ON) {
-                ElMessage.warning('请勾选隐私政策')
-                return
-            }
-            // if(!this.formdata.contestGroup){
-            //     ElMessage.warning('作品名不能为空')
-            // return
-            // }
-            newWork(this.formdata).then(v => {
-                console.log(v)
+        mounted() {
+            this.isSafari = isSafari()
+            // 重新获取contestId
+            contesting().then(v => {
                 if (!v.code) {
-                    ElMessage.success('发布成功')
-                    this.pop1 = true
+                    this.formdata.contestId = v.data.contestId
                 } else {
-                    ElMessage.error(v.description + v.msg)
-                    this.pop2 = true
+                    ElMessage.error(v.msg)
                 }
-
-            }).catch(err => {
-                ElMessage.error('出错了')
-                this.pop2 = true
             })
         }
-    },
-    mounted() {
-        // 重新获取contestId
-        contesting().then(v => {
-            if (!v.code) {
-                this.formdata.contestId = v.data.contestId
-            } else {
-                ElMessage.error(v.msg)
-            }
-        })
-    }
 
-}
+    }
 </script>
 
 
 <style scoped>
-.submit {
-    /* padding: 30px 0px; */
-}
-
-.title {
-    font-weight: 600;
-    font-size: 32px;
-    color: rgba(31, 31, 31, 1);
-    margin-bottom: 17px;
-    margin-top: 30px;
-    padding: 0 20px;
-}
-
-.dad-upload {
-    width: 100%;
-    padding: 0 20px;
-}
-
-.upload {
-    height: 353px;
-    width: 100%;
-    background: #FFFFFF;
-    box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.1);
-    border-radius: 6px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    transition: .3s;
-    min-height: 100px;
-    margin-bottom: 20px;
-}
-
-.info {
-    /* height: 108px; */
-    /* width: 93px; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.icon {
-    margin-bottom: 10px;
-    height: 48px;
-    width: 48px;
-    background: url('../../assets/folderPlus.svg') center center / 100% no-repeat;
-}
-
-.t1 {
-    font-size: 20px;
-    color: rgba(78, 70, 180, 1);
-    margin-bottom: 5px;
-}
-
-.t2 {
-    font-size: 12px;
-    color: rgba(153, 156, 160, 1);
-    font-weight: 300;
-    white-space: pre;
-    text-align: center;
-    line-height: 17px;
-}
-
-.overCover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: white;
-    overflow: hidden;
-}
-
-.source-img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-}
-
-.mask-1 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.39);
-}
-
-.loading-icon {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    animation: rotate 1.5s infinite linear;
-    height: 32px;
-    width: 32px;
-    background: url('../../assets/loading.svg') center center / 100% no-repeat;
-}
-
-.load-double {
-    animation: rotate_rev 1.5s infinite;
-    height: 60px;
-    width: 60px;
-}
-
-.tool-box {
-    padding: 0 1.5px;
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    height: 38px;
-    display: flex;
-    border-radius: 6px;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.644);
-    border: solid 1px white;
-}
-
-.trash {
-    margin: 0 10px;
-    height: 24px;
-    width: 24px;
-    background: url('../../assets/trash2.svg') center center / 100% no-repeat;
-}
-
-.refresh {
-    margin: 0 10px;
-    height: 24px;
-    width: 24px;
-    background: url('../../assets/refresh.svg') center center / 100% no-repeat;
-}
-
-.tab {
-    padding: 10px 20px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.art-name {
-    margin-bottom: 10px;
-    font-size: 20px;
-    color: rgba(78, 70, 180, 1);
-    width: 100%;
-}
-
-.art-name-input {
-    height: 48px;
-    font-size: 12px;
-    margin-bottom: 20px;
-    width: 100%;
-    background: #FFFFFF;
-    /* Mid-shadow */
-    box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.1);
-    border-radius: 6px;
-}
-
-.art-name-textarea {
-    font-size: 12px;
-    margin-bottom: 20px;
-    width: 100%;
-    background: #FFFFFF;
-    /* Mid-shadow */
-    box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.1);
-    border-radius: 6px;
-}
-
-.sub-btn {
-    width: 100%;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(78, 70, 180, 1);
-    color: white;
-    font-size: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-radius: 6px;
-    user-select: none;
-}
-
-.dad-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 20px;
-}
-
-@keyframes rotate {
-    to {
-        transform: translate(-50%, -50%) rotate(360deg);
+    .submit {
+        /* padding: 30px 0px; */
     }
-}
 
-@keyframes rotate_rev {
-    to {
-        transform: translate(-50%, -50%) rotate(-360deg);
+    .title {
+        font-weight: 600;
+        font-size: 32px;
+        color: rgba(31, 31, 31, 1);
+        margin-bottom: 17px;
+        margin-top: 30px;
+        padding: 0 20px;
     }
-}
 
-.tab-bar {
-    display: flex;
-    flex-direction: column;
-    height: 48px;
-    width: 100%;
-    position: relative;
-    background-color: #fff;
-    z-index: 99;
-    /* position: sticky; */
-    /* top: 0; */
-    border-left: solid 5px transparent;
-    border-right: solid 5px transparent;
-}
+    .dad-upload {
+        width: 100%;
+        padding: 0 20px;
+    }
 
-.tab-block-1 {
-    height: 48px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
+    .upload {
+        height: 353px;
+        width: 100%;
+        background: #FFFFFF;
+        box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        transition: .3s;
+        min-height: 100px;
+        margin-bottom: 20px;
+    }
 
-.tab-item {
-    color: #999CA0;
-    font-size: 16px;
-    font-weight: 400;
-    transition: color 0.3s;
-    min-width: calc(100%/5);
-    /* background-color: red; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+    .info {
+        /* height: 108px; */
+        /* width: 93px; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-.tab-item-active {
-    color: #1F1F1F;
-    font-weight: 500;
-}
+    .icon {
+        margin-bottom: 10px;
+        height: 48px;
+        width: 48px;
+        background: url('../../assets/folderPlus.svg') center center / 100% no-repeat;
+    }
 
-.desc {
+    .t1 {
+        font-size: 20px;
+        color: rgba(78, 70, 180, 1);
+        margin-bottom: 5px;
+    }
 
-    width: 20px;
-    height: 2px;
-    bottom: 7px;
-    /* margin-left: calc(100%/6); */
-    transform: translateX(-50%);
-    position: absolute;
-    border-radius: 1px;
-    background-color: #4E46B4;
-    transition: .4s;
-}
+    .t2 {
+        font-size: 12px;
+        color: rgba(153, 156, 160, 1);
+        font-weight: 300;
+        white-space: pre;
+        text-align: center;
+        line-height: 17px;
+    }
+
+    .overCover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: white;
+        overflow: hidden;
+    }
+
+    .source-img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+    }
+
+    .mask-1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.39);
+    }
+
+    .loading-icon {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        animation: rotate 1.5s infinite linear;
+        height: 32px;
+        width: 32px;
+        background: url('../../assets/loading.svg') center center / 100% no-repeat;
+    }
+
+    .load-double {
+        animation: rotate_rev 1.5s infinite;
+        height: 60px;
+        width: 60px;
+    }
+
+    .tool-box {
+        padding: 0 1.5px;
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        height: 38px;
+        display: flex;
+        border-radius: 6px;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.644);
+        border: solid 1px white;
+    }
+
+    .trash {
+        margin: 0 10px;
+        height: 24px;
+        width: 24px;
+        background: url('../../assets/trash2.svg') center center / 100% no-repeat;
+    }
+
+    .refresh {
+        margin: 0 10px;
+        height: 24px;
+        width: 24px;
+        background: url('../../assets/refresh.svg') center center / 100% no-repeat;
+    }
+
+    .tab {
+        padding: 10px 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .art-name {
+        margin-bottom: 10px;
+        font-size: 20px;
+        color: rgba(78, 70, 180, 1);
+        width: 100%;
+    }
+
+    .art-name-input {
+        height: 48px;
+        font-size: 12px;
+        margin-bottom: 20px;
+        width: 100%;
+        background: #FFFFFF;
+        /* Mid-shadow */
+        box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+    }
+
+    .art-name-textarea {
+        font-size: 12px;
+        margin-bottom: 20px;
+        width: 100%;
+        background: #FFFFFF;
+        /* Mid-shadow */
+        box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+    }
+
+    .sub-btn {
+        width: 100%;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(78, 70, 180, 1);
+        color: white;
+        font-size: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        user-select: none;
+    }
+
+    .dad-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 20px;
+    }
+
+    @keyframes rotate {
+        to {
+            transform: translate(-50%, -50%) rotate(360deg);
+        }
+    }
+
+    @keyframes rotate_rev {
+        to {
+            transform: translate(-50%, -50%) rotate(-360deg);
+        }
+    }
+
+    .tab-bar {
+        display: flex;
+        flex-direction: column;
+        height: 48px;
+        width: 100%;
+        position: relative;
+        background-color: #fff;
+        z-index: 99;
+        /* position: sticky; */
+        /* top: 0; */
+        border-left: solid 5px transparent;
+        border-right: solid 5px transparent;
+    }
+
+    .tab-block-1 {
+        height: 48px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .tab-item {
+        color: #999CA0;
+        font-size: 16px;
+        font-weight: 400;
+        transition: color 0.3s;
+        min-width: calc(100%/5);
+        /* background-color: red; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .tab-item-active {
+        color: #1F1F1F;
+        font-weight: 500;
+    }
+
+    .desc {
+
+        width: 20px;
+        height: 2px;
+        bottom: 7px;
+        /* margin-left: calc(100%/6); */
+        transform: translateX(-50%);
+        position: absolute;
+        border-radius: 1px;
+        background-color: #4E46B4;
+        transition: .4s;
+    }
+
+    .footer {
+        height: 100px;
+    }
 </style>

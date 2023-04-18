@@ -1,9 +1,9 @@
 <template>
     <div class="homepage-pc">
-        <img v-for="item in img_data_front" :src="NewURL(item.src)" class="big-img" />
+        <img v-for="item in img_data_front" :src="NewURL(item.src)" class="big-img" :key="item.src"/>
         <div class="other-box">
             <p class="box-title">奖项设置</p>
-            <div v-for="item in medal_setting" class="medal-setting">
+            <div v-for="item in medal_setting" class="medal-setting" :key="item.title">
                 <div class="medal-title">
                     <img src="../../assets/text-left.svg" class="text-icon" />
                     <p>{{ item.title }}</p>
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <img v-for="item in img_data_behind" :src="NewURL(item.src)" class="big-img" />
+        <img v-for="item in img_data_behind" :src="NewURL(item.src)" class="big-img" :key="item.src"/>
     </div>
 </template>
 <script setup>
@@ -84,6 +84,25 @@
     }
 </script>
 <style scoped>
+    .mask{
+        position: fixed;
+        top:0;
+        left:0;
+        display:flex;
+        background:#00000020;
+        width:100%;
+        height:100%;
+        z-index:50;
+    }
+    .login-box{
+        position:fixed;
+        top:20%;
+        left:35%;
+        width:30%;
+        height:50%;
+        background:#FFFFFF;
+        border-radius:5px;
+    }
     .prize-name {
         font-size: 2px;
         color: #000000;

@@ -35,6 +35,7 @@
                 query: { contestId: globalData.contestId }
             }); ON = false" @blueClick="ON = false">
         </Pop>
+        <div :class="isSafari ? 'footer' : ''"></div>
     </div>
 </template>
 
@@ -44,6 +45,7 @@
     import Page3 from '@/components/homepage/Page3.vue'
     import { getSrc, uploadFile, } from '@/api/file'
     import { contesting, } from '@/api/contest'
+    import { isSafari } from '@/utils/common'
     import pubuse from '@/utils/pub-use'
     export default {
         name: 'homepage',
@@ -58,8 +60,7 @@
                 seasonState: 0,
                 byEnd: false,
                 catchTop: 0,
-
-
+                isSafari: true,
                 contest: {},
             }
         },
@@ -112,26 +113,7 @@
             }
         },
         mounted() {
-
-            contesting().then(v => {
-                console.log(101, v)
-                if (!v.code) {
-                    this.contest = v.data
-                    console.log(this.contest)
-                    this.replaceBlob(this.contest, [
-                        'bannerPic',
-                        'introductionPic',
-                        'tailPic',
-                    ])
-                    // prizes
-                    this.contest.prizes['1'].forEach(ele => {
-                        this.replaceBlob(ele, ['goodPic',])
-                    });
-                }
-            })
-        },
-        mounted() {
-
+            this.isSafari = isSafari()
             contesting().then(v => {
                 console.log(v)
                 if (!v.code) {
@@ -240,6 +222,11 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+
+
+    .footer {
+        height: 100px;
     }
 
     .tab-0 {
