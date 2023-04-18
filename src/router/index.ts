@@ -194,6 +194,10 @@ const routes = [
 			{
 				path: "/PC/homepage",
 				component: () => import("@/views/homepagePC/homepage.vue")
+			},
+			{
+				path: "/PC/submit",
+				component: () => import("@/views/homepagePC/submit.vue")
 			}
 		]
 	}

@@ -13,6 +13,8 @@ declare module '@vue/runtime-core' {
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElInput: typeof import('element-plus/es')['ElInput']
     ImgZoom: typeof import('./src/components/ImgZoom/ImgZoom.vue')['default']
+    Login: typeof import('./src/components/PC/login.vue')['default']
+    LoginPC: typeof import('./src/components/PC/LoginPC.vue')['default']
     NavHeader: typeof import('./src/components/NavHeader.vue')['default']
     NavHeader_admin: typeof import('./src/components/NavHeader_admin.vue')['default']
     NavHeader_PC: typeof import('./src/components/NavHeader_PC.vue')['default']
@@ -25,6 +27,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SeasonBtn: typeof import('./src/components/SeasonBtn.vue')['default']
+    Signup: typeof import('./src/components/PC/signup.vue')['default']
     TabMagic: typeof import('./src/components/TabMagic/TabMagic.vue')['default']
     WorkCard: typeof import('./src/components/admin/ReviewSubmissions/WorkCard.vue')['default']
   }

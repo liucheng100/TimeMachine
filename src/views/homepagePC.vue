@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <NavHeader_PC :is_login="is_login" @login="login()"></NavHeader_PC>
+        <NavHeader_PC></NavHeader_PC>
         <div class="container" style="position: relative; height: 100%; width: 100%; perspective: 1200px;">
             <router-view v-slot="{ Component }" class="router-view" style="position: absolute; height: 100%; width: 100%;">
             <transition name="fade">
@@ -15,10 +15,13 @@
 <script>
 import NavHeader_PC from '@/components/NavHeader_PC.vue'
 import Advertise from "@/components/bottom/Advertise.vue"
+import login from "@/components/PC/LoginPC.vue"
 
 export default {
     components:[
-        NavHeader_PC
+        NavHeader_PC,
+        Advertise,
+        login
     ],
     data(){
         return{
