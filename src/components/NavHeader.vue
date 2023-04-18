@@ -44,11 +44,21 @@
                     },
                     {
                         name: '关于天外天',
-                        path: '/'
+                        event: () => {
+                            let a = document.createElement('a')
+                            a.href = 'https://www.twt.edu.cn/'
+                            a.target = 'blank'
+                            a.click()
+                        }
                     },
                     {
                         name: '天外天新闻网',
-                        path: '/'
+                        event: () => {
+                            let a = document.createElement('a')
+                            a.href = 'https://news.twt.edu.cn'
+                            a.target = 'blank'
+                            a.click()
+                        }
                     },
                     {
                         name: '退出登陆',

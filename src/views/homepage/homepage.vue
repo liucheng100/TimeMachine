@@ -9,7 +9,7 @@
                 <div class="info-title">{{ contest.title }}</div>
                 <div class="info-tip">{{ contest.subtitle }}</div>
             </div>
-            <SeasonBtn @click.native="!seasonState ? ON = true : 0" :state="seasonState"></SeasonBtn>
+            <SeasonBtn @click.native="contest.status==2 ? ON = true : 0" :state="contest.status-1 || 0"></SeasonBtn>
         </div>
         <TabMagic :id="11451" sticky="0" :title_list="['赛事介绍', '全部作品', '获奖作品']" @tab0Click="seasonState = 0"
             @tab1Click="seasonState = 1" @tab2Click="seasonState = 2">
@@ -89,6 +89,7 @@
             scroll(e) {
                 // console.log(e)
                 let a = e.target.scrollTop
+                this.catchTop = a
                 let b = e.target.offsetHeight
                 let c = e.target.scrollHeight
                 let d = c - b - a
@@ -115,7 +116,7 @@
         mounted() {
             this.isSafari = isSafari()
             contesting().then(v => {
-                console.log(v)
+                console.log(118,v)
                 if (!v.code) {
                     this.contest = v.data
                     console.log(this.contest)
@@ -147,6 +148,7 @@
         },
         activated() {
             // 对路由变化做出响应...
+            // alert(this.catchTop)
             this.$refs.homepage.scrollTop = this.catchTop
         },
 

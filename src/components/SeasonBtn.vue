@@ -23,6 +23,11 @@ export default {
         return{
             typeList:[
                 {
+                    icon: pubuse('seasonBtn/3.svg'),
+                    text:'未开始',
+                    bgc: 'rgba(68, 68, 68, 1)',
+                },
+                {
                     icon: pubuse('seasonBtn/0.svg'),
                     text:'去投稿',
                     bgc: 'rgba(78, 70, 180, 1)',
@@ -35,11 +40,6 @@ export default {
                 {
                     icon: pubuse('seasonBtn/2.svg'),
                     text:'已结束',
-                    bgc: 'rgba(68, 68, 68, 1)',
-                },
-                {
-                    icon: pubuse('seasonBtn/3.svg'),
-                    text:'未开始',
                     bgc: 'rgba(68, 68, 68, 1)',
                 },
             ]
