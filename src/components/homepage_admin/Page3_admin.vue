@@ -9,32 +9,36 @@
         </div>
         <TabMagic :id="1" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']">
             <template v-slot:tab0>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize1List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize1List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab1>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize1List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize1List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab2>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize1List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize1List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab3>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize1List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize1List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
         </TabMagic>
         <div class="prize_out">
@@ -44,32 +48,36 @@
         </div>
         <TabMagic :id="2" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']">
             <template v-slot:tab0>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize2List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize2List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab1>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize2List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize2List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab2>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize2List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize2List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab3>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize2List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize2List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
         </TabMagic>
         <div class="prize_out">
@@ -79,32 +87,36 @@
         </div>
         <TabMagic :id="3" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']">
             <template v-slot:tab0>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize3List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize3List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab1>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize3List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize3List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab2>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize3List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize3List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
             <template v-slot:tab3>
-                <card @click="$router.push({
-                    path: '/WorkDetail',
+                <card_admin @click="$router.push({
+                    path: '/admin/workDetail',
                     query: { workId: i.workId }
-                })" v-for="i in prize3List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover>
-                </card>
+                })" v-for="i in prize3List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
+                    :score=4.7>
+                </card_admin>
             </template>
         </TabMagic>
         <div class="prize_out">
@@ -115,42 +127,42 @@
         <TabMagic :id="4" :title_list="['单反组', '随手拍组', '短视频组', 'AI组']">
             <template v-slot:tab0>
                 <div class="prize4_card">
-                    <cardMini @click="$router.push({
-                        path: '/WorkDetail',
+                    <cardMini_admin @click="$router.push({
+                        path: '/admin/workDetail',
                         query: { workId: i.workId }
                     })" :key="idx" v-for="(i, idx) in prize4List_df" :title=i.title :auth=i.auth :avatar=i.avatar
-                        :hot=i.hot :cover=i.cover>
-                    </cardMini>
+                        :hot=i.hot :cover=i.cover :score=4.7>
+                    </cardMini_admin>
                 </div>
             </template>
             <template v-slot:tab1>
                 <div class="prize4_card">
-                    <cardMini @click="$router.push({
-                        path: '/WorkDetail',
+                    <cardMini_admin @click="$router.push({
+                        path: '/admin/workDetail',
                         query: { workId: i.workId }
                     })" v-for="i in prize4List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
-                        :cover=i.cover>
-                    </cardMini>
+                        :cover=i.cover :score=4.7>
+                    </cardMini_admin>
                 </div>
             </template>
             <template v-slot:tab2>
                 <div class="prize4_card">
-                    <cardMini @click="$router.push({
-                        path: '/WorkDetail',
+                    <cardMini_admin @click="$router.push({
+                        path: '/admin/workDetail',
                         query: { workId: i.workId }
                     })" v-for="i in prize4List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
-                        :cover=i.cover>
-                    </cardMini>
+                        :cover=i.cover :score=4.7>
+                    </cardMini_admin>
                 </div>
             </template>
             <template v-slot:tab3>
                 <div class="prize4_card">
-                    <cardMini @click="$router.push({
-                        path: '/WorkDetail',
+                    <cardMini_admin @click="$router.push({
+                        path: '/admin/workDetail',
                         query: { workId: i.workId }
                     })" v-for="i in prize4List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
-                        :cover=i.cover>
-                    </cardMini>
+                        :cover=i.cover :score=4.7>
+                    </cardMini_admin>
                 </div>
             </template>
         </TabMagic>
@@ -158,7 +170,7 @@
 </template>
 
 <script>
-    import Card from '@/components/Card/Card.vue'
+    import Card_admin from '@/components/Card/Card_admin.vue'
     import { getSrc, uploadFile, } from '@/api/file'
     import pubuse from '@/utils/pub-use'
     import { getPrized, } from '@/api/work'
@@ -230,9 +242,11 @@
                 if (to !== -1) {
                     getPrized(this.globalData.contestId).then(v => {
                         let data = v.data
+                        // console.log(222222222, data)
                         for (let prizeId in data) {
                             getPrize(prizeId).then(w => {
                                 let prizeInfo = w.data
+                                // console.log(999999898, prizeInfo)
                                 if (prizeInfo.contestGroup === 1) {//单反组
                                     if (prizeInfo.prizeName === "一等奖") {
                                         this.prize1List_df = this.setPrizedArr(data[prizeId])
