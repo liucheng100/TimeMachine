@@ -8,7 +8,7 @@
 <script>
     import pubuse from '@/utils/pub-use';
     export default {
-        name: 'SeasonBtn',
+        name: 'SeasonBtn_admin ',
         props: {
             state: {
                 required: true,
