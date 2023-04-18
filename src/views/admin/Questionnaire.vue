@@ -88,7 +88,7 @@
         color: #000;
         font-weight: 500;
         height: 45px;
-        width: 128px;
+        /* width: 128px; */
     }
 
     .hint {
