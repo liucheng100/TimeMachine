@@ -110,7 +110,7 @@ export default {
     },
     mounted() {
         setTimeout(() => {
-            console.log(this.prizes)
+            // console.log(this.prizes)
         }, 1000);
 
     },
