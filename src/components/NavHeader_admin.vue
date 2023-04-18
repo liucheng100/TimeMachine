@@ -39,10 +39,6 @@
                         path: '/admin/management'
                     },
                     {
-                        name: '所有作品',
-                        path: '/admin/all'
-                    },
-                    {
                         name: '审核投稿',
                         path: '/admin/ReviewSubmissions'
                     },

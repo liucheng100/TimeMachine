@@ -27,16 +27,16 @@
         </div>
         <div class="button-box">
             <button class="button" :style="{ background:'#FF4E6450' }">
-                <img src="@/assets/x.svg"/>
+                <img src="@/assets/x.svg" />
             </button>
             <button class="button" :style="{ background:'#F5F5F5' }">
-                <img src="@/assets/arrow-left.svg"/>
+                <img src="@/assets/arrow-left.svg" />
             </button>
             <button class="button" :style="{ background:'#F5F5F5' }">
-                <img src="@/assets/download.svg"/>
+                <img src="@/assets/download.svg" />
             </button>
             <button class="button" :style="{ background:'#4AD15F50' }">
-                <img src="@/assets/check.svg"/>
+                <img src="@/assets/check.svg" />
             </button>
         </div>
     </div>
@@ -46,16 +46,16 @@
     import { reactive } from "vue"
 
     const work = reactive({
-        workTitle:"作品",
-        auth:"城市作画",
-        avatar:"",
-        cover:'',
-        description:'作品简介作品简介',
-        contestGroup:1,
-        groupName:"单反组",
-        status:"已退回"
+        workTitle: "作品",
+        auth: "城市作画",
+        avatar: "",
+        cover: '',
+        description: '作品简介作品简介',
+        contestGroup: 1,
+        groupName: "单反组",
+        status: "已退回"
     })
-    
+
 </script>
 
 
@@ -78,7 +78,7 @@
         color: #000;
         font-weight: 500;
         height: 45px;
-        width: 128px;
+        /* width: 128px; */
     }
 
     .card {
@@ -168,7 +168,7 @@
     .button-box {
         margin-top: 20px;
         margin-left: 20px;
-        display:flex;
+        display: flex;
         flex-direction: row;
         justify-content: space-between;
         width: calc(100vw - 40px);
@@ -176,11 +176,12 @@
         border-radius: 6px;
 
     }
-    .button{
-        height:60px;
-        width:60px;
+
+    .button {
+        height: 60px;
+        width: 60px;
         border-radius: 50%;
-        border:3px solid #FFFFFF;
+        border: 3px solid #FFFFFF;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     }
 </style>

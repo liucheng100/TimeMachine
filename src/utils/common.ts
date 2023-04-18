@@ -9,7 +9,6 @@ export function isSafari() {
     // var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
     var isSafari = /Safari/.test(u) && !/Chrome/.test(u);
     if (isSafari) {
-        console.log("ios>>>>");
         return true
     }
     
