@@ -230,7 +230,6 @@ export default {
                 })
             }
         }
-
     },
     beforeRouteUpdate(to, from, next) {
         // 对路由变化做出响应...
