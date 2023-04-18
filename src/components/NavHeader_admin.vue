@@ -47,10 +47,6 @@
                         path: '/admin/ReviewSubmissions'
                     },
                     {
-                        name: '作品评分',
-                        path: '/admin/score'
-                    },
-                    {
                         name: '退出登陆',
                         event: () => {
                             removeToken();
