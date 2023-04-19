@@ -231,80 +231,6 @@
                 }
             }
 
-<<<<<<< HEAD
-        } else {
-            if (this.catchId != -1) {
-                this.catchId = -1
-                contesting().then(v => {
-                    // console.log(118, v)
-                    if (!v.code) {
-                        this.contest = v.data
-                        // console.log(this.contest)
-                        this.replaceBlob(this.contest, [
-                            'bannerPic',
-                            'introductionPic',
-                            'tailPic',
-                        ])
-                        // prizes
-                        this.contest.prizes['1'].forEach(ele => {
-                            this.replaceBlob(ele, ['goodPic',])
-                        });
-                        this.contest.prizes['2'].forEach(ele => {
-                            this.replaceBlob(ele, ['goodPic',])
-                        });
-                        this.contest.prizes['3'].forEach(ele => {
-                            this.replaceBlob(ele, ['goodPic',])
-                        });
-                        this.contest.prizes['4'].forEach(ele => {
-                            this.replaceBlob(ele, ['goodPic',])
-                        });
-                        this.globalData.contestId = this.contest.contestId
-                        this.globalData.prizes = this.contest.prizes
-                    } else {
-                        ElMessage.error(v.msg)
-                    }
-                })
-            }
-        }
-    },
-    beforeRouteUpdate(to, from, next) {
-        // 对路由变化做出响应...
-        // 从本路由切换回本路由其他参数query触发
-        // 当前为往届赛事，点击回到主页（当前赛事）时触发
-        contesting().then(v => {
-            // console.log(118, v)
-            if (!v.code) {
-                this.contest = v.data
-                // console.log(this.contest)
-                this.replaceBlob(this.contest, [
-                    'bannerPic',
-                    'introductionPic',
-                    'tailPic',
-                ])
-                // prizes
-                this.contest.prizes['1'].forEach(ele => {
-                    this.replaceBlob(ele, ['goodPic',])
-                });
-                this.contest.prizes['2'].forEach(ele => {
-                    this.replaceBlob(ele, ['goodPic',])
-                });
-                this.contest.prizes['3'].forEach(ele => {
-                    this.replaceBlob(ele, ['goodPic',])
-                });
-                this.contest.prizes['4'].forEach(ele => {
-                    this.replaceBlob(ele, ['goodPic',])
-                });
-                this.globalData.contestId = this.contest.contestId
-                this.globalData.prizes = this.contest.prizes
-            } else {
-                ElMessage.error(v.msg)
-            }
-        })
-        next()
-    },
-
-}
-=======
         },
         beforeRouteUpdate(to, from, next) {
             // 对路由变化做出响应...
@@ -343,7 +269,6 @@
         },
 
     }
->>>>>>> f21d41b63a1c8b2b4173c2e5ff41b6936b0f89b1
 </script>
 
 
