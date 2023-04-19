@@ -4,7 +4,7 @@
             <div class="mainTitle">作品详情</div>
         </div>
         <div class="card">
-            <div class="cover" :style="{backgroundImage: work.cover}"></div>
+            <img class="cover" :src="work.cover"/>
             <div class="bot">
                 <div class="title">
                     <div>{{ work.workTitle }}</div>
@@ -76,7 +76,7 @@
         work.views = info.views;
         work.status = status_text(info.isPass);
         work.groupName = contestGroupName(info.contestGroup);
-        work.cover = concatSrc(info.workFile);
+        work.cover = concatSrc(info.coverFile);
     })
 
     function status_text(i){
