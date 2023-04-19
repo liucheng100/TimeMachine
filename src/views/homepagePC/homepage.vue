@@ -23,6 +23,7 @@
 </template>
 <script setup>
 
+    
     const img_data_front = [
         {
             src: "https://img1.imgtp.com/2023/04/05/R59i1bhz.jpg"
