@@ -1,9 +1,16 @@
 <script setup>
-import { onMounted, computed, ref, reactive} from "vue"
-import { useRouter } from "vue-router"
+import { onMounted, computed, ref, reactive } from "vue"
+import { useRouter, useRoute } from "vue-router"
+import { getSrc, getFile, concatSrc } from "@/api/file"
 
+
+const coverSrc = computed(() => {
+    return concatSrc(props.src);
+})
 const router = useRouter();
+const route = useRoute();
 const WorkCard = ref();
+
 
 const props = defineProps({
     WorkName: String,
@@ -12,7 +19,8 @@ const props = defineProps({
     is_choose: Boolean,
     is_multiply:Boolean,
     ViewVolume: Number,
-    info:Object
+    info:Object,
+    src:String
 })
 
 const contestGroupName = computed(() => {
@@ -42,6 +50,7 @@ onMounted(() => {
     image_style.width = WorkCard.value.offsetWidth + "px";
 }
 )
+
 function checkDetail(){
     if(!props.is_multiply){
         router.push({
@@ -52,11 +61,12 @@ function checkDetail(){
         })
     }
 }
+
 </script>
 
 <template>
     <div class="work-card" ref="WorkCard" @click="checkDetail()">
-        <img src="https://i.328888.xyz/2023/04/11/ipdpXU.jpeg" :style="image_style" class="image"/>
+        <img :src="coverSrc" :style="image_style" class="image"/>
         <p class="work-name">{{ WorkName }}</p>
         <p class="small-text text-out">{{ contestGroupName }}</p>
         <div class="small-box">
@@ -64,9 +74,13 @@ function checkDetail(){
             <p class="small-text-inside">{{ ViewVolume }}</p>
         </div>
         <p class="small-text text-out">{{ status_text }}</p>
-        <div class="small-box" >
+        <div class="small-box" v-if="route.path == '/admin/ReviewSubmissions'">
             <img src="@/assets/trash-2.svg" class="icon"/>
             <p class="small-text-inside">删除</p>
+        </div>
+        <div class="small-box" v-if="route.path == '/admin/RecycleBin'">
+            <img src="@/assets/rotate-ccw.svg" class="icon"/>
+            <p class="small-text-inside">撤回</p>
         </div>
         <div class="circle" v-show="is_multiply" @click="$emit('multi')">
             <img src="@/assets/check-circle.svg" class="check-circle" v-show="is_choose"/>

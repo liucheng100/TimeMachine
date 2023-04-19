@@ -46,7 +46,7 @@
     import { reactive } from "vue"
     import { useRoute, useRouter } from "vue-router"
     import { workDetail } from "@/api/work"
-    import { getSrc } from "@/api/file"
+    import { concatSrc } from "@/api/file"
     import { pass, unPass } from "@/api/examine"
 
     const route = useRoute();
@@ -62,7 +62,7 @@
         groupName: "单反组",
         status: "已退回",
         views:0,
-        id:0
+        id:0,
     })
 
     workDetail(route.query.workId)
@@ -76,7 +76,7 @@
         work.views = info.views;
         work.status = status_text(info.isPass);
         work.groupName = contestGroupName(info.contestGroup);
-        work.cover = getSrc(info.coverFile)
+        work.cover = concatSrc(info.workFile);
     })
 
     function status_text(i){
@@ -96,11 +96,11 @@
     }  
     function passWork(){
         pass([work.id])
-        .then(res => router.push("/admin/ReviewSubmissions"))
+        .then(res => history.back())
     }
     function unPassWork(){
         unPass([work.id])
-        .then(res => router.push("/admin/ReviewSubmissions"))
+        .then(res => history.back())
     }
 
     

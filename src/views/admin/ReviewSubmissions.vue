@@ -1,8 +1,8 @@
 <script setup>
-import { ref, reactive, nextTick, onMounted, computed} from "vue"
+import { ref, reactive, nextTick, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import { contesting } from "@/api/contest"
-import { getUnExamined } from "@/api/examine"
+import { getUnExamined, pass, unPass } from "@/api/examine"
 let is_bottom = ref(false);
 const isElementVisible = (el) => {
   const rect = el.getBoundingClientRect()
@@ -31,7 +31,7 @@ function setHeight(){
 
 function sayBottom(){
     if(!is_bottom.value){
-        alert("到底啦!");
+        
         is_bottom.value = true;
     }
 }
@@ -90,6 +90,30 @@ function chooseMulti(index){
 }
 
 function send(){
+    if(background_button.indexOf(true) != -1){
+        let x = [];
+        switch(background_button.indexOf(true)){
+            case 0:{
+                card_info.forEach((item) => {
+                    if(item.value.is_choose)x.push(item.value.workId)
+                })
+                pass(x)
+                .then(res => console.log(res))
+                .then(location.reload());
+                break;
+            }
+            case 1:{
+                card_info.forEach((item) => {
+                    if(item.value.is_choose)x.push(item.value.workId)
+                })
+                unPass(x)
+                .then(res => console.log(res))
+                .then(location.reload());
+                break;
+            }
+            default:
+        }
+    }
     multiply();
     multiplyInfo.value = false;
 }
@@ -128,6 +152,7 @@ function toRecycle(){
             :ViewVolume="item.value.views"
             :is_multiply="item.value.is_multiply"
             :info="item.value"
+            :src="item.value.coverFile"
             @multi="card_info[index].value.is_choose = !item.value.is_choose"
             />
         </div>

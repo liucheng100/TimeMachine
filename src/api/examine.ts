@@ -7,6 +7,18 @@ export function getUnExamined<T>(parmas:any){
     })
 }
 
+export function getUnPass<T>(contestId:any, pageNum:any, pageSize:any){
+    return http.get<T>({
+        url:"/examine/back",
+        responseType:"json",
+        params:{
+            contestId:contestId,
+            pageNum:pageNum,
+            pageSize:pageSize
+        }
+    })
+}
+
 export function unPass<T>(data:any){
     return http.post<T>({
         url: "/examine/back",
