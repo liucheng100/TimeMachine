@@ -163,75 +163,75 @@ p {
 
 
 .el-carousel__container {
-    height: 100% !important;
+    height: 100% ;
 }
 
 .el-carousel--horizontal {
-    overflow: hidden !important;
+    overflow: hidden ;
 }
 
 .el-carousel__indicators--horizontal {
-    bottom: -8px !important;
+    bottom: -8px ;
 }
 
 .el-carousel__indicator--horizontal {
-    margin: 0 4px !important;
+    margin: 0 4px ;
 }
 
 .el-carousel__button {
-    width: 8px !important;
-    height: 8px !important;
+    width: 8px ;
+    height: 8px ;
     border-radius: 4px;
-    background: #E6E6E6 !important;
-    opacity: 1 !important;
+    background: #E6E6E6 ;
+    opacity: 1 ;
 }
 
 .el-carousel__indicators--horizontal>.is-active button {
-    background: #C7242F !important;
-    opacity: 0.6 !important;
+    background: #C7242F ;
+    opacity: 0.6 ;
 }
 
 .el-tabs__nav-wrap::after {
-    background: none !important;
+    background: none ;
 }
 
 .el-tabs__content {
-    overflow: visible !important;
+    overflow: visible ;
 }
 
 .el-tabs__item {
-    font-size: 24px !important;
-    color: #2F2F2F !important;
-    margin-bottom: 5px !important;
+    font-size: 24px ;
+    color: #2F2F2F ;
+    margin-bottom: 5px ;
 }
 
 .el-tabs__nav>.is-active {
-    color: #C7242F !important;
+    color: #C7242F ;
 }
 
 .el-tabs__active-bar {
-    height: 3px !important;
-    background-color: #C7242F !important;
+    height: 3px ;
+    background-color: #C7242F ;
 }
 
 .el-textarea__inner,
 .el-input__wrapper {
-    border-radius: 4px !important;
-    box-shadow: 0 0 0 2px #F4F3F3 !important;
+    border-radius: 4px ;
+    box-shadow: 0 0 0 2px #F4F3F3 ;
 }
 
 .el-textarea__inner:hover,
 .el-input__wrapper:hover {
-    box-shadow: 0 0 0 1px #4d46b455 inset !important;
+    box-shadow: 0 0 0 1px #4d46b455 inset ;
 }
 
 .el-textarea__inner:focus,
 .el-input__wrapper:focus-within {
-    box-shadow: 0 0 0 1px #4E46B4 inset !important;
+    box-shadow: 0 0 0 1px #4E46B4 inset ;
 }
 
 .el-overlay {
-    background-color: rgba(0, 0, 0, 0.3) !important;
+    background-color: rgba(0, 0, 0, 0.3) ;
 }
 
 .el-dialog {
@@ -239,14 +239,14 @@ p {
     display: -ms-flex;
     flex-direction: column;
     -ms-flex-direction: column;
-    margin: 0 !important;
+    margin: 0 ;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     max-height: calc(100% - 30px);
     max-width: calc(100% - 30px);
-    border-radius: 8px !important;
+    border-radius: 8px ;
 }
 
 .el-dialog .el-dialog__body {
@@ -261,8 +261,8 @@ p {
     text-align: center;
     width: 500px;
     --el-input-height: 50px;
-    line-height: 160px !important;
-    font-size: 22px !important;
+    line-height: 160px ;
+    font-size: 22px ;
 }
 
 .large-select .el-input .el-input__inner {
@@ -270,12 +270,13 @@ p {
 }
 
 .el-table {
-    font-size: 17px !important;
+    font-size: 17px ;
 }
 
 .table-header {
-    background-color: #FFF8F9 !important;
-    font-weight: 400 !important;
-    font-size: 17px !important;
-    color: #2F2F2F !important;
+    background-color: #FFF8F9 ;
+    font-weight: 400 ;
+    font-size: 17px ;
+    color: #2F2F2F;
 }
+

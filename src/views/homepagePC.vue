@@ -32,12 +32,31 @@ export default {
         login(){
 
         }
-    },
-
+    }
 }
 </script>
 
-
+<style>
+.el-message{
+    
+    height:12px;
+    border-radius: 2px;
+    font-size: 5px;
+    padding:0;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.el-message__icon{
+    margin:3px;
+    height:5px;
+}
+.el-message__content{
+    padding:3px;
+    font-size:5px;
+}
+</style>
 <style scoped>
 .home{
     height: 100vh;
