@@ -126,15 +126,15 @@ export default {
 
 .cover {
     width: 100%;
-    height: 221px;
-    overflow: hidden;
+    /* height: 221px; */
+    /* overflow: hidden; */
     margin-bottom: 20px;
 }
 
 .inst {
-    height: 100%;
+    /* height: 100%; */
     width: 100%;
-    object-fit: cover;
+    /* object-fit: cover; */
 }
 
 .title-1 {
