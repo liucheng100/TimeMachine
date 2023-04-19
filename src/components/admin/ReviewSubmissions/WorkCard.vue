@@ -74,11 +74,11 @@ function checkDetail(){
             <p class="small-text-inside">{{ ViewVolume }}</p>
         </div>
         <p class="small-text text-out">{{ status_text }}</p>
-        <div class="small-box" v-if="route.path == '/admin/ReviewSubmissions'">
+        <div class="small-box" v-if="route.path == '/admin/ReviewSubmissions'" @click.stop="$emit('cut')">
             <img src="@/assets/trash-2.svg" class="icon"/>
             <p class="small-text-inside">删除</p>
         </div>
-        <div class="small-box" v-if="route.path == '/admin/RecycleBin'">
+        <div class="small-box" v-if="route.path == '/admin/RecycleBin'" @click.stop="$emit('back')">
             <img src="@/assets/rotate-ccw.svg" class="icon"/>
             <p class="small-text-inside">撤回</p>
         </div>

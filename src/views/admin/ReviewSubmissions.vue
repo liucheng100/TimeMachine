@@ -66,6 +66,8 @@ const top_change = reactive({marginTop:0})
 const background_button = reactive([false,false,false])
 const card_info = reactive([]);
 const multiplyInfo = ref(false);
+const ON = ref(false);
+const work_id = ref(0);
 
 onMounted(() => {
     top_change.marginTop = FloatPanel.value.offsetHeight + "px";
@@ -118,6 +120,11 @@ function send(){
     multiplyInfo.value = false;
 }
 
+function unPassSingleWork(){
+    unPass([work_id.value])
+    .then(res => location.reload())
+}
+
 function toRecycle(){
     router.push("/admin/RecycleBin");
 }
@@ -154,9 +161,14 @@ function toRecycle(){
             :info="item.value"
             :src="item.value.coverFile"
             @multi="card_info[index].value.is_choose = !item.value.is_choose"
+            @cut="ON = true, work_id = item.value.workId"
             />
         </div>
         <div class="bottom" ref="Bottom"></div>
+
+        <Pop :ON="ON" :model="0" title="确认要删除作品吗?" tip="请确认信息无误" :options="{ black: '', grey: '取消', blue: '删除' }"
+            @blackClick="0" @greyClick="ON = false" @blueClick="unPassSingleWork()">
+        </Pop>
     </div>
 
 </template>

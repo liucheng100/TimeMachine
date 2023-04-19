@@ -65,6 +65,8 @@ const Bottom = ref();
 const top_change = reactive({marginTop:0})
 const card_info = reactive([]);
 const multiplyInfo = ref(false);
+const ON = ref(false);
+const work_id = ref(0);
 
 onMounted(() => {
     top_change.marginTop = FloatPanel.value.offsetHeight + "px";
@@ -92,6 +94,12 @@ function send(){
     .then(res => console.log(res))
     .then(location.reload());
 }
+
+function passSingleWork(){
+    pass([work_id.value])
+    .then(res => location.reload())
+}
+
 function back(){
     router.push("/admin/ReviewSubmissions")
 }
@@ -121,8 +129,13 @@ function back(){
             :info="item.value"
             :src="item.value.coverFile"
             @multi="card_info[index].value.is_choose = !item.value.is_choose"
+            @back="ON = true, work_id = item.value.workId"
             />
         </div>
+
+        <Pop :ON="ON" :model="0" title="确认要撤回作品吗?" tip="请确认信息无误" :options="{ black: '', grey: '取消', blue: '撤回' }"
+            @blackClick="0" @greyClick="ON = false" @blueClick="passSingleWork()">
+        </Pop>
     </div>
 
 </template>

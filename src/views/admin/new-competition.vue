@@ -61,10 +61,7 @@
             <p class="title">上传长图</p>
             <p class="detail">请在奖项设置前切图</p>
         </div>
-        <div class="text-input">
-            <p class="title">更新赛事信息</p>
-            <input type="text" placeholder="请输入密码" class="input-content" />
-        </div>
+        
         <button class="submit">提交</button>
 
         <transition name="fade">
