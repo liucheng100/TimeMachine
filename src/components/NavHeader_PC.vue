@@ -36,7 +36,7 @@ const username = ref("");
 const is_login = ref(false);
 const is_need_login = ref(false);
 const is_logOut = ref(false);
-const is_phone = ref(true);
+const is_phone = ref(false);
 
 if(getToken()){
     getUserInfo(getUserId())
