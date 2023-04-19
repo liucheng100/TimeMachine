@@ -29,7 +29,7 @@ export default {
                 },
                 {
                     icon: pubuse('seasonBtn/0.svg'),
-                    text:'去投稿',
+                    text:'编辑赛事',
                     bgc: 'rgba(78, 70, 180, 1)',
                 },
                 {
@@ -55,7 +55,7 @@ export default {
 
 <style scoped>
 .season-btn{
-    width: 118px;
+    
     height: 48px;
     border-radius: 6px;
     display: flex;
