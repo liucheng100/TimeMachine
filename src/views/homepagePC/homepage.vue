@@ -1,109 +1,135 @@
 <template>
     <div class="homepage-pc">
-        <img v-for="item in img_data_front" :src="NewURL(item.src)" class="big-img" :key="item.src"/>
+        <img :src="contest.bannerPic" class="big-img" />
         <div class="other-box">
             <p class="box-title">奖项设置</p>
-            <div v-for="item in medal_setting" class="medal-setting" :key="item.title">
+            <div v-for="(item,idx) in contest.prizes" class="medal-setting">
                 <div class="medal-title">
                     <img src="../../assets/text-left.svg" class="text-icon" />
-                    <p>{{ item.title }}</p>
+                    <p v-if="idx == 1">单反组</p>
+                    <p v-if="idx == 2">随手拍组</p>
+                    <p v-if="idx == 3">短视频组</p>
+                    <p v-if="idx == 4">AI组</p>
                     <img src="../../assets/text-right.svg" class="text-icon" />
                 </div>
                 <div class="medal-content">
-                    <div class="medal-single" v-for="child in item.medal">
-                        <div class="square"></div>
-                        <p class="prize-name">{{ child.prize_name }}</p>
-                        <p class="prize-member">{{ child.medal_name }} / {{ child.member }} 名</p>
+                    <div class="medal-single" v-for="child in item">
+                        <div class="square" :style="{ backgroundImage:`url('${child.goodPic}')` }"></div>
+                        <p class="prize-name">{{ child.prizeName }}</p>
+                        <p class="prize-member">{{ child.goodName }} / {{ child.totalNum }} 名</p>
                     </div>
                 </div>
             </div>
         </div>
-        <img v-for="item in img_data_behind" :src="NewURL(item.src)" class="big-img" :key="item.src"/>
+        <img :src="contest.introductionPic" class="big-img" />
+        <img :src="contest.tailPic" class="big-img" />
     </div>
 </template>
-<script setup>
+<script>
+    import { getSrc, uploadFile, } from '@/api/file'
+    import { contesting, getContest, } from '@/api/contest'
+    import pubuse from '@/utils/pub-use'
 
-    
-    const img_data_front = [
-        {
-            src: "https://img1.imgtp.com/2023/04/05/R59i1bhz.jpg"
+    export default {
+        name: 'homepagePC',
+        props: {
+            contest: {
+                type: Object,
+                required: true,
+            },
         },
-        {
-            src: "https://img1.imgtp.com/2023/04/05/cRlnczeS.jpeg"
-        }
-    ]
+        inject: ['globalData'],
+        data() {
+            return {
+                prizes: [],
+                contest: {},
+            }
+        },
+        computed: {
+            prizes() {
+                return this.globalData.prizes
+            },
+        },
+        methods: {
+            replaceBlob(tarObject, attrList) {
+                console.log(attrList)
+                attrList.forEach(attr => {
+                    getSrc(tarObject[attr]).then(v => {
+                        // console.log(v)
+                        tarObject[attr] = v
+                    }).catch(err => {
+                        ElMessage.error('图片加载失败')
+                    })
+                    tarObject[attr] = pubuse('loading.gif')
+                });
+            },
+            NewURL(url) {
+                return new URL(url);
+            }
 
-    const img_data_behind = [
-        {
-            src: "https://img1.imgtp.com/2023/04/05/R59i1bhz.jpg"
         },
-        {
-            src: "https://img1.imgtp.com/2023/04/05/cRlnczeS.jpeg"
-        }
-    ]
 
-    const medal_setting = [
-        {
-            title: "单反组",
-            medal: [
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" },
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" },
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" },
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" }
-            ]
+        mounted() {
+            if (this.$route.query.contestId) {
+                // 跳出mounted默认当前进行赛事处理逻辑
+                return
+            }
+
+            contesting().then(v => {
+                if (!v.code) {
+                    this.contest = v.data
+                    this.replaceBlob(this.contest, [
+                        'bannerPic',
+                        'introductionPic',
+                        'tailPic',
+                    ])
+                    // prizes
+                    this.contest.prizes['1'].forEach(ele => {
+                        this.replaceBlob(ele, ['goodPic',])
+                    });
+                    this.contest.prizes['2'].forEach(ele => {
+                        this.replaceBlob(ele, ['goodPic',])
+                    });
+                    this.contest.prizes['3'].forEach(ele => {
+                        this.replaceBlob(ele, ['goodPic',])
+                    });
+                    this.contest.prizes['4'].forEach(ele => {
+                        this.replaceBlob(ele, ['goodPic',])
+                    });
+                    console.log(this.contest.prizes)
+                    this.globalData.contestId = this.contest.contestId
+                    this.globalData.prizes = this.contest.prizes
+                } else {
+                    ElMessage.error(v.msg)
+                }
+            })
+
         },
-        {
-            title: "单反组",
-            medal: [
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" },
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" },
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" },
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" }
-            ]
-        },
-        {
-            title: "单反组",
-            medal: [
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" },
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" },
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" },
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" }
-            ]
-        },
-        {
-            title: "单反组",
-            medal: [
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" },
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" },
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" },
-                { prize_name: "DJI POCKET 2", member: 0, medal_name: "一等奖", img_url: "" }
-            ]
-        }
-    ]
-    function NewURL(url) {
-        return new URL(url);
     }
+
 </script>
 <style scoped>
-    .mask{
+    .mask {
         position: fixed;
-        top:0;
-        left:0;
-        display:flex;
-        background:#00000020;
-        width:100%;
-        height:100%;
-        z-index:50;
+        top: 0;
+        left: 0;
+        display: flex;
+        background: #00000020;
+        width: 100%;
+        height: 100%;
+        z-index: 50;
     }
-    .login-box{
-        position:fixed;
-        top:20%;
-        left:35%;
-        width:30%;
-        height:50%;
-        background:#FFFFFF;
-        border-radius:5px;
+
+    .login-box {
+        position: fixed;
+        top: 20%;
+        left: 35%;
+        width: 30%;
+        height: 50%;
+        background: #FFFFFF;
+        border-radius: 5px;
     }
+
     .prize-name {
         font-size: 2px;
         color: #000000;

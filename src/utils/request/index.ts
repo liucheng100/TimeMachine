@@ -2,7 +2,7 @@ import MYRequest from "@/utils/request/request";
 import { BASE_URL, TIMEOUT } from "@/utils/request/config";
 import qs from "querystring";
 import { ElMessage } from "element-plus";
-import { getToken,removeToken } from "../auth";
+import { getToken, removeToken } from "../auth";
 
 const myRequest = new MYRequest({
   baseURL: BASE_URL,
@@ -24,11 +24,11 @@ const myRequest = new MYRequest({
       return res;
     },
     responseInterceptorCatch: (err) => {
-      console.log("响应失败的拦截",err);
+      console.log("响应失败的拦截", err);
       if (err.response.status === 401) {
         removeToken();
         alert('token过期，请重新登录')
-        location.reload();
+        // location.reload();
       }
       return err;
     },

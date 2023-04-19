@@ -6,7 +6,7 @@
                 <div class="title">
                     {{ title }}
                 </div>
-                <div class="info">均分{{ score }}</div>
+                <div class="info">均分 {{ score }}</div>
             </div>
             <div class="bar">
                 <div class="flex">

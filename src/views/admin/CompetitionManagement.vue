@@ -1,11 +1,15 @@
 <template>
     <div class="management" @scroll="scroll">
         <div class="top">
-            <div class="title">管理赛事</div>
-            <img src="../../assets/admin/box.svg" @click="setQues">
-            <button @click="newCompetition">
-                <p>开启新赛事</p>
-            </button>
+            <div class="title">管理赛事
+            </div>
+            <div class="flexx">
+                <img src="../../assets/admin/box.svg" @click="setQues">
+                <button @click="newCompetition">
+                    <p>开启新赛事</p>
+                </button>
+            </div>
+
         </div>
         <div class="comps">
             <div @click="clickFn(item)" class="compCard" v-for="(item, index) in comps">
@@ -169,26 +173,38 @@
 
     .top {
         height: 85px;
-        width: 100%;
+        margin-left: 20px;
+        width: calc(100% - 40px);
         display: flex;
         flex-direction: row;
+        justify-content: space-between
+    }
+
+    .flexx {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between
     }
 
     .title {
-        margin-left: 20px;
+
         margin-top: 20px;
         font-size: 32px;
         color: #000;
         font-weight: 500;
         height: 45px;
         /* width: 128px; */
+        z-index: 10;
+        max-width: 50%;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .top img {
         height: 24px;
         width: 24px;
         margin-top: 31px;
-        margin-left: 63px;
+
     }
 
     .top button {

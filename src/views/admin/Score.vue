@@ -1,23 +1,31 @@
-<!-- <template>
+<template>
     <div class="score">
         <div class="top">
             <div class="mainTitle">作品评分</div>
         </div>
-        <CardMini_admin :key="idx" v-for="(i, idx) in dataList" :title=i.workTitle :auth="i.makerName"
-            :avatar=i.makerAvatar :hot=i.views :cover=i.coverFile :status=i.prizeName :score=4.7 @click="$router.push({
-            path: 'admin/workDetail',
-            query: { workId: i.workId }
-        })"></CardMini_admin>
+        <div class="cards">
+            <CardMini_admin :key="idx" v-for="(i, idx) in dataList" :title=i.workTitle :auth="i.makerName"
+                :avatar=i.makerAvatar :hot=i.views :cover=i.coverFile :status=i.prizeName @click="$router.push({
+                path: 'admin/workDetail',
+                query: { workId: i.workId }
+            })"></CardMini_admin>
+        </div>
         <div :class="isSafari ? 'footer' : ''"></div>
     </div>
 </template>
 
 <script>
+    import { isSafari } from '@/utils/common'
     import { getScoreWorks } from "@/api/score"
+    import { contesting } from "@/api/contest"
+    import { getSrc, uploadFile, } from '@/api/file'
+    import pubuse from '@/utils/pub-use'
+
     export default {
         name: "Score",
         props: {
         },
+        inject: ['globalData'],
         data() {
             return {
                 byEnd: false,
@@ -26,35 +34,36 @@
                 loading: false,
                 isSafari: true,
                 dataList: [],
-
+                contestId: -1,
             }
         },
         watch: {
-            // byEnd(to) {
-            //     if (to) {
-            //         console.log(11)
-            //         if (!this.loading) {
-            //             this.loading = true
-            //             // loadmore here
-            //             getScoreWorks({
-            //                 contestId: this.globalData.contestId,
-            //                 pageNum: this.pageNum,
-            //                 pageSize: this.pageSize,
-            //             }).then(v => {
-            //                 console.log(v)
-            //                 if (!v.code) {
-            //                     this.dataList = this.dataList.concat(v.data)
-            //                     v.data.forEach(ele => {
-            //                         this.replaceBlob(ele, ['coverFile'])
-            //                     });
-            //                     this.pageNum++;
-            //                 }
-            //                 this.loading = false
-            //             })
-            //         }
-            //     }
-            // },
+            byEnd(to) {
+                if (to) {
+                    console.log(11)
+                    if (!this.loading) {
+                        this.loading = true
+                        // loadmore here
+                        getScoreWorks({
+                            contestId: this.contestId,
+                            pageNum: this.pageNum,
+                            pageSize: this.pageSize,
+                        }).then(v => {
+                            console.log(v)
+                            if (!v.code) {
+                                this.dataList = this.dataList.concat(v.data)
+                                v.data.forEach(ele => {
+                                    this.replaceBlob(ele, ['coverFile'])
+                                });
+                                this.pageNum++;
+                            }
+                            this.loading = false
+                        })
+                    }
+                }
+            },
         },
+
         methods: {
             replaceBlob(tarObject, attrList) {
                 console.log(attrList)
@@ -88,20 +97,26 @@
         },
         mounted() {
             this.loading = true
-            getScoreWorks({
-                contestId: this.globalData.contestId,
-                // pageNum: this.pageNum,
-                // pageSize: this.pageSize,
-            }).then(v => {
-                console.log(v)
+            contesting().then(v => {
+                console.log(118, v)
                 if (!v.code) {
-                    this.dataList = v.data
-                    v.data.forEach(ele => {
-                        this.replaceBlob(ele, ['coverFile'])
-                    });
-                    this.pageNum++;
+                    this.contestId = v.data.contestId
+                    getScoreWorks({
+                        contestId: this.contestId,
+                        pageNum: this.pageNum,
+                        pageSize: this.pageSize,
+                    }).then(v => {
+                        console.log(v)
+                        if (!v.code) {
+                            this.dataList = v.data
+                            v.data.forEach(ele => {
+                                this.replaceBlob(ele, ['coverFile'])
+                            });
+                            this.pageNum++;
+                        }
+                        this.loading = false
+                    })
                 }
-                this.loading = false
             })
             this.isSafari = isSafari()
         },
@@ -127,7 +142,17 @@
         /* width: 128px; */
     }
 
+    .cards {
+        width: 100%;
+        min-height: 300px;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        background-color: #fff;
+    }
+
     .footer {
         height: 100px;
     }
-</style> -->
+</style>

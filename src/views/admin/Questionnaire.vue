@@ -79,7 +79,7 @@
         color: #4E46B4;
         height: 22px;
         font-size: 16px;
-        width: 32px;
+        /* width: 32px; */
     }
 
     .title {
