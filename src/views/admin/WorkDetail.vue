@@ -1,7 +1,7 @@
 <template>
     <div class="datail">
         <div class="top">
-            <p class="title">作品详情</p>
+            <div class="mainTitle">作品详情</div>
         </div>
         <div class="card">
             <img class="cover" :src="work.cover"/>
@@ -118,24 +118,6 @@
         width: 100%;
         display: flex;
         flex-direction: row;
-        position: relative;
-        justify-content: flex-end;
-        padding-right:20px;
-    }
-
-    .title {
-        position: absolute;
-        left:0;
-        margin-left: 20px;
-        margin-top: 20px;
-        font-size: 32px;
-        color: #000;
-        font-weight: 500;
-        height: 45px;
-        /* width: 128px; */
-        display: flex;
-        z-index:10;
-        flex-wrap: nowrap;
     }
 
     .mainTitle {
@@ -175,7 +157,13 @@
         justify-content: space-between;
     }
 
-    
+    .title {
+        font-size: 16px;
+        color: rgba(31, 31, 31, 1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
     .introduction {
         margin-top: 4px;
