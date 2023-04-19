@@ -91,7 +91,7 @@ const routes = [
 				}
 			},
 			{
-				path:"/admin/score",
+				path: "/admin/score",
 				component: () => import("@/views/admin/Score.vue"),
 				meta: {
 					title: "作品评分",
@@ -99,7 +99,7 @@ const routes = [
 				}
 			},
 			{
-				path:"/admin/questionnaire",
+				path: "/admin/questionnaire",
 				component: () => import("@/views/admin/Questionnaire.vue"),
 				meta: {
 					title: "问卷收集",
@@ -107,34 +107,34 @@ const routes = [
 				}
 			},
 			{
-				path:"/admin/ReviewSubmissions",
-				component:() => import("@/views/admin/ReviewSubmissions.vue"),
+				path: "/admin/ReviewSubmissions",
+				component: () => import("@/views/admin/ReviewSubmissions.vue"),
 				meta: {
 					title: "审核投稿",
 					requireAuth: true
 				}
 			},
 			{
-				path:"/admin/RecycleBin",
-				component:() => import("@/views/admin/RecycleBin.vue"),
+				path: "/admin/RecycleBin",
+				component: () => import("@/views/admin/RecycleBin.vue"),
 				meta: {
 					title: "回收站",
 					requireAuth: true
 				}
 			},
 			{
-				path:"/admin/WorkDetail",
-				component:() => import("@/views/admin/WorkDetail.vue"),
+				path: "/admin/WorkDetail",
+				component: () => import("@/views/admin/WorkDetail.vue"),
 				meta: {
-					title:"作品详情",
+					title: "作品详情",
 					requireAuth: true
 				}
 			},
 			{
-				path:"/admin/score/detail",
-				component:() => import("@/views/admin/ScoreDetail.vue"),
+				path: "/admin/score/detail",
+				component: () => import("@/views/admin/ScoreDetail.vue"),
 				meta: {
-					title:"作品详情",
+					title: "作品详情",
 					requireAuth: true
 				}
 			},
@@ -167,7 +167,7 @@ const routes = [
 	{
 		path: "/signup",
 		component: () => import("@/views/signup.vue"),
-		
+
 		meta: {
 			title: "注册",
 			requireAuth: false,
@@ -195,18 +195,18 @@ const routes = [
 				path: "/PC/homepage",
 				component: () => import("@/views/homepagePC/homepage.vue"),
 				meta: {
-					title:"首页",
+					title: "首页",
 					requireAuth: false,
-					isPC :true
+					isPC: true
 				}
 			},
 			{
 				path: "/PC/submit",
 				component: () => import("@/views/homepagePC/submit.vue"),
 				meta: {
-					title:"提交作品",
+					title: "提交作品",
 					requireAuth: true,
-					isPC :true
+					isPC: true
 				}
 			}
 		]
@@ -230,8 +230,8 @@ router.beforeEach(async (to, from, next) => {
 			next({
 				path: "/PC"
 			});
-		} 
-		if(to.meta.requireAuth && !token){
+		}
+		if (to.meta.requireAuth && !token) {
 			next({
 				path: "/PC/homepage",
 			})
@@ -243,9 +243,9 @@ router.beforeEach(async (to, from, next) => {
 					: `${to.meta.title} - 方寸流年`;
 			next();
 		}
-	} 
+	}
 	else {
-		if(to.meta.isPC){
+		if (to.meta.isPC) {
 			// setTimeout(() => {
 			// 	alert('当前正在用手机访问电脑页面,为不影响体验请更换为手机页面')
 			// }, 1000);
@@ -270,7 +270,7 @@ router.beforeEach(async (to, from, next) => {
 				// console.log(to.meta.isAdmin)
 				if (!to.meta.isAdmin) {
 					// 不是管理端页面
-					ElMessage.info('请不要访问非管理端端页面')
+					// ElMessage.info('请不要访问非管理端端页面')
 					next({
 						path: "/admin"
 					})
@@ -286,7 +286,7 @@ router.beforeEach(async (to, from, next) => {
 				// 用户端
 				if (to.meta.isAdmin) {
 					// 不是用户端页面
-					ElMessage.warning('请不要访问非用户端页面')
+					// ElMessage.warning('请不要访问非用户端页面')
 					next({
 						path: "/"
 					})
