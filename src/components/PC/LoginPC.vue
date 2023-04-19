@@ -189,6 +189,7 @@ export default {
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   border-radius: 2px;
   margin-bottom:5px;
+  font-size:4.5px;
 }
 .proto{
   
