@@ -1,7 +1,7 @@
 <template>
     <div class="management" @scroll="scroll">
         <div class="top">
-            <div class="title">管理赛事</div>
+            <p class="title">管理赛事</p>
             <img src="../../assets/admin/box.svg" @click="setQues">
             <button @click="newCompetition">
                 <p>开启新赛事</p>
@@ -172,9 +172,14 @@
         width: 100%;
         display: flex;
         flex-direction: row;
+        position: relative;
+        justify-content: flex-end;
+        padding-right:20px;
     }
 
     .title {
+        position: absolute;
+        left:0;
         margin-left: 20px;
         margin-top: 20px;
         font-size: 32px;
@@ -182,6 +187,9 @@
         font-weight: 500;
         height: 45px;
         /* width: 128px; */
+        display: flex;
+        z-index:10;
+        flex-wrap: nowrap;
     }
 
     .top img {

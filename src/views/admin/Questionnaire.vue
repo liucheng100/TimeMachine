@@ -6,7 +6,7 @@
                 <div class="backFont">返回</div>
             </div>
         </div>
-        <div class="title">问卷收集</div>
+        <p class="title">问卷收集</p>
         <div class="hint">你正在收集的是{{campTitle}}的奖品</div>
         <div class="hintURL">收集链接</div>
         <input class="inputURL" type="text" v-model="questionnaireURL" placeholder="问卷星/腾讯问卷">
@@ -59,10 +59,28 @@
     /* .questionnaire {} */
 
     .top {
-        height: 64px;
+        height: 85px;
         width: 100%;
-        padding-top: 21px;
-        padding-left: 14px;
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        justify-content: flex-end;
+        padding-right:20px;
+    }
+
+    .title {
+        position: absolute;
+        left:0;
+        margin-left: 20px;
+        margin-top: 20px;
+        font-size: 32px;
+        color: #000;
+        font-weight: 500;
+        height: 45px;
+        /* width: 128px; */
+        display: flex;
+        z-index:10;
+        flex-wrap: nowrap;
     }
 
     .back {
@@ -80,15 +98,6 @@
         height: 22px;
         font-size: 16px;
         width: 32px;
-    }
-
-    .title {
-        margin-left: 20px;
-        font-size: 32px;
-        color: #000;
-        font-weight: 500;
-        height: 45px;
-        /* width: 128px; */
     }
 
     .hint {
