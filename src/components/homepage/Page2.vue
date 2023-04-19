@@ -67,9 +67,9 @@ export default {
             }
         },
         contestId(to) {
-            alert('contestId改变'+to)
+            // alert('contestId改变'+to)
             // 初始化
-            this.pageNum = 0
+            this.pageNum = 1
             this.loading = false
             if (to !== -1) {
                 // alert('page2 reload'+this.globalData.contestId)

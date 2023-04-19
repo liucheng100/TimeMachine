@@ -253,6 +253,7 @@ router.beforeEach(async (to, from, next) => {
 			next({
 				path: "/"
 			});
+			return
 		}
 		// 以下为手机端
 		if (to.meta.requireAuth && !token) {
