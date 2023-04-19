@@ -1,10 +1,10 @@
 <template>
     <div class="datail">
         <div class="top">
-            <div class="mainTitle">作品详情</div>
+            <p class="title">作品详情</p>
         </div>
         <div class="card">
-            <div class="cover" :style="{backgroundImage: work.cover}"></div>
+            <img class="cover" :src="work.cover"/>
             <div class="bot">
                 <div class="title">
                     <div>{{ work.workTitle }}</div>
@@ -76,7 +76,7 @@
         work.views = info.views;
         work.status = status_text(info.isPass);
         work.groupName = contestGroupName(info.contestGroup);
-        work.cover = concatSrc(info.workFile);
+        work.cover = concatSrc(info.coverFile);
     })
 
     function status_text(i){
@@ -118,6 +118,25 @@
         width: 100%;
         display: flex;
         flex-direction: row;
+        position: relative;
+        justify-content: flex-end;
+        padding-right:20px;
+    }
+
+    .title {
+        position: absolute;
+        left:0;
+        margin-left: 20px;
+        margin-top: 20px;
+        font-size: 32px;
+        color: #000;
+        font-weight: 500;
+        height: 45px;
+        /* width: 128px; */
+        z-index:10;
+        max-width:50%;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .mainTitle {
@@ -157,13 +176,7 @@
         justify-content: space-between;
     }
 
-    .title {
-        font-size: 16px;
-        color: rgba(31, 31, 31, 1);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+    
 
     .introduction {
         margin-top: 4px;

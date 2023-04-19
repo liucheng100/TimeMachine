@@ -2,16 +2,21 @@
     <div class="nav-header">
         <img src="../assets/Group13.svg" class="more"/>
         <div class="second-box-nav">
-            <p class="go-to-phone">前往手机端浏览作品</p>
+            <div v-show="is_login" class="username-box"
+            @mouseenter="is_phone = true" 
+            @mouseleave="is_phone = false"
+            >
+                <p class="go-to-phone">前往手机端浏览作品</p>
+                <img class="phone" v-show="is_phone" src="@/assets/http___photograph.twt.edu.svg"/>
+            </div>
+            
             <p v-show="!is_login" class="login-text" @click="is_need_login = !is_need_login">登录</p>
             <div v-show="is_login" class="username"
             @mouseenter="is_logOut = true" 
             @mouseleave="is_logOut = false"
             >
                 <p>{{username}}</p>
-                <transition name="fade">
-                    <p class="logout" v-show="is_logOut" @click="logOut()">退出登录</p>
-                </transition>
+                <p class="logout" v-show="is_logOut" @click="logOut()">退出登录</p>
             </div>
 
         </div>
@@ -28,10 +33,10 @@ import { ref } from "vue"
 import { removeToken } from "@/utils/auth";
 import { getUserInfo } from "@/api/login"
 const username = ref("");
-const usernameOld = "";
 const is_login = ref(false);
 const is_need_login = ref(false);
 const is_logOut = ref(false);
+const is_phone = ref(false);
 
 if(getToken()){
     getUserInfo(getUserId())
@@ -81,8 +86,11 @@ function logOut(){
     justify-content: flex-end;
 }
 .login-text, .go-to-phone, .personal-center{
-    margin-right:8px;
+    
     cursor:pointer;
+    display:flex;
+    justify-content: center;
+    align-items: center;
     display:flex;
     justify-content: center;
     align-items: center;
@@ -95,6 +103,13 @@ function logOut(){
     justify-content: center;
     align-items: center;
 }
+.username-box{
+    position: relative;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-right:8px;
+}
 .logout{
     cursor:pointer;
     position:absolute;
@@ -106,16 +121,15 @@ function logOut(){
     padding:2px;
     border-radius: 2px;
 }
-.fade-enter-from {
-    opacity: .0;
-    transform: translateY(10%);
-    /* transform: rotate3d(0,0,1,60deg); */
-}
-
-.fade-leave-to {
-    opacity: .0;
-    transform: translateX(-20%);
-    transition-delay: .0s;
-    /* transform: rotate3d(0,0,1,60deg); */
+.phone{
+    width:40px;
+    height:40px;
+    padding:3px;
+    border-radius: 2px;
+    position:absolute;
+    top:100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    z-index:100;
+    background:#FFFFFF;
 }
 </style>

@@ -1,13 +1,15 @@
 <template>
     <div class="management" @scroll="scroll">
         <div class="top">
-            <div class="title">管理赛事</div>
+            <div class="title">管理赛事
+            </div>
             <div class="flexx">
                 <img src="../../assets/admin/box.svg" @click="setQues">
                 <button @click="newCompetition">
                     <p>开启新赛事</p>
                 </button>
             </div>
+
         </div>
         <div class="comps">
             <div @click="clickFn(item)" class="compCard" v-for="(item, index) in comps">
@@ -185,12 +187,17 @@
     }
 
     .title {
+
         margin-top: 20px;
         font-size: 32px;
         color: #000;
         font-weight: 500;
         height: 45px;
         /* width: 128px; */
+        z-index: 10;
+        max-width: 50%;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .top img {

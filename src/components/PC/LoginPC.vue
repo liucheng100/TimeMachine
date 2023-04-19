@@ -6,7 +6,7 @@
     </div>
     <div class="input-box">
       <p class=input-title>{{ "密码" }}</p>
-      <input type="text" class="input-self" v-model="password" placeholder="请输入密码...">
+      <input type="password" class="input-self" v-model="password" placeholder="请输入密码...">
     </div>
     <div class="other-bar" v-if="loginType == 'loginA'">
       <div class="proto">
@@ -189,6 +189,7 @@ export default {
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   border-radius: 2px;
   margin-bottom:5px;
+  font-size:4.5px;
 }
 .proto{
   
