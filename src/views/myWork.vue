@@ -28,12 +28,12 @@
                         <div class="status">{{ pass(item.isPass) }}</div>
                         <div class="flex">
                             <div class="del"></div>
-                            <div @click="deleteWork(item.workId)" class="info">删除</div>
+                            <div @click.stop="deleteWork(item.workId)" class="info">删除</div>
                         </div>
                     </div>
                     <div class="bar" v-if="item.prizeId">
                         <div class="status_prized">{{ item.prizeName }}</div>
-                        <div class="ques" @click="beReward">填写收货信息</div>
+                        <div class="ques" @click.stop="beReward">填写收货信息</div>
                     </div>
                 </div>
             </div>
@@ -94,10 +94,10 @@ export default {
     data() {
         return {
             works: [
-                { title: "我的作品", isPass: 0, prizeId: 0, Pic: "../../assets/admin/testpic.jpg", Time: "2023-08-24T14:15:22", view: 2123 },
-                { title: "我的作品", isPass: 1, prizeId: 0, Pic: "../../assets/admin/testpic.jpg", Time: "2023-05-24T14:15:22", view: 2123 },
-                { title: "我的作品", isPass: 2, prizeId: 0, Pic: "../../assets/admin/testpic.jpg", Time: "2021-08-24T14:15:22", view: 2123 },
-                { title: "我的作品", isPass: 2, prizeId: 1, Pic: "../../assets/admin/testpic.jpg", Time: "2019-08-24T14:15:22", view: 2123 },
+                // { title: "我的作品", isPass: 0, prizeId: 0, Pic: "../../assets/admin/testpic.jpg", Time: "2023-08-24T14:15:22", view: 2123 },
+                // { title: "我的作品", isPass: 1, prizeId: 0, Pic: "../../assets/admin/testpic.jpg", Time: "2023-05-24T14:15:22", view: 2123 },
+                // { title: "我的作品", isPass: 2, prizeId: 0, Pic: "../../assets/admin/testpic.jpg", Time: "2021-08-24T14:15:22", view: 2123 },
+                // { title: "我的作品", isPass: 2, prizeId: 1, Pic: "../../assets/admin/testpic.jpg", Time: "2019-08-24T14:15:22", view: 2123 },
             ],
             contest: {},
             info: {},
