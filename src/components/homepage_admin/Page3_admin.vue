@@ -13,7 +13,7 @@
                     path: '/admin/workDetail',
                     query: { workId: i.workId }
                 })" v-for="i in prize1List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
-                    :score=4.7>
+                    :score=i.score>
                 </card_admin>
             </template>
             <template v-slot:tab1>
@@ -21,7 +21,7 @@
                     path: '/admin/workDetail',
                     query: { workId: i.workId }
                 })" v-for="i in prize1List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
-                    :score=4.7>
+                    :score=i.score>
                 </card_admin>
             </template>
             <template v-slot:tab2>
@@ -29,7 +29,7 @@
                     path: '/admin/workDetail',
                     query: { workId: i.workId }
                 })" v-for="i in prize1List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
-                    :score=4.7>
+                    :score=i.score>
                 </card_admin>
             </template>
             <template v-slot:tab3>
@@ -37,7 +37,7 @@
                     path: '/admin/workDetail',
                     query: { workId: i.workId }
                 })" v-for="i in prize1List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
-                    :score=4.7>
+                    :score=i.score>
                 </card_admin>
             </template>
         </TabMagic>
@@ -52,7 +52,7 @@
                     path: '/admin/workDetail',
                     query: { workId: i.workId }
                 })" v-for="i in prize2List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
-                    :score=4.7>
+                    :score=i.score>
                 </card_admin>
             </template>
             <template v-slot:tab1>
@@ -60,7 +60,7 @@
                     path: '/admin/workDetail',
                     query: { workId: i.workId }
                 })" v-for="i in prize2List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
-                    :score=4.7>
+                    :score=i.score>
                 </card_admin>
             </template>
             <template v-slot:tab2>
@@ -68,7 +68,7 @@
                     path: '/admin/workDetail',
                     query: { workId: i.workId }
                 })" v-for="i in prize2List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
-                    :score=4.7>
+                    :score=i.score>
                 </card_admin>
             </template>
             <template v-slot:tab3>
@@ -76,7 +76,7 @@
                     path: '/admin/workDetail',
                     query: { workId: i.workId }
                 })" v-for="i in prize2List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
-                    :score=4.7>
+                    :score=i.score>
                 </card_admin>
             </template>
         </TabMagic>
@@ -91,7 +91,7 @@
                     path: '/admin/workDetail',
                     query: { workId: i.workId }
                 })" v-for="i in prize3List_df" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
-                    :score=4.7>
+                    :score=i.score>
                 </card_admin>
             </template>
             <template v-slot:tab1>
@@ -99,7 +99,7 @@
                     path: '/admin/workDetail',
                     query: { workId: i.workId }
                 })" v-for="i in prize3List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
-                    :score=4.7>
+                    :score=i.score>
                 </card_admin>
             </template>
             <template v-slot:tab2>
@@ -107,7 +107,7 @@
                     path: '/admin/workDetail',
                     query: { workId: i.workId }
                 })" v-for="i in prize3List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
-                    :score=4.7>
+                    :score=i.score>
                 </card_admin>
             </template>
             <template v-slot:tab3>
@@ -115,7 +115,7 @@
                     path: '/admin/workDetail',
                     query: { workId: i.workId }
                 })" v-for="i in prize3List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot :cover=i.cover
-                    :score=4.7>
+                    :score=i.score>
                 </card_admin>
             </template>
         </TabMagic>
@@ -131,7 +131,7 @@
                         path: '/admin/workDetail',
                         query: { workId: i.workId }
                     })" :key="idx" v-for="(i, idx) in prize4List_df" :title=i.title :auth=i.auth :avatar=i.avatar
-                        :hot=i.hot :cover=i.cover :score=4.7>
+                        :hot=i.hot :cover=i.cover :score=i.score>
                     </cardMini_admin>
                 </div>
             </template>
@@ -141,7 +141,7 @@
                         path: '/admin/workDetail',
                         query: { workId: i.workId }
                     })" v-for="i in prize4List_ssp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
-                        :cover=i.cover :score=4.7>
+                        :cover=i.cover :score=i.score>
                     </cardMini_admin>
                 </div>
             </template>
@@ -151,7 +151,7 @@
                         path: '/admin/workDetail',
                         query: { workId: i.workId }
                     })" v-for="i in prize4List_dsp" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
-                        :cover=i.cover :score=4.7>
+                        :cover=i.cover :score=i.score>
                     </cardMini_admin>
                 </div>
             </template>
@@ -161,7 +161,7 @@
                         path: '/admin/workDetail',
                         query: { workId: i.workId }
                     })" v-for="i in prize4List_ai" :title=i.title :auth=i.auth :avatar=i.avatar :hot=i.hot
-                        :cover=i.cover :score=4.7>
+                        :cover=i.cover :score=i.score>
                     </cardMini_admin>
                 </div>
             </template>
@@ -226,6 +226,7 @@
                     temp.hot = works[i].views
                     temp.avatar = works[i].makerAvatar
                     temp.cover = works[i].coverFile
+                    temp.score = works[i].average
                     arr.push(temp)
                 }
 
@@ -242,11 +243,9 @@
                 if (to !== -1) {
                     getPrized(this.globalData.contestId).then(v => {
                         let data = v.data
-                        // console.log(222222222, data)
                         for (let prizeId in data) {
                             getPrize(prizeId).then(w => {
                                 let prizeInfo = w.data
-                                // console.log(999999898, prizeInfo)
                                 if (prizeInfo.contestGroup === 1) {//单反组
                                     if (prizeInfo.prizeName === "一等奖") {
                                         this.prize1List_df = this.setPrizedArr(data[prizeId])

@@ -5,7 +5,7 @@
         </div>
         <div class="cards">
             <CardMini_admin :key="idx" v-for="(i, idx) in dataList" :title=i.workTitle :auth="i.makerName"
-                :avatar=i.makerAvatar :hot=i.views :cover=i.coverFile :status=i.prizeName :score=4.7 @click="$router.push({
+                :avatar=i.makerAvatar :hot=i.views :cover=i.coverFile :status=i.prizeName @click="$router.push({
                 path: 'admin/workDetail',
                 query: { workId: i.workId }
             })"></CardMini_admin>
@@ -17,6 +17,7 @@
 <script>
     import { isSafari } from '@/utils/common'
     import { getScoreWorks } from "@/api/score"
+    import { contesting } from "@/api/contest"
     import { getSrc, uploadFile, } from '@/api/file'
     import pubuse from '@/utils/pub-use'
 
@@ -37,30 +38,30 @@
             }
         },
         watch: {
-            // byEnd(to) {
-            //     if (to) {
-            //         console.log(11)
-            //         if (!this.loading) {
-            //             this.loading = true
-            //             // loadmore here
-            //             getScoreWorks({
-            //                 contestId: this.contestId,
-            //                 pageNum: this.pageNum,
-            //                 pageSize: this.pageSize,
-            //             }).then(v => {
-            //                 console.log(v)
-            //                 if (!v.code) {
-            //                     this.dataList = this.dataList.concat(v.data)
-            //                     v.data.forEach(ele => {
-            //                         this.replaceBlob(ele, ['coverFile'])
-            //                     });
-            //                     this.pageNum++;
-            //                 }
-            //                 this.loading = false
-            //             })
-            //         }
-            //     }
-            // },
+            byEnd(to) {
+                if (to) {
+                    console.log(11)
+                    if (!this.loading) {
+                        this.loading = true
+                        // loadmore here
+                        getScoreWorks({
+                            contestId: this.contestId,
+                            pageNum: this.pageNum,
+                            pageSize: this.pageSize,
+                        }).then(v => {
+                            console.log(v)
+                            if (!v.code) {
+                                this.dataList = this.dataList.concat(v.data)
+                                v.data.forEach(ele => {
+                                    this.replaceBlob(ele, ['coverFile'])
+                                });
+                                this.pageNum++;
+                            }
+                            this.loading = false
+                        })
+                    }
+                }
+            },
         },
 
         methods: {
@@ -102,8 +103,8 @@
                     this.contestId = v.data.contestId
                     getScoreWorks({
                         contestId: this.contestId,
-                        // pageNum: this.pageNum,
-                        // pageSize: this.pageSize,
+                        pageNum: this.pageNum,
+                        pageSize: this.pageSize,
                     }).then(v => {
                         console.log(v)
                         if (!v.code) {

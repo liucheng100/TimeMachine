@@ -20,7 +20,7 @@
                     <div class="info">{{ status }}</div>
                 </div>
                 <div class="flex">
-                    <div class="info">均分{{ score }}</div>
+                    <div class="info" v-if="score">均分 {{ score }}</div>
                 </div>
             </div>
         </div>
