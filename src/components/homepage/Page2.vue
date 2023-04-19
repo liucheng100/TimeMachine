@@ -67,6 +67,7 @@ export default {
             }
         },
         contestId(to) {
+            alert('contestId改变'+to)
             // 初始化
             this.pageNum = 0
             this.loading = false

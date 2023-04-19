@@ -4,7 +4,7 @@
             <div class="mainTitle">作品详情</div>
         </div>
         <div class="card">
-            <div class="cover" :style="{backgroundImage: `url('${work.cover}')`}"></div>
+            <div class="cover" :style="{backgroundImage: work.cover}"></div>
             <div class="bot">
                 <div class="title">
                     <div>{{ work.workTitle }}</div>
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="button-box">
-            <button class="button" :style="{ background:'#FF4E6450' }">
+            <button class="button" :style="{ background:'#FF4E6450' }" @click="unPassWork()">
                 <img src="@/assets/x.svg" />
             </button>
             <button class="button" :style="{ background:'#F5F5F5' }">
@@ -35,7 +35,7 @@
             <button class="button" :style="{ background:'#F5F5F5' }">
                 <img src="@/assets/download.svg" />
             </button>
-            <button class="button" :style="{ background:'#4AD15F50' }">
+            <button class="button" :style="{ background:'#4AD15F50' }" @click="passWork()">
                 <img src="@/assets/check.svg" />
             </button>
         </div>
@@ -44,6 +44,13 @@
 
 <script setup>
     import { reactive } from "vue"
+    import { useRoute, useRouter } from "vue-router"
+    import { workDetail } from "@/api/work"
+    import { getSrc } from "@/api/file"
+    import { pass, unPass } from "@/api/examine"
+
+    const route = useRoute();
+    const router = useRouter();
 
     const work = reactive({
         workTitle: "作品",
@@ -53,8 +60,50 @@
         description: '作品简介作品简介',
         contestGroup: 1,
         groupName: "单反组",
-        status: "已退回"
+        status: "已退回",
+        views:0,
+        id:0
     })
+
+    workDetail(route.query.workId)
+    .then(res => {
+        const info = res.data;
+        work.id = info.workId;
+        work.workTitle = info.workTitle;
+        work.auth = info.makerName;
+        work.avatar = info.makerAvatar;
+        work.description = info.description;
+        work.views = info.views;
+        work.status = status_text(info.isPass);
+        work.groupName = contestGroupName(info.contestGroup);
+        work.cover = getSrc(info.coverFile)
+    })
+
+    function status_text(i){
+    switch(i){
+        case 0: return "评审中";
+        case 1: return "通过";
+        case 2: return "未通过"; 
+    }
+    }
+    function contestGroupName(i){
+        switch(i){
+            case 1: return "单反组";
+            case 2: return "随手拍组";
+            case 3: return "短视频组";
+            case 4: return "AI组";
+        }
+    }  
+    function passWork(){
+        pass([work.id])
+        .then(res => router.push("/admin/ReviewSubmissions"))
+    }
+    function unPassWork(){
+        unPass([work.id])
+        .then(res => router.push("/admin/ReviewSubmissions"))
+    }
+
+    
 
 </script>
 

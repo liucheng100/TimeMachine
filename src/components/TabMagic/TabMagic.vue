@@ -36,171 +36,169 @@
 </template>
 
 <script>
-    import bus from '@/utils/mitt'
-    export default {
-        name: 'TabMagic',
-        emits: ['tab0Click', 'tab1Click', 'tab2Click', 'tab3Click'],
-        props: {
-            title_list: {
-                type: Array,
-                required: true,
-            },
-            id: {
-                type: Number,
-                default: 0
-            },
-            backColor: {
-                type: String,
-                default: "#fff"
-            },
-            sticky: {
-                type: [String],
-                default: '',
-            },
-            tabId: {
-                type: Number,
-                default: 0
-            }
+import bus from '@/utils/mitt'
+export default {
+    name: 'TabMagic',
+    emits: ['tab0Click', 'tab1Click', 'tab2Click', 'tab3Click'],
+    props: {
+        title_list: {
+            type: Array,
+            required: true,
         },
-        data() {
-            return {
-                observer: null,
-                activeIdx: this.tabId,
-                tabHeight: 100,
-
-                cacheTop: [0, 0, 0, 0],
-            }
+        id: {
+            type: Number,
+            default: 0
         },
-        methods: {
-            refreshHeight() {
-                let rect = this.$refs['tab' + this.activeIdx].getBoundingClientRect();
-                // console.log(rect.height)
-                this.tabHeight = rect.height
-            }
+        backColor: {
+            type: String,
+            default: "#fff"
         },
-        watch: {
-            tabId(to) {
-                this.activeIdx = to
-            },
-            activeIdx(to, from) {
-                let dom = document.getElementById('homepage')
-                if (dom) {
-                    this.cacheTop[from] = dom.scrollTop
-                }
-                // setTimeout(() => {
-                //     dom.scrollTop = this.cacheTop[to] || 0
-                // }, 100);
-                // console.log('need-tab-idx', [to, this.id])
-                bus.emit('need-tab-idx', [to, this.id])
-            }
+        sticky: {
+            type: [String],
+            default: '',
         },
-        mounted() {
-            // bus.on('refreshHeight', this.refreshHeight)
-            setTimeout(() => {
-                this.refreshHeight()
-            }, 100);
-            let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
-            this.observer = new MutationObserver((mutationList) => {
-                // for (let mutation of mutationList) {
-                //     console.log(mutation);
-                // }
-                let rect = this.$refs['tab' + this.activeIdx].getBoundingClientRect();
-                // console.log(rect.height, this.title_list)
-                this.tabHeight = rect.height
-                setTimeout(() => {
-                    // bus.emit('refreshHeight')
-                    this.refreshHeight()
-                }, 180)
-            })
-            this.observer.observe(this.$refs.tab, {
-                childList: true,
-                attributes: true,
-                subtree: true,
-            })
-
-        },
-        beforeUnmount() {
-            if (this.observer) {
-                this.observer.disconnect()
-                this.observer.takeRecords()
-                this.observer = null
-            }
-            // bus.all.clear();
-            bus.off('refreshHeight', this.refreshHeight)
+        activeIdx: {
+            type: Number,
+            default: 0
         }
+    },
+    data() {
+        return {
+            // activeIdx: 0,
+            observer: null,
+            tabHeight: 100,
+            cacheTop: [0, 0, 0, 0],
+        }
+    },
+    methods: {
+        refreshHeight() {
+            let rect = this.$refs['tab' + this.activeIdx].getBoundingClientRect();
+            // console.log(rect.height)
+            if (rect && rect.height) {
+                this.tabHeight = rect.height
+            }
+        }
+    },
+    watch: {
+        activeIdx(to, from) {
+            let dom = document.getElementById('homepage')
+            if (dom) {
+                this.cacheTop[from] = dom.scrollTop
+            }
+            // setTimeout(() => {
+            //     dom.scrollTop = this.cacheTop[to] || 0
+            // }, 100);
+            // console.log('need-tab-idx', [to, this.id])
+            bus.emit('need-tab-idx', [to, this.id])
+        }
+    },
+    mounted() {
+        // bus.on('refreshHeight', this.refreshHeight)
+        setTimeout(() => {
+            this.refreshHeight()
+        }, 100);
+        let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
+        this.observer = new MutationObserver((mutationList) => {
+            // for (let mutation of mutationList) {
+            //     console.log(mutation);
+            // }
+            let rect = this.$refs['tab' + this.activeIdx].getBoundingClientRect();
+            // console.log(rect.height, this.title_list)
+            this.tabHeight = rect.height
+            setTimeout(() => {
+                // bus.emit('refreshHeight')
+                this.refreshHeight()
+            }, 180)
+        })
+        this.observer.observe(this.$refs.tab, {
+            childList: true,
+            attributes: true,
+            subtree: true,
+        })
 
+    },
+    beforeUnmount() {
+        if (this.observer) {
+            this.observer.disconnect()
+            this.observer.takeRecords()
+            this.observer = null
+        }
+        // bus.all.clear();
+        // bus.off('refreshHeight', this.refreshHeight)
     }
+
+}
 </script>
 
 
 <style scoped>
-    .tab-magic {
-        width: 100%;
-    }
+.tab-magic {
+    width: 100%;
+}
 
-    .tab-bar {
-        display: flex;
-        flex-direction: column;
-        height: 48px;
-        width: 100%;
-        position: relative;
-        background-color: #fff;
-        z-index: 99;
-        /* position: sticky; */
-        /* top: 0; */
-        border-left: solid 5px transparent;
-        border-right: solid 5px transparent;
-    }
+.tab-bar {
+    display: flex;
+    flex-direction: column;
+    height: 48px;
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    z-index: 99;
+    /* position: sticky; */
+    /* top: 0; */
+    border-left: solid 5px transparent;
+    border-right: solid 5px transparent;
+}
 
-    .tab-block-1 {
-        height: 48px;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-    }
+.tab-block-1 {
+    height: 48px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
 
-    .tab-item {
-        color: #999CA0;
-        font-size: 16px;
-        font-weight: 400;
-        transition: color 0.3s;
-        min-width: calc(100%/5);
-        /* background-color: red; */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+.tab-item {
+    color: #999CA0;
+    font-size: 16px;
+    font-weight: 400;
+    transition: color 0.3s;
+    min-width: calc(100%/5);
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    .tab-item-active {
-        color: #1F1F1F;
-        font-weight: 500;
-    }
+.tab-item-active {
+    color: #1F1F1F;
+    font-weight: 500;
+}
 
-    .desc {
+.desc {
 
-        width: 20px;
-        height: 2px;
-        bottom: 7px;
-        /* margin-left: calc(100%/6); */
-        transform: translateX(-50%);
-        position: absolute;
-        border-radius: 1px;
-        background-color: #4E46B4;
-        transition: .4s;
-    }
+    width: 20px;
+    height: 2px;
+    bottom: 7px;
+    /* margin-left: calc(100%/6); */
+    transform: translateX(-50%);
+    position: absolute;
+    border-radius: 1px;
+    background-color: #4E46B4;
+    transition: .4s;
+}
 
-    .main-container {
-        overflow: hidden;
-        width: 100%;
-        display: flex;
-        align-items: flex-start;
-        transition: height .3s;
-    }
+.main-container {
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    transition: height .3s;
+}
 
-    .tab {
-        flex-shrink: 0;
-        width: 100vw;
-        transition: .3s;
-    }
+.tab {
+    flex-shrink: 0;
+    width: 100vw;
+    transition: .3s;
+}
 </style>
