@@ -66,7 +66,13 @@
             clickFn(item) {
                 let j = (item.contestId == this.globalData.contestId)
                 if (j) {
+                    // 转跳当前正在进行的投稿页面
                     this.$router.push('/submit')
+                } else {
+                    this.$router.push({
+                        path: '/homepage',
+                        query: { contestId: item.contestId }
+                    })
                 }
             },
             replaceBlob(tarObject, attrList) {
