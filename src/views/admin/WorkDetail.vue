@@ -133,9 +133,10 @@
         font-weight: 500;
         height: 45px;
         /* width: 128px; */
-        display: flex;
         z-index:10;
-        flex-wrap: nowrap;
+        max-width:50%;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .mainTitle {
