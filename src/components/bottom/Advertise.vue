@@ -1,12 +1,12 @@
 <template>
     <div class="advertise">
         <div class="left">
-            <img src="../../assets/bookmark.svg" class="icon"/>
-            <p class="info">第十四届方寸·流年摄影大赛「复苏」</p>
+            <img src="../../assets/bookmark.svg" class="icon"  @click="t()"/>
+            <p class="info">{{ contestData.title }}</p>
         </div>
         <div class="right">
             <img src="../../assets/clock.svg" class="icon"/>
-            <p class="info">还有24天截稿</p>
+            <p class="info">还有{{ contestData.time }}天截稿</p>
             <div class="to-pull" @click="toSubmit()">
                 <img src="../../assets/plus-circle.svg" class="icon"/>
                 <p class="to-pull-text">去投稿</p>
@@ -17,7 +17,28 @@
 <script setup>
 import { useRouter } from "vue-router"
 import { getToken } from "@/utils/auth"
+import { contesting } from "@/api/contest"
+import { reactive } from "vue"
+import  formatDate  from "@/utils/time/time"
+
 const router = useRouter();
+const contestData = reactive({
+    title:"",
+    time:""
+});
+
+contesting()
+.then(res => {
+    let info = res.data;
+    console.log(res.data)
+    console.log(new Date())
+    contestData.title = info.title;
+    contestData.time = parseInt((new Date(formatDate(info.stopTime)) - new Date()) / 86400000)
+});
+
+function t(){
+    console.log(contestData)
+}
 
 function toSubmit(){
     if(getToken())router.push("/PC/submit");
