@@ -8,7 +8,10 @@
             </div>
         </div>
         <div class="cards">
-            <div class="card-work" v-for="(item, i) in works">
+            <div @click="$router.push({
+                path: '/workDetail',
+                query:{workId:item.workId}
+            })" class="card-work" v-for="(item, i) in works">
                 <div class="cover" :style="{ backgroundImage: `url('${item.coverFile}')` }"></div>
                 <div class="bot">
                     <div class="title">
