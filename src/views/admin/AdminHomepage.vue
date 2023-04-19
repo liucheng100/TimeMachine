@@ -113,6 +113,7 @@
                 // 跳出mounted默认当前进行赛事处理逻辑
                 return
             }
+            // alert(1111)
             contesting().then(v => {
                 console.log(118, v)
                 if (!v.code) {
@@ -146,7 +147,6 @@
         },
         activated() {
             // 对路由变化做出响应...
-            // alert(this.catchTop)
             this.$refs.homepage.scrollTop = this.catchTop
 
             if (this.$route.query.contestId) {
@@ -224,6 +224,8 @@
             // 对路由变化做出响应...
             // 从本路由切换回本路由其他参数query触发
             // 当前为往届赛事，点击回到主页（当前赛事）时触发
+            // alert(333)
+            this.catchId = -1
             contesting().then(v => {
                 // console.log(118, v)
                 if (!v.code) {

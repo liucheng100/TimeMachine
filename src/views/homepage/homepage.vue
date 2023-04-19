@@ -158,6 +158,7 @@ export default {
         // 从其他路由切换回本路由触发
         this.$refs.homepage.scrollTop = this.catchTop
 
+            
         if (this.$route.query.contestId) {
             if (this.catchId == this.$route.query.contestId) {
 
@@ -236,6 +237,7 @@ export default {
         // 对路由变化做出响应...
         // 从本路由切换回本路由其他参数query触发
         // 当前为往届赛事，点击回到主页（当前赛事）时触发
+        this.catchId = -1
         contesting().then(v => {
             // console.log(118, v)
             if (!v.code) {

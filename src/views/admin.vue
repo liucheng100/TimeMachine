@@ -5,7 +5,7 @@
             <router-view v-slot="{ Component }" class="router-view"
                 style="position: absolute; height: 100%; width: 100%;">
                 <transition name="fade">
-                    <keep-alive include="homepage">
+                    <keep-alive include="adminhomepage">
                         <component class="components" :is="Component" />
                     </keep-alive>
                 </transition>
