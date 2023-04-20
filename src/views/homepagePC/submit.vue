@@ -172,7 +172,8 @@ export default {
                 // console.log(e.target.files[0])
                 let save_the_event_id = this.net_event_id
                 let file = e.target.files[0]
-                file = new window.File([file], file.name.slice(0, 9), { type: file.type })
+                // file = new window.File([file], file.name.slice(0, 9), { type: file.type })
+                file = new window.File([file], file.name, { type: file.type })
                 let formData = new FormData();
                 formData.append('file', file)
                 let blob = window.URL.createObjectURL(file)

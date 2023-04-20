@@ -149,6 +149,8 @@ export default {
             } else {
                 ElMessage.error(v.msg)
             }
+        }).catch(err=>{
+            // alert('阻断contestId的变化，page23请求不到')
         })
 
     },
