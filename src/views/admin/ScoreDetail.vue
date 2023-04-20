@@ -75,7 +75,12 @@
 
 <script>
     import { getUnExamined, pass, unPass } from "@/api/examine"
-    import { uploadScore } from "@/api/score"
+    import { uploadScore, getScoreWorks } from "@/api/score"
+    import { contesting } from "@/api/contest"
+    import { workDetail } from "@/api/work"
+    import { getSrc, uploadFile, } from '@/api/file'
+    import pubuse from '@/utils/pub-use'
+
     export default {
         name: "ScoreDetail",
         props: {
@@ -83,6 +88,9 @@
         data() {
             return {
                 workId: -1,
+                lastWorkId: -1,
+                nextWorkId: -1,
+                contestId: -1,
                 score: -1,
                 work: { workTitle: '作品', auth: '城市作画', avatar: '', views: '1071', cover: '', description: '作品简介作品简介', contestGroup: 1 },
                 awards:
@@ -133,10 +141,22 @@
                 let p = { score: this.score, workId: this.workId }
                 uploadScore(p)
                     .then(res => {
-                        this.$router.push({
-                            path: '/admin/score',
-                            query: { workId: i.workId }
-                        })
+                        if (this.nextWorkId != -1) {
+                            console.log(11)
+                            // this.$router.push({
+                            //     path: '/admin/scoreDetail',
+                            //     query: { workId: this.nextWorkId, lastWorkId: this.workId }
+                            // })
+                            this.lastWorkId = this.workId
+                            this.workId = this.nextWorkId
+                            this.stars_none = [{}, {}, {}, {}, {}]
+                            this.stars_none_old = [],
+                                this.refresh()
+                        } else {
+                            this.$router.push({
+                                path: '/admin/score',
+                            })
+                        }
                     })
             },
             changeColorLeave: function () {
@@ -149,10 +169,60 @@
             changeColorClick: function () {
                 this.changeColorHover();
                 this.click = true;
+            },
+            replaceBlob(tarObject, attrList) {
+                attrList.forEach(attr => {
+                    getSrc(tarObject[attr]).then(v => {
+                        // console.log(v)
+                        tarObject[attr] = v
+                        this.$forceUpdate()
+                    })
+                    // .catch(err => {
+                    //     ElMessage.error('图片加载失败')
+                    // })
+                    tarObject[attr] = pubuse('loading.gif')
+                    // console.log(this.dataList)
+                });
+            },
+            refresh() {
+                contesting().then(v => {
+                    if (!v.code) {
+                        this.contestId = v.data.contestId
+                        getScoreWorks({
+                            contestId: this.contestId,
+                            pageNum: 1,
+                            pageSize: 10,
+                        }).then(v => {
+                            console.log(v)
+                            if (v.data[1]) {
+                                this.nextWorkId = v.data[1].workId
+                            } else {
+                                this.nextWorkId = -1
+                            }
+                        })
+                    }
+                })
+                workDetail(this.workId).then(v => {
+                    if (!v.code) {
+                        console.log(v.data)
+                        this.work.workTitle = v.data.workTitle
+                        this.work.description = v.data.description
+                        this.work.avatar = v.data.makerAvatar
+                        this.work.views = v.data.views
+                        this.work.cover = v.data.coverFile
+                        this.contestGroup = v.data.contestGroup
+                        this.replaceBlob(this.work, ['cover',])
+                    }
+                })
             }
         },
         mounted() {
             this.workId = this.$route.query.workId
+            if (this.$route.query.lastWorkId) {
+                this.lastWorkId = this.$route.query.lastWorkId
+            }
+            this.refresh()
+
         },
     }
 </script>

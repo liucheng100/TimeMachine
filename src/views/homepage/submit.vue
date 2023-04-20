@@ -265,20 +265,26 @@
                 //     ElMessage.warning('作品名不能为空')
                 // return
                 // }
-                newWork(this.formdata).then(v => {
-                    console.log(v)
-                    if (!v.code) {
-                        ElMessage.success('发布成功')
-                        this.pop1 = true
-                    } else {
-                        ElMessage.error(v.description + v.msg)
-                        this.pop2 = true
-                    }
+                this.loading = true
+                if (this.loading) {
+                    newWork(this.formdata).then(v => {
+                        console.log(v)
+                        if (!v.code) {
+                            ElMessage.success('发布成功')
+                            this.pop1 = true
+                        } else {
+                            ElMessage.error(v.description + v.msg)
+                            this.pop2 = true
+                        }
+                        this.loading = false
 
-                }).catch(err => {
-                    ElMessage.error('出错了')
-                    this.pop2 = true
-                })
+                    }).catch(err => {
+                        ElMessage.error('出错了')
+                        this.pop2 = true
+                        this.loading = false
+
+                    })
+                }
             }
         },
         mounted() {
