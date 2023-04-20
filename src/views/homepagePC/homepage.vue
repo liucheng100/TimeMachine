@@ -1,5 +1,5 @@
 <template>
-    <div class="homepage-pc">
+    <div class="homepage-pc" v-show="if_token">
         <img :src="contest.bannerPic" class="big-img" />
         <div class="other-box">
             <p class="box-title">奖项设置</p>
@@ -13,10 +13,10 @@
                     <img src="../../assets/text-right.svg" class="text-icon" />
                 </div>
                 <div class="medal-content">
-                    <div class="medal-single" v-for="child in item">
+                    <div class="medal-single" v-for="child in item" ref="MedalSingle">
                         <div class="square" :style="{ backgroundImage:`url('${child.goodPic}')` }"></div>
                         <p class="prize-name">{{ child.prizeName }}</p>
-                        <p class="prize-member">{{ child.goodName }} / {{ child.totalNum }} 名</p>
+                        <p class="prize-member" ref="PrizeMember" :style="{transform:`scale(${textSize},${textSize})`}">{{ child.goodName }} / {{ child.totalNum }} 名</p>
                     </div>
                 </div>
             </div>
@@ -28,6 +28,7 @@
 <script>
     import { getSrc, uploadFile, } from '@/api/file'
     import { contesting, getContest, } from '@/api/contest'
+    import { getToken } from "@/utils/auth";
     import pubuse from '@/utils/pub-use'
 
     export default {
@@ -43,6 +44,8 @@
             return {
                 prizes: [],
                 contest: {},
+                if_token: getToken(),
+                textSize:0
             }
         },
         computed: {
@@ -65,17 +68,9 @@
             },
             NewURL(url) {
                 return new URL(url);
-            }
-
-        },
-
-        mounted() {
-            if (this.$route.query.contestId) {
-                // 跳出mounted默认当前进行赛事处理逻辑
-                return
-            }
-
-            contesting().then(v => {
+            },
+            async getData(){
+                await contesting().then(v => {
                 if (!v.code) {
                     this.contest = v.data
                     this.replaceBlob(this.contest, [
@@ -99,11 +94,29 @@
                     console.log(this.contest.prizes)
                     this.globalData.contestId = this.contest.contestId
                     this.globalData.prizes = this.contest.prizes
-                } else {
+                    } 
+                    else {
                     ElMessage.error(v.msg)
-                }
-            })
+                    }
+                })
+                let textLength = [];
+                this.$refs.PrizeMember.forEach((item) => {
+                    textLength.push(item.offsetWidth);
+                })
+                this.textSize = this.$refs.MedalSingle[0].offsetWidth / Math.max(...textLength);
+            }
 
+        },
+
+        mounted() {
+            if (this.$route.query.contestId) {
+                // 跳出mounted默认当前进行赛事处理逻辑
+                return
+            }
+            //没有token就不请求主页数据啦~
+            if (!getToken())return;
+
+            this.getData();
         },
     }
 
@@ -139,7 +152,7 @@
     .prize-member {
         font-size: .5px;
         margin-top: 5%;
-        transform: scale(.7, .7);
+        
     }
 
     .square {

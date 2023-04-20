@@ -10,7 +10,7 @@
                 <img class="phone" v-show="is_phone" src="@/assets/http___photograph.twt.edu.svg"/>
             </div>
             
-            <p v-show="!is_login" class="login-text" @click="is_need_login = !is_need_login">登录</p>
+            <!-- <p v-show="!is_login" class="login-text" @click="is_need_login = !is_need_login">登录</p> -->
             <div v-show="is_login" class="username"
             @mouseenter="is_logOut = true" 
             @mouseleave="is_logOut = false"
@@ -20,7 +20,7 @@
             </div>
 
         </div>
-        <div class="mask" v-show="is_need_login" @click="changeNeedLogin()">
+        <div class="mask" v-show="!getToken()" @click="changeNeedLogin()">
             <LoginPC @tokenGet="is_login = true"/>
         </div>
     </div>

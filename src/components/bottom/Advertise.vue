@@ -1,10 +1,10 @@
 <template>
     <div class="advertise">
         <div class="left">
-            <img src="../../assets/bookmark.svg" class="icon"  @click="t()"/>
+            <img src="../../assets/bookmark.svg" class="icon"/>
             <p class="info">{{ contestData.title }}</p>
         </div>
-        <div class="right">
+        <div class="right" v-show="if_token">
             <img src="../../assets/clock.svg" class="icon"/>
             <p class="info">还有{{ contestData.time }}天截稿</p>
             <div class="to-pull" @click="toSubmit()">
@@ -15,34 +15,29 @@
     </div>
 </template>
 <script setup>
-import { useRouter } from "vue-router"
 import { getToken } from "@/utils/auth"
 import { contesting } from "@/api/contest"
 import { reactive } from "vue"
 import  formatDate  from "@/utils/time/time"
-
+import { useRouter } from "vue-router"
 const router = useRouter();
+const if_token = getToken();
 const contestData = reactive({
     title:"",
     time:""
 });
 
-contesting()
-.then(res => {
-    let info = res.data;
-    console.log(res.data)
-    console.log(new Date())
-    contestData.title = info.title;
-    contestData.time = parseInt((new Date(formatDate(info.stopTime)) - new Date()) / 86400000)
-});
-
-function t(){
-    console.log(contestData)
+if(getToken()){
+    contesting()
+    .then(res => {
+        let info = res.data;
+        contestData.title = info.title;
+        contestData.time = parseInt((new Date(formatDate(info.stopTime)) - new Date()) / 86400000)
+    });
 }
 
 function toSubmit(){
-    if(getToken())router.push("/PC/submit");
-    else alert("请先登录!");
+    router.push("/PC/submit");
 }
 </script>
 <style scoped>
