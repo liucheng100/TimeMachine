@@ -117,7 +117,7 @@ function checkDetail(){
     margin-left:5%;
     margin-right:5%;
     font-size: 11px;
-    justify-content: flex-end;
+    
     transform: scale(.95, .95);
     align-items: center;
     width:40%;
@@ -128,7 +128,7 @@ function checkDetail(){
     margin-right:5%;
     transform: scale(.95, .95);
     display: flex;
-    justify-content: center;
+    
     align-items: center;
 }
 .icon{
@@ -152,5 +152,8 @@ function checkDetail(){
 }
 .text-out{
     width:40%;
+}
+.small-text-inside{
+    margin-left:5px;
 }
 </style>

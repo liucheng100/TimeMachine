@@ -3,74 +3,67 @@
     import { useRouter } from "vue-router"
     import { contesting } from "@/api/contest"
     import { getUnPass, pass } from "@/api/examine"
-    let is_bottom = ref(false);
-    const isElementVisible = (el) => {
-        const rect = el.getBoundingClientRect()
-        const vWidth = window.innerWidth || document.documentElement.clientWidth
-        const vHeight = window.innerHeight || document.documentElement.clientHeight
+    let page = ref(0);
+let if_send  = false;
+const router = useRouter();
+const FloatPanel = ref();
+const Bottom = ref();
+const top_change = reactive({marginTop:0})
+const card_info = reactive([]);
+const multiplyInfo = ref(false);
+const ON = ref(false);
+const work_id = ref(0);
 
+const isElementVisible = (el) => {
+  const rect = el.getBoundingClientRect()
+  const vWidth = window.innerWidth || document.documentElement.clientWidth
+  const vHeight = window.innerHeight || document.documentElement.clientHeight
+  if (
+    rect.right < 0 ||
+    rect.bottom < 0 ||
+    rect.left > vWidth ||
+    rect.top > vHeight
+  ) {return false}
+  return true
+}
 
-        if (
-            rect.right < 0 ||
-            rect.bottom < 0 ||
-            rect.left > vWidth ||
-            rect.top > vHeight
-        ) {
-            return false
-        }
-
-        return true
+function setHeight(){
+    if(isElementVisible(Bottom.value) && !if_send){
+        if_send = true;
+        getUnPassNow();
     }
+}
 
-    function setHeight() {
-        if (isElementVisible(Bottom.value)) {
-            getUnPassNow();
-            page++;
-        }
-    }
+async function getUnPassNow(){
+    const contestInfo = await contesting();
+    const contestId = contestInfo.data.contestId;
+    getUnPass(
+        contestId,
+        page.value,
+        8
+    )
+    .then(res => {
+        if(res.data.length == 0)return;
 
-    function sayBottom() {
-        if (!is_bottom.value) {
+        page.value++;
+        if_send = false;
+        
+        res.data.forEach(item => {
 
-            is_bottom.value = true;
-        }
-    }
+            if(multiplyInfo.value)item.is_multiply = true;
+            else item.is_multiply = false;
 
-    async function getUnPassNow() {
-        const contestInfo = await contesting();
-        const contestId = contestInfo.data.contestId;
-        getUnPass(
-            contestId,
-            page,
-            8
-        )
-            .then(res => {
-                if (res.data.length == 0) {
-                    sayBottom();
-                }
-                res.data.forEach(item => {
-                    item.ref = "0";
-                    item.is_multiply = false;
-                    item.is_choose = false;
-                    card_info.push(ref(item));
-                });
-            })
-    }
+            item.ref = "0";
+            item.is_choose = false;
 
-    getUnPassNow();
-    let page = 0;
-    const router = useRouter();
-    const FloatPanel = ref();
-    const Bottom = ref();
-    const top_change = reactive({ marginTop: 0 })
-    const card_info = reactive([]);
-    const multiplyInfo = ref(false);
-    const ON = ref(false);
-    const work_id = ref(0);
-
-    onMounted(() => {
-        top_change.marginTop = FloatPanel.value.offsetHeight + "px";
+            card_info.push(ref(item));
+        });
     })
+}
+onMounted(() => {
+    top_change.marginTop = FloatPanel.value.offsetHeight + "px";
+    getUnPassNow()
+})
 
     function multiply() {
         multiplyInfo.value = !multiplyInfo.value;
@@ -124,9 +117,13 @@
                 @back="ON = true, work_id = item.value.workId" />
         </div>
 
+        <div class="bottom" ref="Bottom"></div>
+
         <Pop :ON="ON" :model="0" title="确认要撤回作品吗?" tip="请确认信息无误" :options="{ black: '', grey: '取消', blue: '撤回' }"
             @blackClick="0" @greyClick="ON = false" @blueClick="passSingleWork()">
         </Pop>
+
+        
     </div>
 
 </template>
@@ -196,5 +193,8 @@
         align-items: space-around;
         justify-content: space-between;
         margin-top: 25%;
+    }
+    .bottom{
+        height:5px;
     }
 </style>

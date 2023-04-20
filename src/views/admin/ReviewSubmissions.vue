@@ -3,62 +3,9 @@ import { ref, reactive, nextTick, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import { contesting } from "@/api/contest"
 import { getUnExamined, pass, unPass } from "@/api/examine"
-let is_bottom = ref(false);
-const isElementVisible = (el) => {
-  const rect = el.getBoundingClientRect()
-  const vWidth = window.innerWidth || document.documentElement.clientWidth
-  const vHeight = window.innerHeight || document.documentElement.clientHeight
 
-  
-  if (
-    rect.right < 0 ||
-    rect.bottom < 0 ||
-    rect.left > vWidth ||
-    rect.top > vHeight
-  ) {
-    return false
-  }
-  
-  return true
-}
-
-function setHeight(){
-    if(isElementVisible(Bottom.value)){
-        getUnExaminedNow();
-        page++;
-    }
-}
-
-function sayBottom(){
-    if(!is_bottom.value){
-        
-        is_bottom.value = true;
-    }
-}
-
-async function getUnExaminedNow(){
-    const contestInfo = await contesting();
-    const contestId = contestInfo.data.contestId;
-    getUnExamined({
-        contestId:contestId,
-        pageNum:page,
-        pageSize:8
-    })
-    .then(res => {
-        if(res.data.length == 0){
-            sayBottom();
-        }
-        res.data.forEach(item => {
-            item.ref = "0";
-            item.is_multiply = false;
-            item.is_choose = false;
-            card_info.push(ref(item));
-        });
-    })
-}
-
-getUnExaminedNow();
-let page = 0;
+let page = ref(0);
+let if_send  = false;
 const router = useRouter();
 const FloatPanel = ref();
 const Bottom = ref();
@@ -69,8 +16,55 @@ const multiplyInfo = ref(false);
 const ON = ref(false);
 const work_id = ref(0);
 
+const isElementVisible = (el) => {
+  const rect = el.getBoundingClientRect()
+  const vWidth = window.innerWidth || document.documentElement.clientWidth
+  const vHeight = window.innerHeight || document.documentElement.clientHeight
+  if (
+    rect.right < 0 ||
+    rect.bottom < 0 ||
+    rect.left > vWidth ||
+    rect.top > vHeight
+  ) {return false}
+  return true
+}
+
+function setHeight(){
+    if(isElementVisible(Bottom.value) && !if_send){
+        if_send = true;
+        getUnExaminedNow();
+    }
+}
+
+async function getUnExaminedNow(){
+    const contestInfo = await contesting();
+    const contestId = contestInfo.data.contestId;
+    getUnExamined({
+        contestId:contestId,
+        pageNum:page.value,
+        pageSize:8
+    })
+    .then(res => {
+        if(res.data.length == 0)return;
+
+        page.value++;
+        if_send = false;
+        
+        res.data.forEach(item => {
+
+            if(multiplyInfo.value)item.is_multiply = true;
+            else item.is_multiply = false;
+
+            item.ref = "0";
+            item.is_choose = false;
+
+            card_info.push(ref(item));
+        });
+    })
+}
 onMounted(() => {
     top_change.marginTop = FloatPanel.value.offsetHeight + "px";
+    getUnExaminedNow()
 })
 
 function multiply(){

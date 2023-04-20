@@ -137,8 +137,9 @@
     }
 
     .prize-member {
-        font-size: 1px;
+        font-size: .5px;
         margin-top: 5%;
+        transform: scale(.7, .7);
     }
 
     .square {
@@ -154,6 +155,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        width:25%;
     }
 
     .medal-content {
@@ -210,7 +212,8 @@
 
     .big-img {
         width: 60%;
-        height: 200px;
         margin: 5px;
     }
+
+    
 </style>
