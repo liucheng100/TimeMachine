@@ -11,3 +11,14 @@ export function getScoreWorks<T>(data: any) {
         },
     })
 }
+
+//打分
+export function uploadScore<T>(data: any) {
+    return http.post<T>({
+        url: '/score/upload',
+        params: {
+            score: data.score,
+            workId: data.workId,
+        },
+    })
+}

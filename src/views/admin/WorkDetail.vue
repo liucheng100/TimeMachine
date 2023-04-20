@@ -1,10 +1,10 @@
 <template>
     <div class="datail">
         <div class="top">
-            <p class="title">作品详情</p>
+            <div class="mainTitle">作品详情</div>
         </div>
         <div class="card">
-            <img class="cover" :src="work.cover"/>
+            <img class="cover" :src="work.cover" />
             <div class="bot">
                 <div class="title">
                     <div>{{ work.workTitle }}</div>
@@ -61,49 +61,49 @@
         contestGroup: 1,
         groupName: "单反组",
         status: "已退回",
-        views:0,
-        id:0,
+        views: 0,
+        id: 0,
     })
 
     workDetail(route.query.workId)
-    .then(res => {
-        const info = res.data;
-        work.id = info.workId;
-        work.workTitle = info.workTitle;
-        work.auth = info.makerName;
-        work.avatar = info.makerAvatar;
-        work.description = info.description;
-        work.views = info.views;
-        work.status = status_text(info.isPass);
-        work.groupName = contestGroupName(info.contestGroup);
-        work.cover = concatSrc(info.coverFile);
-    })
+        .then(res => {
+            const info = res.data;
+            work.id = info.workId;
+            work.workTitle = info.workTitle;
+            work.auth = info.makerName;
+            work.avatar = info.makerAvatar;
+            work.description = info.description;
+            work.views = info.views;
+            work.status = status_text(info.isPass);
+            work.groupName = contestGroupName(info.contestGroup);
+            work.cover = concatSrc(info.coverFile);
+        })
 
-    function status_text(i){
-    switch(i){
-        case 0: return "评审中";
-        case 1: return "通过";
-        case 2: return "未通过"; 
+    function status_text(i) {
+        switch (i) {
+            case 0: return "评审中";
+            case 1: return "通过";
+            case 2: return "未通过";
+        }
     }
-    }
-    function contestGroupName(i){
-        switch(i){
+    function contestGroupName(i) {
+        switch (i) {
             case 1: return "单反组";
             case 2: return "随手拍组";
             case 3: return "短视频组";
             case 4: return "AI组";
         }
-    }  
-    function passWork(){
-        pass([work.id])
-        .then(res => history.back())
     }
-    function unPassWork(){
+    function passWork() {
+        pass([work.id])
+            .then(res => history.back())
+    }
+    function unPassWork() {
         unPass([work.id])
-        .then(res => history.back())
+            .then(res => history.back())
     }
 
-    
+
 
 </script>
 
@@ -118,25 +118,6 @@
         width: 100%;
         display: flex;
         flex-direction: row;
-        position: relative;
-        justify-content: flex-end;
-        padding-right:20px;
-    }
-
-    .title {
-        position: absolute;
-        left:0;
-        margin-left: 20px;
-        margin-top: 20px;
-        font-size: 32px;
-        color: #000;
-        font-weight: 500;
-        height: 45px;
-        /* width: 128px; */
-        z-index:10;
-        max-width:50%;
-        text-overflow: ellipsis;
-        overflow: hidden;
     }
 
     .mainTitle {
@@ -176,7 +157,13 @@
         justify-content: space-between;
     }
 
-    
+    .title {
+        font-size: 16px;
+        color: rgba(31, 31, 31, 1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
     .introduction {
         margin-top: 4px;

@@ -29,7 +29,7 @@ export default {
                 },
                 {
                     icon: pubuse('seasonBtn/0.svg'),
-                    text:'编辑赛事',
+                    text:'去投稿',
                     bgc: 'rgba(78, 70, 180, 1)',
                 },
                 {

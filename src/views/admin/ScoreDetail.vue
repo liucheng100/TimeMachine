@@ -32,10 +32,12 @@
                 src="@/assets/star-none.svg" class="star" />
         </div>
         <div class="button-box">
-            <button class="button" :style="{ background:'#FF4E6450' }">
+            <button class="button" :style="{ background:'#FF4E6450' }" @click="delWork">
                 <img src="@/assets/trash-2.svg" />
             </button>
-            <button class="button" :style="{ background:'#F5F5F5' }">
+            <button class="button" :style="{ background:'#F5F5F5' }" @click="$router.push({
+                path: '/admin/score',
+            })">
                 <img src="@/assets/arrow-left.svg" />
             </button>
             <button class="button" :style="{ background:'#F5F5F5' }">
@@ -72,12 +74,16 @@
 </template>
 
 <script>
+    import { getUnExamined, pass, unPass } from "@/api/examine"
+    import { uploadScore } from "@/api/score"
     export default {
         name: "ScoreDetail",
         props: {
         },
         data() {
             return {
+                workId: -1,
+                score: -1,
                 work: { workTitle: '作品', auth: '城市作画', avatar: '', views: '1071', cover: '', description: '作品简介作品简介', contestGroup: 1 },
                 awards:
                     [
@@ -107,14 +113,31 @@
             }
         },
         methods: {
+            delWork() {
+                let x = []
+                x.push(this.workId)
+                unPass(x)
+                this.$router.push({
+                    path: '/admin/score',
+                })
+            },
             changeColorHover: function (index) {
                 let length = index + 1;
+                this.score = index + 1
                 this.stars_old = this.stars;
                 this.stars_none_old = this.stars_none;
                 this.stars.length = 0;
                 this.stars_none.length = 0;
                 for (let a = 0; a < length; a++)this.stars.push({});
                 for (let a = 0; a < 5 - length; a++)this.stars_none.push({});
+                let p = { score: this.score, workId: this.workId }
+                uploadScore(p)
+                    .then(res => {
+                        this.$router.push({
+                            path: '/admin/score',
+                            query: { workId: i.workId }
+                        })
+                    })
             },
             changeColorLeave: function () {
                 if (!this.click) {
@@ -129,6 +152,7 @@
             }
         },
         mounted() {
+            this.workId = this.$route.query.workId
         },
     }
 </script>

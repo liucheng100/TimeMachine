@@ -131,7 +131,7 @@ const routes = [
 				}
 			},
 			{
-				path: "/admin/score/detail",
+				path: "/admin/scoreDetail",
 				component: () => import("@/views/admin/ScoreDetail.vue"),
 				meta: {
 					title: "作品详情",

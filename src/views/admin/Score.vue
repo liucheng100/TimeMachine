@@ -6,7 +6,7 @@
         <div class="cards">
             <CardMini_admin :key="idx" v-for="(i, idx) in dataList" :title=i.workTitle :auth="i.makerName"
                 :avatar=i.makerAvatar :hot=i.views :cover=i.coverFile :status=i.prizeName @click="$router.push({
-                path: 'admin/workDetail',
+                path: '/admin/scoreDetail',
                 query: { workId: i.workId }
             })"></CardMini_admin>
         </div>

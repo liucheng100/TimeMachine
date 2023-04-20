@@ -19,7 +19,7 @@ export function getSrc<T>(path:any){
 }
 
 export function concatSrc<T>(path:any){
-    return '/file/get?path='+path;
+    return '/api/file/get?path='+path;
 }
 
 export function uploadFile<T>(file:FormData){
