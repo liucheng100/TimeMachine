@@ -27,7 +27,7 @@ const myRequest = new MYRequest({
       console.log("响应失败的拦截", err);
       if (err.response.status === 401) {
         removeToken();
-        alert('token过期，请重新登录')
+        alert('登录已过期，请重新登陆')
         // location.reload();
       }
       return err;
