@@ -21,18 +21,18 @@ export default defineConfig({
   },
   server: {
       host: "0.0.0.0",
-      proxy: {
-        '/api': {
-          target: 'http://photo.twtstudio.com',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, '')
-        },
-        '/file/get': {
-          target: 'http://photo.twtstudio.com',
-          changeOrigin: true,
-          // rewrite: (path) => path.replace(/^\/api/, '')
-        },
-      },
+      // proxy: {
+      //   '/api': {
+      //     target: 'http://photo.twtstudio.com',
+      //     changeOrigin: true,
+      //     rewrite: (path) => path.replace(/^\/api/, '')
+      //   },
+      //   '/file/get': {
+      //     target: 'http://photo.twtstudio.com',
+      //     changeOrigin: true,
+      //     // rewrite: (path) => path.replace(/^\/api/, '')
+      //   },
+      // },
   },
   define: {
     'process.env': {}
