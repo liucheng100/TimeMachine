@@ -66,7 +66,6 @@
 
         methods: {
             replaceBlob(tarObject, attrList) {
-                console.log(attrList)
                 attrList.forEach(attr => {
                     getSrc(tarObject[attr]).then(v => {
                         // console.log(v)
@@ -98,7 +97,7 @@
         mounted() {
             this.loading = true
             contesting().then(v => {
-                console.log(118, v)
+                // console.log(118, v)
                 if (!v.code) {
                     this.contestId = v.data.contestId
                     getScoreWorks({
@@ -106,7 +105,7 @@
                         pageNum: this.pageNum,
                         pageSize: this.pageSize,
                     }).then(v => {
-                        console.log(v)
+                        // console.log(v)
                         if (!v.code) {
                             this.dataList = v.data
                             v.data.forEach(ele => {

@@ -7,7 +7,7 @@ const { resolve } = require('path')
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base:'./',
+  base: './',
   plugins: [
     vue(),
     AutoImport({
@@ -20,19 +20,29 @@ export default defineConfig({
     alias: [{ find: '@', replacement: resolve(__dirname, 'src') }],
   },
   server: {
-      host: "0.0.0.0",
-      proxy: {
-        '/api': {
-          target: 'http://photo.twtstudio.com',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, '')
-        },
-        '/file/get': {
-          target: 'http://photo.twtstudio.com',
-          changeOrigin: true,
-          // rewrite: (path) => path.replace(/^\/api/, '')
-        },
+    host: "0.0.0.0",
+    proxy: {
+      // '/api': {
+      //   target: 'http://photo.twtstudio.com',
+      //   changeOrigin: true,
+      //   rewrite: (path) => path.replace(/^\/api/, '')
+      // },
+      // '/file/get': {
+      //   target: 'http://photo.twtstudio.com',
+      //   changeOrigin: true,
+      //   // rewrite: (path) => path.replace(/^\/api/, '')
+      // },
+      '/api/api': {
+        target: 'https://photograph.twt.edu.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
       },
+      '/api/file/get': {
+        target: 'https://photograph.twt.edu.com',
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/api/, '')
+      },
+    },
   },
   define: {
     'process.env': {}

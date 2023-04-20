@@ -6,8 +6,8 @@ export function getScoreWorks<T>(data: any) {
         url: '/score/list',
         params: {
             contestId: data.contestId,
-            // pageNum: data.pageNum,
-            // pageSize: data.pageSize,
+            pageNum: data.pageNum,
+            pageSize: data.pageSize,
         },
     })
 }
