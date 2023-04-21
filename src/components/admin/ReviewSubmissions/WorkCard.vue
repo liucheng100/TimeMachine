@@ -55,7 +55,8 @@ function checkDetail(){
     if(!props.is_multiply){
         router.push({
             query:{
-                workId:props.info.workId
+                workId:props.info.workId,
+                from:route.fullPath
             },
             path:"/admin/WorkDetail"
         })

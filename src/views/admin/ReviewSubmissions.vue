@@ -7,7 +7,7 @@ import { getUnExamined, pass, unPass } from "@/api/examine"
 import JSZip from "JSZip"
 import { saveAs } from "file-saver"
 
-let page = ref(0);
+let page = ref(1);
 let if_send  = false;
 const router = useRouter();
 const FloatPanel = ref();
