@@ -29,7 +29,7 @@
         {{ loginType == 'login'?'没有天外天账号？':'天外天账号登录' }}
       </div>
       <p class="forget bottom-text" v-show="loginType == 'login'">忘记密码</p>
-      <p class="signup bottom-text" v-show="loginType == 'loginA'" @click="login = 'signUp'">注册方寸流年</p>
+      <p class="signup bottom-text" v-show="loginType == 'loginA'" @click="is_login = 'signUp'">注册方寸流年</p>
     </div>
 
     <teleport to="body">
@@ -46,16 +46,80 @@
     </teleport>
 
   </div>
-  <!-- <div v-else-if="login == 'signUp'" class="login" @click.stop="0">
-    注册方寸流年  
+
+  <div v-else-if="is_login == 'signUp'" class="sign-up" @click.stop="0">
+    <div class="input-box">
+      <p class=input-title>邮箱</p>
+      <input type="email" class="input-self" v-model="account" placeholder="请输入邮箱" @blur="checkEmail">
+    </div>
+    <div class="input-box">
+      <p class=input-title>验证码</p>
+      <div class="second-box">
+        <input type="password" class="input-self second-input" v-model="authCode" placeholder="验证码">
+        <button class="send-verify-code" v-if="sendable" @click="sendCode">发送验证码</button>
+        <p class="resend" v-else>{{`重发${restTime}秒`}}</p>
+      </div>
+    </div>
+    <div class="input-box">
+      <p class=input-title>密码</p>
+      <input type="password" class="input-self" v-model="password" placeholder="请输入密码">
+    </div>
+    <div class="other-bar" v-if="loginType == 'loginA'">
+      <div class="proto">
+        <img src="@/assets/checkSquare.svg" v-show="!ON" @click="ON = !ON" class="img"/>
+        <img src="@/assets/checkSquare_.svg" v-show="ON" @click="ON = !ON" class="img"/>
+        <p>我已阅读并同意</p>
+        <p class="privacy">隐私政策</p>
+      </div>
+    </div>
+    <button class="button" @click="signUp()">注册</button>
+    <div class="other-bar">
+      <div class="other-way bottom-text" @click="is_login='login'">
+        返回登录
+      </div>
+      <p class="forget bottom-text" @click="is_login = 'forget'">忘记密码</p>
+    </div>
   </div>
-  <div v-else-if="login == 'forget'" class="login" @click.stop="0">
-    忘记密码
-  </div> -->
+
+  <div v-else-if="is_login == 'forget'" class="sign-up" @click.stop="0">
+    <div class="input-box">
+      <p class=input-title>邮箱</p>
+      <input type="email" class="input-self" v-model="account" placeholder="请输入邮箱" @blur="checkEmail">
+    </div>
+    <div class="input-box">
+      <p class=input-title>验证码</p>
+      <div class="second-box">
+        <input type="password" class="input-self second-input" v-model="authCode" placeholder="验证码">
+        <button class="send-verify-code" v-if="sendable" @click="sendCode">发送验证码</button>
+        <p class="resend" v-else>{{`重发${restTime}秒`}}</p>
+      </div>
+    </div>
+    <div class="input-box">
+      <p class=input-title>新密码</p>
+      <input type="password" class="input-self" v-model="password" placeholder="请输入密码">
+    </div>
+    <div class="other-bar" v-if="loginType == 'loginA'">
+      <div class="proto">
+        <img src="@/assets/checkSquare.svg" v-show="!ON" @click="ON = !ON" class="img"/>
+        <img src="@/assets/checkSquare_.svg" v-show="ON" @click="ON = !ON" class="img"/>
+        <p>我已阅读并同意</p>
+        <p class="privacy">隐私政策</p>
+      </div>
+    </div>
+    <button class="button" @click="resetPwd()">重置密码</button>
+    <div class="other-bar">
+      <div class="other-way bottom-text" @click="is_login='login'">
+        返回登录
+      </div>
+      <p class="forget bottom-text" @click="is_login = 'signUp'">注册方寸流年账号</p>
+    </div>
+  </div>
+  
 </template>
 <script>
 import { getToken, setToken, setAdmin, setUserId } from "@/utils/auth";
-import { loginA, login } from "@/api/login";
+import { loginA, login, sendCode, verifyCode, register, resetPass } from "@/api/login";
+
 export default {
   emits:[
   "tokenGet"
@@ -69,10 +133,118 @@ export default {
       loginType:'login',
       pro_box:false,
       is_login:'login',
-
+      restTime: 0,
+      waitTime: 2,
+      sendable: true,
+      loginLoading: false,
+      interval: 0,
+      authCode: '',
     };
   },
   methods: {
+    resetPwd(){
+      if (!this.account) {
+        ElMessage.warning("请输入您的邮箱并验证");
+        return;
+      }
+      if (!this.authCode) {
+        ElMessage.warning("请输入验证码");
+        return;
+      }
+      if (!this.password) {
+        ElMessage.warning("请设置密码");
+        return;
+      }
+      if (!this.ON) {
+        ElMessage.warning("请阅读并同意隐私政策");
+        return;
+      }
+
+
+      resetPass({
+        code: this.authCode,
+        newPassword: this.password,
+        email: this.account,
+      }).then(v => {
+        // console.log(v)
+        if (!v.code) {
+          ElMessage.success('密码修改成功！')
+          // 自动登录
+          // this.toLogin();
+          this.is_login = 'login';
+        } else {
+          ElMessage.error('修改失败: ' + v.description)
+        }
+      })
+    },
+    sendCode() {
+      if(!this.checkEmail()) {
+        ElMessage.warning('请输入正确的邮箱格式')
+        return
+      }
+
+
+      this.sendable = false
+      this.restTime = this.waitTime
+      setTimeout(() => {
+        this.sendable = true
+        clearInterval(this.interval);
+      }, this.waitTime * 1000);
+      this.interval = setInterval(() => {
+        this.restTime--;
+      }, 1000);
+
+      sendCode(this.account).then(v=>{
+        // console.log(v)
+        if(!v.code){
+          ElMessage.success('验证码已发送至邮箱')
+        }else{
+          ElMessage.error(v.msg)
+        }
+      })
+    },
+    signUp(){
+      if (!this.account) {
+        ElMessage.warning("请输入您的邮箱并验证");
+        return;
+      }
+      if (!this.authCode) {
+        ElMessage.warning("请输入验证码");
+        return;
+      }
+      if (!this.password) {
+        ElMessage.warning("请设置密码");
+        return;
+      }
+      if (!this.ON) {
+        ElMessage.warning("请阅读并同意隐私政策");
+        return;
+      }
+
+      verifyCode({
+        code: this.authCode,
+        email: this.account
+      }).then(v=>{
+        console.log(v)
+        if(!v.code){
+          register({
+            password: this.password,
+            email: this.account
+          }).then(v=>{
+            // console.log(v)
+            if(!v.code){
+              ElMessage.success('注册成功！')
+              // 自动登录
+              this.is_login = 'login';
+            }else{
+              ElMessage.error('注册失败: '+v.description)
+            }
+          })
+        }else{
+          ElMessage.error('验证码校验失败:'+v.msg)
+        }
+      })
+    },
     changeWay(name) {
       switch(name){
         case "loginByTWT":{
@@ -123,7 +295,8 @@ export default {
               setToken(res.headers["token"]);
               // console.log(data)
               this.loginLoading = false;
-              this.$router.push(this.$route.query.from || "/");
+              location.reload();
+              // this.$router.push(this.$route.query.from || "/");
             } else {
               ElMessage.error(data.description+': '+data.msg);
               this.password = "";
@@ -198,6 +371,21 @@ export default {
   align-items: center;
   z-index: 100;
 }
+.sign-up{
+  width: 40%;
+  height: 85%;
+  background-color: white;
+  position: relative;
+  position:fixed;
+  top:5%;
+  left:30%;
+  border-radius:5px;
+  padding:13px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 100;
+}
 .input-box{
   display:flex;
   flex-direction: column;
@@ -216,6 +404,7 @@ export default {
   border-radius: 2px;
   margin-bottom:5px;
   font-size:4.5px;
+
 }
 .proto{
   
@@ -283,5 +472,23 @@ iframe {
 width: 100%;
 height: 100%;
 border: none;
+}
+.second-box{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.send-verify-code{
+  height:15px;
+  width:30%;
+  background:#4E46B4;
+  color:#FFFFFF;
+  border:0;
+  border-radius: 2px;
+  font-size:5px;
+}
+.second-input{
+  width:65%;
+  
 }
 </style>
