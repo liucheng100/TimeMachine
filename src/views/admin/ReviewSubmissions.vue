@@ -134,18 +134,20 @@ function downloadMulti(){
 	const zip = new JSZip();
     const img = zip.folder("images");
     const promiseAll = [];
+    const nameAll = [];
     card_info.forEach((item) => {
         if(item.value.is_choose){
-            promiseAll.push(getFile(item.value.coverFile))
+            promiseAll.push(getFile(item.value.coverFile));
+            nameAll.push(item.value.workTitle)
         }
     })
     Promise.all(promiseAll)
     .then(res => {
         res.forEach((item, index) => {
-        img.file(`${index}.jpeg`, item, {base64: true});
+        img.file(`${nameAll[index]}.jpeg`, item, {base64: true});
         })
     zip.generateAsync({type:"blob"})
-    .then((res) => saveAs(res, "example.zip"))
+    .then((res) => saveAs(res, "作品集.zip"))
     })
 }
 </script>
