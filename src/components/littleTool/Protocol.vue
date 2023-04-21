@@ -120,12 +120,13 @@ export default {
     flex-direction: column;
 }
 .header{
-    height: 50px;
+    height: 50Px;
     /* background-color: blue; */
     box-shadow: 0 9px 9px rgba(0, 0, 0, .05);
     display: flex;
     align-items: center;
-    padding-left: 20px;
+    padding-left: 20Px;
+    font-size: 16Px;
 }
 .content{
     flex: 1;
@@ -133,7 +134,7 @@ export default {
     white-space: pre-wrap;
     text-align: center;
     line-height: 30px;
-
+    overflow: hidden;
 }
 iframe {
   width: 100%;

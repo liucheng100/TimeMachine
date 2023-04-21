@@ -32,16 +32,16 @@ export default defineConfig({
       //   changeOrigin: true,
       //   // rewrite: (path) => path.replace(/^\/api/, '')
       // },
-      // '/api/api': {
-      //   target: 'https://photograph.twt.edu.cn',
-      //   changeOrigin: true,
-      //   rewrite: (path) => path.replace(/^\/api/, '')
-      // },
-      // '/api/file/get': {
-      //   target: 'https://photograph.twt.edu.cn',
-      //   changeOrigin: true,
-      //   // rewrite: (path) => path.replace(/^\/api/, '')
-      // },
+      '/api/api': {
+        target: 'https://photograph.twt.edu.cn',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/api/file/get': {
+        target: 'https://photograph.twt.edu.cn',
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/api/, '')
+      },
     },
   },
   define: {
