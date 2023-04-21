@@ -33,16 +33,9 @@
 
     export default {
         name: 'homepagePC',
-        props: {
-            contest: {
-                type: Object,
-                required: true,
-            },
-        },
-        inject: ['globalData'],
+        
         data() {
             return {
-                prizes: [],
                 contest: {},
                 if_token: getToken(),
                 textSize:0
