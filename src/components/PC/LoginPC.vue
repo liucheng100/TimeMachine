@@ -1,5 +1,5 @@
 <template>
-  <div class="login" @click.stop="0">
+  <div class="login" @click.stop="0" v-if="is_login == 'login'">
     <div class="input-box">
       <p class=input-title>{{ loginType == 'login'?'天外天账户名':'方寸流年账号' }}</p>
       <input type="text" class="input-self" v-model="account" :placeholder="loginType == 'login'?'学号/昵称/手机号...':'请输入邮箱...'">
@@ -13,15 +13,15 @@
         <img src="@/assets/checkSquare.svg" v-show="!ON" @click="ON = !ON" class="img"/>
         <img src="@/assets/checkSquare_.svg" v-show="ON" @click="ON = !ON" class="img"/>
         <p>我已阅读并同意</p>
-        <p>隐私政策</p>
+        <p class="privacy">隐私政策</p>
       </div>
-      <p class="forget" v-show="loginType == 'loginA'">忘记密码</p>
+      <p class="forget" v-show="loginType == 'loginA'" @click="is_login = 'forget'">忘记密码</p>
     </div>
     <div class="proto" v-if="loginType == 'login'">
       <img src="@/assets/checkSquare.svg" v-show="!ON" @click="ON = !ON" class="img"/>
       <img src="@/assets/checkSquare_.svg" v-show="ON" @click="ON = !ON" class="img"/>
       <p>我已阅读并同意</p>
-      <p>隐私政策</p>
+      <p class="privacy" @click="pro_box = !pro_box">隐私政策</p>
     </div>
     <button class="button" @click="toLogin(loginType)">登录</button>
     <div class="other-bar">
@@ -29,9 +29,29 @@
         {{ loginType == 'login'?'没有天外天账号？':'天外天账号登录' }}
       </div>
       <p class="forget bottom-text" v-show="loginType == 'login'">忘记密码</p>
-      <p class="signup bottom-text" v-show="loginType == 'loginA'">注册方寸流年</p>
+      <p class="signup bottom-text" v-show="loginType == 'loginA'" @click="login = 'signUp'">注册方寸流年</p>
     </div>
+
+    <teleport to="body">
+      <div class="proBox" v-if="pro_box">
+          <div class="header">
+              <div @click="pro_box=false" class="back">
+                  {{'<返回'}}
+              </div>
+          </div>
+          <div class="content">
+              <iframe :src="iframeSrc()"></iframe>
+          </div>
+      </div>
+    </teleport>
+
   </div>
+  <!-- <div v-else-if="login == 'signUp'" class="login" @click.stop="0">
+    注册方寸流年  
+  </div>
+  <div v-else-if="login == 'forget'" class="login" @click.stop="0">
+    忘记密码
+  </div> -->
 </template>
 <script>
 import { getToken, setToken, setAdmin, setUserId } from "@/utils/auth";
@@ -47,6 +67,9 @@ export default {
       password: "",
       loginLoading: false,
       loginType:'login',
+      pro_box:false,
+      is_login:'login',
+
     };
   },
   methods: {
@@ -62,6 +85,9 @@ export default {
         }
         default:
       }
+    },
+    iframeSrc(){
+      return new URL(`../littleTool/privacy.html`, import.meta.url).href
     },
     toLogin(loginType) {
       // setToken('asdf');
@@ -220,5 +246,42 @@ export default {
 }
 .bottom-text{
   margin-top:5px;
+}
+.privacy{
+  color:#4E46B4;
+  cursor:pointer;
+}
+.proBox{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+}
+.header{
+  height: 15px;
+  /* background-color: blue; */
+  box-shadow: 0 9px 9px rgba(0, 0, 0, .05);
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+  font-size:5px;
+}
+.content{
+  flex: 1;
+  overflow: auto;
+  white-space: pre-wrap;
+  text-align: center;
+  line-height: 30px;
+
+}
+iframe {
+width: 100%;
+height: 100%;
+border: none;
 }
 </style>

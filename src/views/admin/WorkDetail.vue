@@ -32,7 +32,7 @@
             <button class="button" :style="{ background:'#F5F5F5' }">
                 <img src="@/assets/arrow-left.svg" />
             </button>
-            <button class="button" :style="{ background:'#F5F5F5' }">
+            <button class="button" :style="{ background:'#F5F5F5' }" @click="download()">
                 <img src="@/assets/download.svg" />
             </button>
             <button class="button" :style="{ background:'#4AD15F50' }" @click="passWork()">
@@ -102,8 +102,12 @@
         unPass([work.id])
             .then(res => history.back())
     }
-
-
+    function download() {
+        let a = document.createElement("a");
+        a.setAttribute("href", work.cover);
+        a.setAttribute("download", work.cover);
+        a.click();
+    }
 
 </script>
 

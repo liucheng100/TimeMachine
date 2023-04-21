@@ -2,7 +2,10 @@
 import { ref, reactive, nextTick, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import { contesting } from "@/api/contest"
+import { concatSrc, getFile } from "@/api/file"
 import { getUnExamined, pass, unPass } from "@/api/examine"
+import JSZip from "JSZip"
+import { saveAs } from "file-saver"
 
 let page = ref(0);
 let if_send  = false;
@@ -107,6 +110,10 @@ function send(){
                 .then(location.reload());
                 break;
             }
+            case 2:{
+                downloadMulti();
+                break;
+            }
             default:
         }
     }
@@ -121,6 +128,25 @@ function unPassSingleWork(){
 
 function toRecycle(){
     router.push("/admin/RecycleBin");
+}
+
+function downloadMulti(){   
+	const zip = new JSZip();
+    const img = zip.folder("images");
+    const promiseAll = [];
+    card_info.forEach((item) => {
+        if(item.value.is_choose){
+            promiseAll.push(getFile(item.value.coverFile))
+        }
+    })
+    Promise.all(promiseAll)
+    .then(res => {
+        res.forEach((item, index) => {
+        img.file(`${index}.jpeg`, item, {base64: true});
+        })
+    zip.generateAsync({type:"blob"})
+    .then((res) => saveAs(res, "example.zip"))
+    })
 }
 </script>
 
