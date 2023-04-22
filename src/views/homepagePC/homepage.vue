@@ -1,20 +1,20 @@
 <template>
     <div class="homepage-pc" v-show="if_token">
-        <img :src="contest.bannerPic" class="big-img" />
+        <img :src="contest.bannerPic" class="big-img"/>
         <div class="other-box">
             <p class="box-title">奖项设置</p>
             <div v-for="(item,idx) in contest.prizes" class="medal-setting">
                 <div class="medal-title">
                     <img src="../../assets/text-left.svg" class="text-icon" />
-                    <p v-if="idx == 1">单反组</p>
-                    <p v-if="idx == 2">随手拍组</p>
-                    <p v-if="idx == 3">短视频组</p>
-                    <p v-if="idx == 4">AI组</p>
+                    <p v-if="idx == 0">单反组</p>
+                    <p v-if="idx == 1">随手拍组</p>
+                    <p v-if="idx == 2">短视频组</p>
+                    <p v-if="idx == 3">AI组</p>
                     <img src="../../assets/text-right.svg" class="text-icon" />
                 </div>
                 <div class="medal-content">
                     <div class="medal-single" v-for="child in item" ref="MedalSingle">
-                        <div class="square" :style="{ backgroundImage:`url('${child.goodPic}')` }"></div>
+                        <img class="square" :src="child.goodPic"/>
                         <p class="prize-name">{{ child.prizeName }}</p>
                         <p class="prize-member" ref="PrizeMember" :style="{transform:`scale(${textSize},${textSize})`}">{{ child.goodName }} / {{ child.totalNum }} 名</p>
                     </div>
@@ -26,7 +26,7 @@
     </div>
 </template>
 <script>
-    import { getSrc, uploadFile, } from '@/api/file'
+    import { getSrc, uploadFile, concatSrc } from '@/api/file'
     import { contesting, getContest, } from '@/api/contest'
     import { getToken } from "@/utils/auth";
     import pubuse from '@/utils/pub-use'
@@ -41,52 +41,28 @@
                 textSize:0
             }
         },
-        computed: {
-            prizes() {
-                return this.globalData.prizes
-            },
-        },
         methods: {
-            replaceBlob(tarObject, attrList) {
-                console.log(attrList)
-                attrList.forEach(attr => {
-                    getSrc(tarObject[attr]).then(v => {
-                        // console.log(v)
-                        tarObject[attr] = v
-                    }).catch(err => {
-                        ElMessage.error('图片加载失败')
-                    })
-                    tarObject[attr] = pubuse('loading.gif')
-                });
-            },
             NewURL(url) {
                 return new URL(url);
             },
             async getData(){
                 await contesting().then(v => {
                 if (!v.code) {
-                    this.contest = v.data
-                    this.replaceBlob(this.contest, [
-                        'bannerPic',
-                        'introductionPic',
-                        'tailPic',
-                    ])
-                    // prizes
-                    this.contest.prizes['1'].forEach(ele => {
-                        this.replaceBlob(ele, ['goodPic',])
-                    });
-                    this.contest.prizes['2'].forEach(ele => {
-                        this.replaceBlob(ele, ['goodPic',])
-                    });
-                    this.contest.prizes['3'].forEach(ele => {
-                        this.replaceBlob(ele, ['goodPic',])
-                    });
-                    this.contest.prizes['4'].forEach(ele => {
-                        this.replaceBlob(ele, ['goodPic',])
-                    });
-                    console.log(this.contest.prizes)
-                    this.globalData.contestId = this.contest.contestId
-                    this.globalData.prizes = this.contest.prizes
+                        this.contest = v.data;
+                        this.contest.bannerPic = concatSrc(this.contest.bannerPic);
+                        this.contest.introductionPic = concatSrc(this.contest.introductionPic);
+                        this.contest.tailPic = concatSrc(this.contest.tailPic)
+                        let x = [];
+                        x.push(this.contest.prizes["1"])
+                        x.push(this.contest.prizes["2"])
+                        x.push(this.contest.prizes["3"])
+                        x.push(this.contest.prizes["4"])
+                        this.contest.prizes = x;
+                        this.contest.prizes.forEach((item) => {
+                            item.forEach((item) => {
+                                item.goodPic = concatSrc(item.goodPic);
+                            })
+                        })
                     } 
                     else {
                     ElMessage.error(v.msg)
