@@ -33,7 +33,7 @@ class MYRequest {
     );
     this.instance.interceptors.request.use(
       (config) => {
-        console.log("所有实例已经拦截12");
+        // console.log("所有实例已经拦截");
         // 在每个请求发送前，将 baseurl 设置为 $env.VITE_APP_SERVER_URL
         // 这个作为方便部署时调整服务器url使用，正式上线请注释
         // console.log('%c此时的baseUrl为: '+config.baseURL, 'color: pink');

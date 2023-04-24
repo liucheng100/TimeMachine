@@ -125,7 +125,7 @@
                     avatar: this.info.avatar,
                     nickname: this.newNickname
                 }).then(v => {
-                    console.log(v)
+                    // console.log(v)
                     if (!v.code) {
                         ElMessage.success('修改成功')
                         this.pop4 = false
@@ -144,7 +144,7 @@
             },
             removeWork() {
                 removeWork(this.waitingForRemove).then(v => {
-                    console.log(v)
+                    // console.log(v)
                     if (!v.code) {
                         ElMessage.success('删除成功')
                         this.pop2 = true
@@ -212,7 +212,7 @@
                 // console.log(101, v)
                 if (!v.code) {
                     this.contest = v.data
-                    console.log(this.contest)
+                    // console.log(this.contest)
                 } else {
                     ElMessage.error(v.msg)
                 }
@@ -225,13 +225,13 @@
                             'coverFile',
                         ])
                     });
-                    console.log(1123, this.works)
+                    // console.log(1123, this.works)
                 }
             }).catch(err => {
                 ElMessage.error('请刷新')
             })
             getUserInfo(getUserId()).then(v => {
-                console.log(v)
+                // console.log(v)
                 if (!v.code) {
                     this.info = v.data
                 }

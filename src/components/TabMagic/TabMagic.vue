@@ -75,6 +75,7 @@ export default {
             let rect = this.$refs['tab' + this.activeIdx].getBoundingClientRect();
             // console.log(rect.height)
             if (rect && rect.height) {
+                // console.log(rect.height,this.tabHeight)
                 this.tabHeight = rect.height
             }
         }
@@ -125,7 +126,17 @@ export default {
         }
         // bus.all.clear();
         // bus.off('refreshHeight', this.refreshHeight)
-    }
+    },
+    activated() {
+        this.refreshHeight()
+    },
+    beforeRouteUpdate(to, from, next) {
+        // 对路由变化做出响应...
+        // 从本路由切换回本路由其他参数query触发
+        // 当前为往届赛事，点击回到主页（当前赛事）时触发
+        this.refreshHeight()
+        next()
+    },
 
 }
 </script>

@@ -89,7 +89,7 @@
             // alert(this.$route.query.workId)
             this.workId = this.$route.query.workId
             workDetail(this.workId).then(v => {
-                console.log(71, v)
+                // console.log(71, v)
                 if (!v.code) {
                     this.workData = v.data
                     if (this.workData.contestGroup == 3) {

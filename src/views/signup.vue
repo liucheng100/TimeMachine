@@ -76,7 +76,7 @@ export default {
         code: this.authcode,
         email: this.account
       }).then(v=>{
-        console.log(v)
+        // console.log(v)
         if(!v.code){
           register({
             password: this.password,

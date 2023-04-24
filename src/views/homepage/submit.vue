@@ -200,7 +200,7 @@
                         if (save_the_event_id != this.net_event_id) {
                             return
                         }
-                        console.log(v)
+                        // console.log(v)
                         if (!v.code) {
                             ElMessage.success('上传成功')
                             if (this.contestgroup != 3) {
@@ -235,7 +235,7 @@
                         }
                     }).catch(err => {
                         ElMessage.error('上传失败请重试' + err)
-                        console.log(err)
+                        // console.log(err)
                     })
 
                 }
@@ -268,7 +268,7 @@
                 this.loading = true
                 if (this.loading) {
                     newWork(this.formdata).then(v => {
-                        console.log(v)
+                        // console.log(v)
                         if (!v.code) {
                             ElMessage.success('发布成功')
                             this.pop1 = true

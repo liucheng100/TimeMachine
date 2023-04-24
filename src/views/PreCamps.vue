@@ -48,7 +48,7 @@
                             pageNum: this.pageNum,
                             pageSize: this.pageSize,
                         }).then(v => {
-                            console.log(v)
+                            // console.log(v)
                             if (!v.code) {
                                 this.comps = this.comps.concat(v.data)
                                 v.data.forEach(ele => {
@@ -76,7 +76,7 @@
                 }
             },
             replaceBlob(tarObject, attrList) {
-                console.log(attrList)
+                // console.log(attrList)
                 attrList.forEach(attr => {
                     getSrc(tarObject[attr]).then(v => {
                         // console.log(v)
@@ -96,7 +96,7 @@
                 let b = e.target.offsetHeight
                 let c = e.target.scrollHeight
                 let d = c - b - a
-                console.log(d)
+                // console.log(d)
                 if (d < 140) {
                     this.byEnd = true
                 } else {
@@ -134,7 +134,7 @@
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
             }).then(v => {
-                console.log(v)
+                // console.log(v)
                 if (!v.code) {
                     this.comps = v.data
                     v.data.forEach(ele => {

@@ -195,7 +195,7 @@ export default {
         replaceBlob(tarObject, attrList) {
             attrList.forEach(attr => {
                 getSrc(tarObject[attr]).then(v => {
-                    console.log(v)
+                    // console.log(v)
                     tarObject[attr] = v
                     setTimeout(() => {
                         this.$forceUpdate()
@@ -331,7 +331,7 @@ export default {
             }
         },
         prize1List_ssp(to) {
-            console.log(99999, to)
+            // console.log(99999, to)
         }
     },
 }

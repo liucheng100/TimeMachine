@@ -170,7 +170,7 @@ export default {
                     // console.log(118, v)
                     if (!v.code) {
                         this.contest = v.data
-                        console.log(this.contest)
+                        // console.log(this.contest)
                         this.replaceBlob(this.contest, [
                             'bannerPic',
                             'introductionPic',
