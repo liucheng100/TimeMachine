@@ -6,7 +6,7 @@
                 {{ title }}
             </div>
             <div class="bar">
-                <div class="flex">
+                <div class="flex overflow">
                     <div class="avatar" :style="{ backgroundImage: `url('${avatar}')` }"></div>
                     <div class="info">{{ auth }}</div>
                 </div>
@@ -107,6 +107,9 @@ export default {
 }
 
 .info {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-size: 12px;
     font-weight: 300;
     color: rgba(153, 156, 160, 1);
@@ -117,8 +120,11 @@ export default {
     display: flex;
     align-items: center;
 }
-
+.overflow{
+    overflow: hidden;
+}
 .avatar {
+    flex-shrink: 0;
     height: 17px;
     width: 17px;
     border-radius: 50%;

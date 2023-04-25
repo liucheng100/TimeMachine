@@ -11,6 +11,17 @@ export function getAllWorks<T>(data:any){
     })
 }
 
+export function getNewWorks<T>(data:any){
+    return http.get<T>({
+        url:'/work/contest/ordered',
+        params: {
+            contestId: data.contestId,
+            pageNum: data.pageNum,
+            pageSize: data.pageSize,
+        },
+    })
+}
+
 export function workDetail<T>(workId:any){
     return http.get<T>({
         url:'/work/detail',
